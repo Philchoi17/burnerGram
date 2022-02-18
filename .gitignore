@@ -20,6 +20,7 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
+*.dSYM.zip
 
 # Android/IntelliJ
 #
@@ -29,6 +30,10 @@ build/
 local.properties
 *.iml
 *.hprof
+
+# Visual Studio Code
+#
+.vscode/
 
 # node.js
 #
@@ -58,3 +63,13 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+/ios/builds/
+
+# PYC firebase key protection
+google-services.json
+GoogleService-Info.plist
+.editorconfig
+fastlane/credentials/
+
+fastlane/report.xml
+package-lock.json
