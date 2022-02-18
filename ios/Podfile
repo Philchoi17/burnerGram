@@ -5,6 +5,8 @@ platform :ios, '11.0'
 
 target 'burnerMobile' do
   config = use_native_modules!
+  # for vector-icons adding in Podfile option 3 in git repo
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   use_react_native!(
     :path => config[:reactNativePath],

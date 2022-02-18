@@ -1,4 +1,5 @@
 package com.burnermobile;
+import android.os.Bundle; // adding for react-navigation
 
 import com.facebook.react.ReactActivity;
 
@@ -11,5 +12,11 @@ public class MainActivity extends ReactActivity {
   @Override
   protected String getMainComponentName() {
     return "burnerMobile";
+  }
+  
+  // for react-navigation
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(null);
   }
 }
