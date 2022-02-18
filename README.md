@@ -140,3 +140,107 @@ https://reactnavigation.org/docs/drawer-navigator#installation
 2. yarn add react-native-gesture-handler react-native-reanimated
 
 ```
+
+# State Management --> redux
+
+```
+https://redux.js.org/introduction/getting-started
+
+toolkit:
+yarn add @reduxjs/toolkit react-redux
+
+```
+
+# react-native-community/hooks
+
+```
+https://github.com/react-native-community/hooks
+
+yarn add @react-native-community/hooks
+
+```
+
+# zoontek/react-native-permissions
+
+```
+https://github.com/zoontek/react-native-permissions
+
+yarn add react-native-permissions
+```
+
+# react-redux-firebase
+
+```
+
+https://github.com/prescottprue/react-redux-firebase
+http://react-redux-firebase.com/
+
+yarn add react-redux-firebase
+
+```
+
+# RNFirebase
+
+```
+
+https://rnfirebase.io/
+
+yarn add @react-native-firebase/app
+yarn add @react-native-firebase/auth
+yarn add @react-native-firebase/storage
+yarn add @react-native-firebase/firestore
+yarn add @react-native-firebase/functions
+yarn add @react-native-firebase/messaging
+yarn add @react-native-firebase/database # for walkaround createUser bug
+
+```
+
+# redux-firestore
+
+```
+
+https://github.com/prescottprue/redux-firestore
+
+yarn add redux-firestore
+
+```
+
+# redux-logger
+
+```
+
+https://github.com/LogRocket/redux-logger
+
+yarn add redux-logger
+yarn add -D @types/redux-logger
+
+```
+
+# redux-devtools-extension
+
+```
+
+https://github.com/zalmoxisus/redux-devtools-extension
+
+yarn add -D redux-devtools-extension
+
+```
+
+# patch-package
+
+```
+https://www.npmjs.com/package/patch-package
+
+yarn add patch-package postinstall-postinstall
+
+package.json -->
+ "scripts": {
++  "postinstall": "patch-package"
+ }
+
+ useage: npx patch-package package-name
+
+ needed for:
+ *react-native-gifted-chat
+  TypeError: _reactNative.Keyboard.removeListener is not a function. (In '_reactNative.Keyboard.removeListener('keyboardWillShow', invertibleProps.onKeyboardWillShow)', '_reactNative.Keyboard.removeListener' is undefined)
+```
