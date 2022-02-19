@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Div } from 'react-native-magnus'
 import { useFirebase, ExtendedFirebaseInstance } from 'react-redux-firebase'
 import { useNavigation } from '@react-navigation/native'
+import { useSelector } from 'react-redux'
 
 import { AuthNavProps } from '@/Navigators/NavParams'
 import { AuthRoutes } from '../SCREENS'
@@ -20,6 +21,7 @@ export default function Login({}): React.ReactElement {
 
   const firebase: ExtendedFirebaseInstance = useFirebase()
   const { login } = firebase
+  const { profile } = useSelector((state: any) => state.firebase)
 
   const { navigate } = useNavigation<AuthNavProps>()
 
@@ -37,6 +39,16 @@ export default function Login({}): React.ReactElement {
       return setSigningIn(false)
     }
   }
+
+  useEffect(() => {
+    if (!profile.isEmpty) {
+      // TODO: Or handle creation here for social login !
+      Logger.debug('profile not empty but no profile =', profile)
+    }
+    return () => {
+      // cleanup
+    }
+  }, [profile])
 
   return (
     <>

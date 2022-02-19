@@ -42,7 +42,12 @@ export default function Signup({}: Props): React.ReactElement {
       delete userPkg.password
       delete userPkg.confirmPassword
       // userPkg.createdAt = await firestore.FieldValue.serverTimeStamp()
-      userPkg.createdAt = new Date()
+      const now = new Date()
+      userPkg.createdAt = now
+      userPkg.updatedAt = now
+      userPkg.lastSeenAt = now
+      userPkg.createdWithSocialLogin = false
+      userPkg.photoURL = null
       await firebase.createUser({ email, password }, userPkg)
       // 3. set publicUser profile
       const { uid } = await auth().currentUser

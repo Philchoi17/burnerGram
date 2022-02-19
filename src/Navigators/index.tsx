@@ -23,18 +23,42 @@ export default function Navigator() {
   const { profile } = useSelector((state: any) => state.firebase)
 
   const [initializing, setInitializing] = useState<boolean>(false)
+  const [user, setUser] = useState<any>()
 
   const onAuthStateChanged = async (user: any) => {
+    // Logger.debug('onAuthStateChanged =', user)
     setInitializing(true)
-    // setUser(user)
+    setUser(user)
     try {
-      console.log('something here')
       if (user) {
         // const lastSeenAt = await firestore.FieldValue.serverTimeStamp()
+
         const lastSeenAt = new Date()
         await firebase.updateProfile({
           lastSeenAt,
+          createdWithSocialLogin: user.providerData.some((userInfo: any) =>
+            [
+              'google.com',
+              'apple.com',
+              'facebook.com',
+              'twitter.com',
+              'github.com',
+            ].includes(userInfo.providerId),
+          ),
         })
+
+        if (!profile.email && profile.createdWithSocialLogin) {
+          // Logger.debug('UPDATED PROFILE HERE WITH CREDENTIALS')
+          const now = new Date()
+          await firebase.updateProfile({
+            email: user.email,
+            name: user.displayName,
+            photoURL: user.photoURL,
+            nickname: '',
+            createdAt: now,
+            updatedAt: now,
+          })
+        }
       }
     } catch (error) {
       // Logger.debug('Navigator: onAuthStateChanged: error =', error)
