@@ -10,6 +10,9 @@ import { useSelector } from 'react-redux'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 
 import AuthStack from './Auth'
+import HomeTabs from './Home'
+import Logger from '@/Utils/Logger'
+import { Loading } from '@/Components'
 
 const { useEffect, useState } = React
 export default function Navigator() {
@@ -41,20 +44,22 @@ export default function Navigator() {
   }
 
   const navigatorUseEffectHandler = () => {
-    // Logger.debug(
-    //   'navigator useEffect invoked: profile =',
-    //   profile,
-    //   firestore.FieldValue.serverTimestamp(),
-    //   // firebase.firestore.FieldValue().serverTimeStamp(),
-    // )
+    Logger.debug(
+      'navigator useEffect invoked: profile =',
+      profile,
+      // firestore.FieldValue.serverTimestamp(),
+      // firebase.firestore.FieldValue().serverTimeStamp(),
+    )
     const unsubscribe = auth().onAuthStateChanged(onAuthStateChanged)
     return () => unsubscribe()
   }
 
   useEffect(navigatorUseEffectHandler, [])
-  return initializing ? null : (
+  return initializing ? (
+    <Loading />
+  ) : (
     <NavigationContainer>
-      <AuthStack />
+      {profile.email ? <HomeTabs /> : <AuthStack />}
     </NavigationContainer>
   )
 }

@@ -1,14 +1,14 @@
 class Logger {
-  public static debug(...message: any): void {
+  public debug(...message: any): void {
     console.log('DEBUG:', ...message)
   }
-  public static info(...message: any): void {
+  public info(...message: any): void {
     console.info('INFO:', ...message)
   }
-  public static warn(...message: any): void {
+  public warn(...message: any): void {
     console.warn('WARNING:', ...message)
   }
-  public static error(...message: any): void {
+  public error(...message: any): void {
     console.error('ERROR:', ...message)
   }
 }

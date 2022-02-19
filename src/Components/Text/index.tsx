@@ -19,7 +19,6 @@ interface Props extends TextProps {
     | undefined
   size?: number | string
   center?: boolean
-  color?: string
   rest?: TextProps
 }
 
@@ -28,7 +27,7 @@ export default function ({
   weight = '400',
   size = 'md',
   center = false,
-  color = 'black',
+
   ...rest
 }: Props) {
   return (

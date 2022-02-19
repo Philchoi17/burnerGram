@@ -27,6 +27,7 @@
     "@reduxjs/toolkit": "^1.7.2",
     "color": "^4.2.1",
     "deepmerge": "^4.2.2",
+    "formik": "^2.2.9",
     "patch-package": "^6.4.7",
     "postinstall-postinstall": "^2.1.0",
     "react": "17.0.2",
@@ -43,7 +44,8 @@
     "react-redux-firebase": "^3.11.0",
     "redux-firestore": "^0.15.2",
     "redux-logger": "^3.0.6",
-    "validate-color": "^2.2.1"
+    "validate-color": "^2.2.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
