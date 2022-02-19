@@ -287,3 +287,11 @@ export default function ({
 
 
 ```
+
+# @react-native-google-signin/google-signin
+
+```
+https://www.npmjs.com/package/@react-native-google-signin/google-signin
+
+yarn add @react-native-google-signin/google-signin
+```

@@ -14,7 +14,7 @@ interface Props extends OverlayProps {
   cancelAction?: () => void
 }
 
-export default function LCLAlert({
+export default function ({
   visible,
   alertMsg,
   alertTitle,

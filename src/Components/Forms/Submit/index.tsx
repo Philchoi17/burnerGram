@@ -12,7 +12,7 @@ interface Props {
   loading?: boolean
 }
 
-export default function LCLSubmitButton({
+export default function ({
   title,
   wide = false,
   inputSuffix,
