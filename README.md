@@ -295,3 +295,12 @@ https://www.npmjs.com/package/@react-native-google-signin/google-signin
 
 yarn add @react-native-google-signin/google-signin
 ```
+
+# react-native-image-picker
+
+```
+https://www.npmjs.com/package/react-native-image-picker
+
+yarn add react-native-image-picker
+
+```

@@ -10,3 +10,11 @@ export type profileType = {
   photoURL?: string | null
   updatedAt: FirebaseFirestoreTypes.Timestamp
 }
+
+// type used in usage examples
+export type PermissionStatus =
+  | 'unavailable'
+  | 'denied'
+  | 'limited'
+  | 'granted'
+  | 'blocked'
