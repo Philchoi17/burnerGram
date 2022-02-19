@@ -123,6 +123,8 @@ some platform configurations needed to be done to run icons correctly
 https://reactnavigation.org/docs/getting-started
 1. yarn add @react-navigation/native
 2. yarn add react-native-screens react-native-safe-area-context
+DEPRACATED:
+react-native-gesture-handler react-native-reanimated
 3. npx pod-install ios || cd ios && pod install ( i think )
 4. android/app/src/main/java/<your package name>/MainActivity.java ->
   a.) add in MainActivity class:
