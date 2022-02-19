@@ -1,6 +1,8 @@
 apply plugin: "com.android.application"
 // for react-native-vector-icons
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+// firebae config
+apply plugin: 'com.google.gms.google-services'
 
 import com.android.build.OutputFile
 
@@ -191,6 +193,9 @@ android {
 }
 
 dependencies {
+    // firebase config
+    implementation platform('com.google.firebase:firebase-bom:29.1.0')
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules

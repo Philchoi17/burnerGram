@@ -40,11 +40,6 @@ const rrfConfig = {
   useFirestoreForProfile: true,
 }
 
-// const reducer = combineReducers({
-//   firebase: firebaseReducer,
-//   firestore: firestoreReducer,
-//   [api.reducerPath]: api.reducer,
-// })
 const reducer: any = {
   firebase: firebaseReducer,
   firestore: firestoreReducer,
@@ -65,11 +60,6 @@ const middlewares = [thunk.withExtraArgument(getFirebase) /*logger*/]
 
 const composeEnhancers = composeWithDevTools({})
 
-// const store = createStore(
-//   rootReducer,
-//   initialState,
-//   composeEnhancers(applyMiddleware(...middlewares)),
-// )
 const store = configureStore({
   reducer,
   preloadedState,
@@ -84,13 +74,13 @@ const store = configureStore({
 })
 
 const rrfProps = {
-  firebase: RNFirebase,
+  firebase: RNFirebase.app(),
   config: rrfConfig,
   dispatch: store.dispatch,
   createFirestoreInstance,
 }
 
-const RRFProvider: React.FC<RRFProviderProps> = ({ children }) => {
+export default function RRFProvider({ children }: RRFProviderProps) {
   return (
     <Provider store={store}>
       <ReactReduxFirebaseProvider {...rrfProps}>
@@ -99,5 +89,3 @@ const RRFProvider: React.FC<RRFProviderProps> = ({ children }) => {
     </Provider>
   )
 }
-
-export default RRFProvider
