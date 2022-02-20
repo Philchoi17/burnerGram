@@ -3,6 +3,7 @@ import {
   CameraOptions,
   launchImageLibrary,
   ImagePickerResponse,
+  Asset,
 } from 'react-native-image-picker'
 import Logger from '@/Utils/Logger'
 import { Platform } from 'react-native'
@@ -13,10 +14,11 @@ const options: CameraOptions = {
   maxHeight: 200,
 }
 
-function uploadUriFormatter(uri: string) {
+function uploadURIFormatter(uri: string) {
   return Platform.OS == 'ios' ? uri.replace('file://', '') : uri
 }
 
+// TODO: change any for assets to Asset[]
 export const imagePickerLaunchCamera = async (
   savingScheme: (image: string) => void,
 ) => {
@@ -24,7 +26,7 @@ export const imagePickerLaunchCamera = async (
   Logger.debug('imagePickerLaunchCamera: response =', response)
   try {
     const { assets }: any = response
-    const uploadUri = uploadUriFormatter(assets[0].uri)
+    const uploadUri = uploadURIFormatter(assets[0].uri)
     savingScheme(uploadUri)
   } catch (error) {
     Logger.debug('imagePickerLaunchCamera: error =', error)
@@ -38,7 +40,7 @@ export const imagePickerLaunchLibrary = async (
   Logger.debug('imagePickerLaunchLibrary: response =', response)
   try {
     const { assets }: any = response
-    const uploadUri = uploadUriFormatter(assets[0].uri)
+    const uploadUri = uploadURIFormatter(assets[0].uri)
     savingScheme(uploadUri)
   } catch (error) {
     Logger.debug('imagePickerLaunchLibrary: error =', error)
