@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ActivityIndicator, ScrollView } from 'react-native'
+import { ActivityIndicator, ScrollView, TouchableOpacity } from 'react-native'
 import { Div } from 'react-native-magnus'
 import {
   useFirebase,
@@ -8,14 +8,13 @@ import {
   ExtendedFirestoreInstance,
   useFirestoreConnect,
 } from 'react-redux-firebase'
-import { useSelector } from 'react-redux'
 
+import { useAppSelector } from '@/Hooks'
 import { MainContainer } from '@/Containers'
-import { Text, Button, Alert, Icon } from '@/Components'
+import { Text, Button, Alert, Icon, ActionSheetOpener } from '@/Components'
 import { Form, Input, Submit } from '@/Components/Forms'
 import Logger from '@/Utils/Logger'
 import { nicknameValidation } from './validation'
-import ActionSheetOpener from '@/Components/ActionSheetOpener'
 import {
   imagePickerLaunchCamera,
   imagePickerLaunchLibrary,
@@ -28,7 +27,7 @@ export default function Feed({}) {
     ExtendedFirebaseInstance,
     ExtendedFirestoreInstance,
   ] = [useFirebase(), useFirestore()]
-  const { profile } = useSelector(({ firebase }: any) => firebase)
+  const { profile } = useAppSelector(({ firebase }) => firebase)
 
   const { logout, updateProfile, storage, auth } = firebase
   const { update } = firestore
@@ -168,8 +167,11 @@ export default function Feed({}) {
                       ),
                     },
                   ]}>
-                  <Icon name="plus" size="6xl" />
+                  <Icon name="plus" size="6xl" px="md" />
                 </ActionSheetOpener>
+                <TouchableOpacity onPress={() => {}}>
+                  <Icon name="bell" size="6xl" px="md" />
+                </TouchableOpacity>
               </Div>
             ),
           },

@@ -304,3 +304,14 @@ https://www.npmjs.com/package/react-native-image-picker
 yarn add react-native-image-picker
 
 ```
+
+# react-native-uuid
+
+```
+https://www.npmjs.com/package/react-native-uuid
+
+yarn add react-native-uuid
+
+import uuid from 'react-native-uuid';
+uuid.v4(); // ⇨ '11edc52b-2918-4d71-9058-f7285e29d894'
+```

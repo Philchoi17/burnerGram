@@ -16,6 +16,7 @@ export default function Practice({}) {
           <ProfileCard
             photoURL="https://lh3.googleusercontent.com/a-/AOh14GiX5QPg40HGE5MUds5GdtJgj1lEEKQpWSLKHBkq=s96-c"
             nickname="Nickname"
+            navigateToEditProfile={() => {}}
           />
           <FeedCard />
         </Div>

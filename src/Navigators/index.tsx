@@ -6,9 +6,9 @@ import {
   useFirestore,
   ExtendedFirestoreInstance,
 } from 'react-redux-firebase'
-import { useSelector } from 'react-redux'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 
+import { useAppSelector } from '@/Hooks'
 import AuthStack from './Auth'
 import HomeTabs from './Home'
 import Logger from '@/Utils/Logger'
@@ -20,7 +20,7 @@ export default function Navigator() {
     ExtendedFirebaseInstance,
     ExtendedFirestoreInstance,
   ] = [useFirebase(), useFirestore()]
-  const { profile } = useSelector((state: any) => state.firebase)
+  const { profile } = useAppSelector((state) => state.firebase)
 
   const [initializing, setInitializing] = useState<boolean>(false)
   const [user, setUser] = useState<any>()

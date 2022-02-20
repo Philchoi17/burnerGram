@@ -8,8 +8,8 @@ import {
   ExtendedFirebaseInstance,
   ExtendedFirestoreInstance,
 } from 'react-redux-firebase'
-import { useSelector } from 'react-redux'
 
+import { useAppSelector } from '@/Hooks'
 import { MainContainer } from '@/Containers'
 import { Text } from '@/Components'
 import { ProfileCard } from '@/Components/Cards'
@@ -22,7 +22,7 @@ export default function Profile({}) {
     ExtendedFirebaseInstance,
     ExtendedFirestoreInstance,
   ] = [useFirebase(), useFirestore()]
-  const { profile } = useSelector(({ firebase }: any) => firebase)
+  const { profile } = useAppSelector(({ firebase }) => firebase)
   const { navigate } = useNavigation<AppNavProps>()
 
   const navigateToEditProfile = () => navigate(AppRoutes.EDIT_PROFILE_SCREEN)

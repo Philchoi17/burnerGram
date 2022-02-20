@@ -49,6 +49,8 @@ export default function HomeTabs() {
           <Icon name={focused ? 'play-box' : 'play-box-outline'} size="6xl" />
         ))}
       />
+      {/* <Group>
+      </Group> */}
     </Navigator>
   )
 }

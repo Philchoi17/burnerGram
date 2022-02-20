@@ -1,6 +1,7 @@
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
 
 export type profileType = {
+  bio?: string
   createdAt: FirebaseFirestoreTypes.Timestamp
   createdWithSocialLogin: boolean
   email: string

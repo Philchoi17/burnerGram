@@ -2,8 +2,8 @@ import * as React from 'react'
 import { Div } from 'react-native-magnus'
 import { useFirebase, ExtendedFirebaseInstance } from 'react-redux-firebase'
 import { useNavigation } from '@react-navigation/native'
-import { useSelector } from 'react-redux'
 
+import { useAppSelector } from '@/Hooks'
 import { AuthNavProps } from '@/Navigators/NavParams'
 import { AuthRoutes } from '../SCREENS'
 import { AuthContainer } from '@/Containers'
@@ -21,7 +21,7 @@ export default function Login({}): React.ReactElement {
 
   const firebase: ExtendedFirebaseInstance = useFirebase()
   const { login } = firebase
-  const { profile } = useSelector((state: any) => state.firebase)
+  const { profile } = useAppSelector((state) => state.firebase)
 
   const { navigate } = useNavigation<AuthNavProps>()
 
