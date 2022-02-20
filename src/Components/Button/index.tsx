@@ -11,7 +11,7 @@ interface Props extends ButtonProps {
 
 export default function ({ onPress, children, wide = false, ...rest }: Props) {
   return (
-    <Button onPress={onPress} {...rest}>
+    <Button block={wide} onPress={onPress} {...rest}>
       {children}
     </Button>
   )

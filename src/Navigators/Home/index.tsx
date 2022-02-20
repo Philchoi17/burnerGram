@@ -2,7 +2,7 @@ import * as React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import { AppRoutes } from '@/Screens/SCREENS'
-import { FeedScreen, ProfileScreen } from '@/Screens'
+import { FeedScreen, ProfileScreen, PracticeScreen } from '@/Screens'
 import { Icon } from '@/Components'
 
 const { Navigator, Screen, Group } = createBottomTabNavigator()
@@ -36,6 +36,14 @@ export default function HomeTabs() {
             name={focused ? 'account-settings' : 'account-settings-outline'}
             size="6xl"
           />
+        ))}
+      />
+      {/* PRACTICE */}
+      <Screen
+        component={PracticeScreen}
+        name={'Practice'}
+        options={tabOptions(({ focused }) => (
+          <Icon name={focused ? 'play-box' : 'play-box-outline'} size="6xl" />
         ))}
       />
     </Navigator>

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ScrollView } from 'react-native'
+import { ActivityIndicator, ScrollView } from 'react-native'
 import { Div } from 'react-native-magnus'
 import {
   useFirebase,
@@ -36,6 +36,7 @@ export default function Feed({}) {
   const [nicknameAlert, setNicknameAlert] = useState<boolean>(false)
   const [imagePickerType, setimagePickerType] = useState<string | null>(null)
   const [uploading, setUploading] = useState<boolean>(false)
+  const [activity, setActivity] = useState<boolean>(false)
 
   const InputActions = () => (
     <Form
@@ -69,8 +70,6 @@ export default function Feed({}) {
       Logger.debug('profile', profile)
       if (profile.nickname == '') {
         setNicknameAlert(true)
-      } else {
-        setNicknameAlert(false)
       }
     } catch (error) {
       Logger.error('checkNickNameHandler: error =', error)
@@ -101,7 +100,7 @@ export default function Feed({}) {
 
   const openImagePicker = () => {
     Logger.debug('openImagePicker: openImagePicker =', imagePickerType)
-    // setActivity(true)
+    setActivity(true)
     try {
       switch (imagePickerType) {
         case 'Camera':
@@ -118,7 +117,7 @@ export default function Feed({}) {
       Logger.debug('openImagePicker: error =', error)
     } finally {
       setimagePickerType(null)
-      // setActivity(false)
+      setActivity(false)
     }
   }
 
@@ -176,10 +175,14 @@ export default function Feed({}) {
           },
         }}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Div>
-            <Text>Home</Text>
-            <Button onPress={logout} />
-          </Div>
+          {activity ? (
+            <ActivityIndicator size="large" />
+          ) : (
+            <Div>
+              <Text>Home</Text>
+              <Button onPress={logout} />
+            </Div>
+          )}
         </ScrollView>
       </MainContainer>
     </>
