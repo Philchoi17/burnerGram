@@ -26,7 +26,7 @@ export default function Navigator() {
   const [user, setUser] = useState<any>()
 
   const onAuthStateChanged = async (user: any) => {
-    // Logger.debug('onAuthStateChanged =', user)
+    // Logger.debug('onAuthStateChanged: user.providerData =', user.providerData)
     setInitializing(true)
     setUser(user)
     try {

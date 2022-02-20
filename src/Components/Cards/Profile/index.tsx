@@ -26,12 +26,33 @@ export default function ({
   return (
     <Div
       justifyContent="center"
-      alignItems="center"
+      alignItems="flex-start"
       rounded="sm"
       borderWidth={1}>
-      <Image h={77} w={77} rounded="circle" source={imageURI(photoURL)} />
-      <Div m="sm">
-        <Text size="xl">{nickname}</Text>
+      <Div p="md" row>
+        <Image h={77} w={77} rounded="circle" source={imageURI(photoURL)} />
+        <Div row alignItems="center">
+          <Div m="md" alignItems="center">
+            <Text size="xl">12</Text>
+            <Text size="lg">something</Text>
+          </Div>
+          <Div m="md" alignItems="center">
+            <Text size="xl">12</Text>
+            <Text size="lg">something</Text>
+          </Div>
+          <Div m="md" alignItems="center">
+            <Text size="xl">12</Text>
+            <Text size="lg">something</Text>
+          </Div>
+        </Div>
+      </Div>
+      <Div m="md">
+        <Text size="xl" mb="md">
+          {nickname}
+        </Text>
+        <Text size="lg" mb="md">
+          something descriptions
+        </Text>
       </Div>
       <Div row justifyContent="space-around" alignItems="stretch">
         <Button mx="md" flex={1} onPress={() => {}}>

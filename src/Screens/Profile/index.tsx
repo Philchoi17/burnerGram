@@ -27,7 +27,7 @@ export default function Profile({}) {
         heading: 'Profile',
       }}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Div>
+        <Div p="md">
           <ProfileCard
             photoURL={profile.photoURL}
             nickname={profile.nickname}

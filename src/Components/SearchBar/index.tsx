@@ -10,7 +10,7 @@ interface Props {
 // TODO: add more functionality
 export default function ({ placeholder = 'search' }: Props) {
   return (
-    <Div m="sm">
+    <Div my="md">
       <Input
         placeholder={placeholder}
         p="md"
@@ -19,7 +19,7 @@ export default function ({ placeholder = 'search' }: Props) {
           <TouchableOpacity>
             <Icon
               name="search"
-              color="gray900"
+              color="gray400"
               fontFamily="MaterialIcons"
               size="5xl"
             />
