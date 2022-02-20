@@ -16,6 +16,7 @@ export type AuthNavProps = NativeStackNavigationProp<
 export type AppStackParams = {
   [AppRoutes.FEED_SCREEN]: undefined
   [AppRoutes.PROFILE_SCREEN]: undefined
+  [AppRoutes.EDIT_PROFILE_SCREEN]: undefined
 }
 
 export type AppNavProps = NativeStackNavigationProp<AppStackParams, AppRoutes>

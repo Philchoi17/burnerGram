@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { ScrollView } from 'react-native'
 import { Div } from 'react-native-magnus'
+import { useNavigation } from '@react-navigation/native'
 import {
   useFirebase,
   useFirestore,
@@ -13,6 +14,8 @@ import { MainContainer } from '@/Containers'
 import { Text } from '@/Components'
 import { ProfileCard } from '@/Components/Cards'
 import Logger from '@/Utils/Logger'
+import { AppRoutes } from '@/Screens/SCREENS'
+import { AppNavProps } from '@/Navigators/NavParams'
 
 export default function Profile({}) {
   const [firebase, firestore]: [
@@ -20,6 +23,9 @@ export default function Profile({}) {
     ExtendedFirestoreInstance,
   ] = [useFirebase(), useFirestore()]
   const { profile } = useSelector(({ firebase }: any) => firebase)
+  const { navigate } = useNavigation<AppNavProps>()
+
+  const navigateToEditProfile = () => navigate(AppRoutes.EDIT_PROFILE_SCREEN)
 
   return (
     <MainContainer
@@ -31,6 +37,7 @@ export default function Profile({}) {
           <ProfileCard
             photoURL={profile.photoURL}
             nickname={profile.nickname}
+            navigateToEditProfile={navigateToEditProfile}
           />
         </Div>
       </ScrollView>

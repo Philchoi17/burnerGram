@@ -11,6 +11,7 @@ interface Props {
   profile?: profileType
   photoURL: string
   nickname: string
+  navigateToEditProfile: () => void
 }
 
 // const photoURL =
@@ -22,6 +23,7 @@ export default function ({
   // profile,
   photoURL,
   nickname,
+  navigateToEditProfile,
 }: Props): React.ReactElement {
   return (
     <Div
@@ -62,7 +64,7 @@ export default function ({
           test
         </Button>
       </Div>
-      <Button m="md" wide onPress={() => {}}>
+      <Button m="md" wide onPress={navigateToEditProfile}>
         Edit
       </Button>
     </Div>

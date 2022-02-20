@@ -2,7 +2,10 @@ import * as React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import { AppRoutes } from '@/Screens/SCREENS'
+import { AppStacks } from '../STACKS'
 import { FeedScreen, ProfileScreen, PracticeScreen } from '@/Screens'
+import ProfileStack from '../Profile'
+
 import { Icon } from '@/Components'
 
 const { Navigator, Screen, Group } = createBottomTabNavigator()
@@ -29,8 +32,8 @@ export default function HomeTabs() {
         ))}
       />
       <Screen
-        component={ProfileScreen}
-        name={AppRoutes.PROFILE_SCREEN}
+        component={ProfileStack}
+        name={AppStacks.PROFILE_STACK}
         options={tabOptions(({ focused }) => (
           <Icon
             name={focused ? 'account-settings' : 'account-settings-outline'}
