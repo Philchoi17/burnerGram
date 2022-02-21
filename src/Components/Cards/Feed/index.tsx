@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Div, WINDOW_WIDTH as width } from 'react-native-magnus'
+import { TouchableOpacity } from 'react-native'
 
 import { Image, Text, Button, Icon } from '@/Components'
 import { imageURI } from '@/Utils/Misc'
@@ -23,7 +24,8 @@ const postOwner = {
 const photoURL =
   'https://images.pexels.com/photos/11210402/pexels-photo-11210402.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
 
-const postDescription = 'some description'
+const postDescription =
+  'some description longer longer longer longer longersome description longer longer longer longer longer'
 
 const moreOptions = () => {
   Logger.debug('Cards: Feed: moreOptions')
@@ -87,9 +89,51 @@ export default function ({}) {
           <Icon name="heart" size="6xl" />
         </Button>
       </Div>
-      <Div>
-        <Text>{postDescription}</Text>
+      <Div row alignItems="center">
+        <Text
+          size="lg"
+          onPress={() => Logger.debug('handle view whole description')}>
+          <Text
+            size="xl"
+            weight="bold"
+            onPress={() => Logger.debug('something')}>
+            {postOwner.nickname}
+          </Text>
+          {/* TODO: Handle better */}
+          {postDescription.length > 75
+            ? ' ' + postDescription.substring(0, 72 - 3) + '...'
+            : ' ' + postDescription}
+        </Text>
       </Div>
+      <Div mt="sm">
+        <Text
+          size="lg"
+          onPress={() => Logger.debug('handle view all comments')}
+          color="gray600">
+          {`View all${true ? '' : ' ' + String(1)} Comments`}
+        </Text>
+      </Div>
+      <Button
+        p="none"
+        mt="sm"
+        row
+        alignItems="center"
+        onPress={() => {
+          Logger.debug('handle add comment')
+        }}
+        bg="transparent">
+        <Image
+          source={imageURI(postOwner.photoURL)}
+          h={44}
+          w={44}
+          rounded="circle"
+        />
+        <Text color="gray600">{'add a comment...'}</Text>
+      </Button>
     </Div>
   )
 }
+
+// {(hospital?.title1 ?? '').length > 10
+// ? (hospital?.title1 ?? '').substring(0, 10 - 3) + '...'
+// : hospital?.title1 ?? ''}

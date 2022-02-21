@@ -14,6 +14,7 @@ import { MainContainer } from '@/Containers'
 import { Text, Button, Alert, Icon, ActionSheetOpener } from '@/Components'
 import { Form, Input, Submit } from '@/Components/Forms'
 import Logger from '@/Utils/Logger'
+import { generateUUID } from '@/Utils/Misc'
 import { nicknameValidation } from './validation'
 import {
   imagePickerLaunchCamera,
@@ -32,8 +33,11 @@ export default function Feed({}) {
   const { logout, updateProfile, storage, auth } = firebase
   const { update } = firestore
 
+  // state variables
   const [nicknameAlert, setNicknameAlert] = useState<boolean>(false)
-  const [imagePickerType, setimagePickerType] = useState<string | null>(null)
+  const [imagePickerType, setimagePickerType] = useState<
+    'Camera' | 'Library' | null
+  >(null)
   const [uploading, setUploading] = useState<boolean>(false)
   const [activity, setActivity] = useState<boolean>(false)
 
@@ -80,13 +84,16 @@ export default function Feed({}) {
   const uploadToServer = async (image: string) => {
     setUploading(true)
     try {
-      Logger.debug('uploadToServer: image =', image)
-      // const path = StoragePaths.FEED_IMAGES
-      // const { uid } = await auth().currentUser
       // const ref = `${path}/${uid}.jpg`
-      // const task = await storage().ref(ref).putFile(image)
-      // Logger.debug('task =', task)
-      // const uploadSnapshot = await storage().ref(ref)
+      Logger.debug('uploadToServer: image =', image)
+      const path = StoragePaths.FEED_IMAGES
+      const { uid } = await auth().currentUser
+      const uuid = generateUUID()
+      const now = new Date()
+      const ref = `${path}/${uid}_${uuid}_${now.toISOString()}.jpg`
+      const task = await storage().ref(ref).putFile(image)
+      Logger.debug('task =', task)
+      const uploadSnapshot = await storage().ref(ref)
       // const photoURL = await uploadSnapshot.getDownloadURL()
       // await updateProfile({ photoURL })
       // await update(`publicUsers/${uid}`, { photoURL })
@@ -177,14 +184,16 @@ export default function Feed({}) {
           },
         }}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {activity ? (
-            <ActivityIndicator size="large" />
-          ) : (
-            <Div>
-              <Text>Home</Text>
-              <Button onPress={logout} />
-            </Div>
-          )}
+          <Div p="md">
+            {activity ? (
+              <ActivityIndicator size="large" />
+            ) : (
+              <Div>
+                <Text>Home</Text>
+                <Button onPress={logout} />
+              </Div>
+            )}
+          </Div>
         </ScrollView>
       </MainContainer>
     </>

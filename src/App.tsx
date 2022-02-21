@@ -3,6 +3,9 @@ import { Platform, StatusBar, AppState, AppStateStatus } from 'react-native'
 import { ThemeProvider } from 'react-native-magnus'
 import { useAppState } from '@react-native-community/hooks'
 import { checkAndRequest } from '@/Utils/Permissions'
+// dayjs timezones
+import 'dayjs/locale/ko'
+import 'dayjs/locale/en'
 
 import Theme from '@/Theme'
 
@@ -23,10 +26,6 @@ export default function App({}) {
             'transparency',
           ])
           Logger.debug('appTrackingTransparency =', appTrackingTransparency)
-          // const appTrackingTransparency = await request(
-          //   PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY,
-          // )
-          // Logger.debug('appTrackingTransparency =', appTrackingTransparency)
         }
       } catch (error) {
         Logger.debug('appPermissionListener: error =', error)

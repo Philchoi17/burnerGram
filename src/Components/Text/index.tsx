@@ -3,7 +3,8 @@ import { StyleSheet } from 'react-native'
 import { Text, TextProps } from 'react-native-magnus'
 
 interface Props extends TextProps {
-  children: string
+  // TODO: make better
+  children: string | any
   weight?:
     | 'bold'
     | '400'
