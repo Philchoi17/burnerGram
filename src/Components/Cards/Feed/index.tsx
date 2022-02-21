@@ -27,15 +27,13 @@ interface Props {
   handleDislike: () => void
   disliked: boolean
   dislikedCount: number
+  handleComment: () => void
 }
 
 const moreOptions = () => {
   Logger.debug('Cards: Feed: moreOptions')
 }
 
-const handleComment = () => {
-  Logger.debug('Cards: Feed: handleComment')
-}
 const handleSupport = () => {
   Logger.debug('Cards: Feed: handleSupport')
 }
@@ -48,17 +46,11 @@ const handleShare = () => {
  * 
   star-outline
   star
-
   bookmark-remove-outline
   bookmark-remove
-
   comment-outline
-
   share-outline
-
-
   contactless-payment-circle-outline
-
   contactless-payment-circle
  */
 
@@ -73,6 +65,7 @@ export default function ({
   handleDislike,
   disliked,
   dislikedCount,
+  handleComment,
 }: Props) {
   // Logger.debug('Cards: Feed: render: updatedAt =', updatedAt)
   return (

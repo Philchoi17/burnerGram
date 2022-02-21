@@ -5,6 +5,7 @@ export { default as SignupScreen } from './Signup'
 // app screens
 export { default as FeedScreen } from './Feed'
 export { default as UploadScreen } from './Upload'
+export { default as CommentPostScreen } from './CommentPost'
 
 // Profile screens
 export { default as ProfileScreen } from './Profile'

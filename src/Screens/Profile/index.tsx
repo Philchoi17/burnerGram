@@ -11,7 +11,7 @@ import {
 
 import { useAppSelector } from '@/Hooks'
 import { MainContainer } from '@/Containers'
-import { Text } from '@/Components'
+import { Button, Icon, Text, Alert } from '@/Components'
 import { ProfileCard } from '@/Components/Cards'
 import { PhotoTile } from '@/Components/Tiles'
 import Logger from '@/Utils/Logger'
@@ -25,6 +25,7 @@ export default function Profile({}) {
     ExtendedFirebaseInstance,
     ExtendedFirestoreInstance,
   ] = [useFirebase(), useFirestore()]
+  const { logout } = firebase
   const { get } = firestore
   const { profile } = useAppSelector(({ firebase }) => firebase)
   const { navigate } = useNavigation<AppNavProps>()
@@ -33,6 +34,9 @@ export default function Profile({}) {
 
   // state variables
   const [posts, setPosts] = useState<any[]>([])
+  const [logoutAlert, setLogoutAlert] = useState<boolean>(false)
+
+  const toggleLogoutAlert = () => setLogoutAlert(!logoutAlert)
 
   const getUserPosts = async () => {
     try {
@@ -63,37 +67,56 @@ export default function Profile({}) {
   }
 
   return (
-    <MainContainer
-      headerProps={{
-        heading: 'Profile',
-      }}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <Div p="md">
-          <ProfileCard
-            photoURL={profile.photoURL}
-            nickname={profile.nickname}
-            navigateToEditProfile={navigateToEditProfile}
-          />
-          <Div
-            flexWrap="wrap"
-            row
-            flex={1}
-            p="xs"
-            alignItems="center"
-            justifyContent="center">
-            {posts &&
-              posts.map((post, idx) => {
-                return (
-                  <PhotoTile
-                    key={String(idx)}
-                    source={post.downloadURL}
-                    onPress={handlePostPress}
-                  />
-                )
-              })}
+    <>
+      <Alert
+        alertTitle="Logout"
+        alertMsg="Are you sure you want to logout?"
+        visible={logoutAlert}
+        actionButtons
+        confirmAction={logout}
+        cancelAction={toggleLogoutAlert}
+      />
+      <MainContainer
+        headerProps={{
+          heading: 'Profile',
+          headerRest: {
+            suffix: (
+              <Div row px="md">
+                <Button bg="transparent" onPress={toggleLogoutAlert}>
+                  <Icon name="logout" size="6xl" />
+                </Button>
+              </Div>
+            ),
+          },
+        }}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Div p="md">
+            <ProfileCard
+              photoURL={profile.photoURL}
+              nickname={profile.nickname}
+              navigateToEditProfile={navigateToEditProfile}
+            />
+            <Div
+              flexWrap="wrap"
+              row
+              flex={1}
+              p="xs"
+              alignItems="center"
+              justifyContent="center">
+              {posts &&
+                posts.map((post, idx) => {
+                  return (
+                    <PhotoTile
+                      key={String(idx)}
+                      source={post.downloadURL}
+                      onPress={handlePostPress}
+                    />
+                  )
+                })}
+            </Div>
           </Div>
-        </Div>
-      </ScrollView>
-    </MainContainer>
+        </ScrollView>
+      </MainContainer>
+    </>
   )
 }

@@ -141,6 +141,15 @@ export default function Feed({}) {
     }
   }
 
+  const handleComment = async (feedPost: any) => {
+    try {
+      Logger.debug('handleComment')
+      navigate(AppRoutes.COMMENT_POST_SCREEN, { feedPost })
+    } catch (error) {
+      Logger.error('handleComment: error =', error)
+    }
+  }
+
   return (
     <Host>
       <Alert
@@ -185,6 +194,7 @@ export default function Feed({}) {
                     disliked={feedPost.dislikedUsers.includes(profile.uid)}
                     likedCount={feedPost.likedUsers?.length || 0}
                     dislikedCount={feedPost.dislikedUsers?.length || 0}
+                    handleComment={() => handleComment(feedPost)}
                   />
                 )
               })
