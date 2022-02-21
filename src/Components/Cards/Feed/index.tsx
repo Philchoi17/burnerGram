@@ -53,7 +53,7 @@ const handleShare = () => {
 export default function ({}) {
   return (
     <Div p="md" rounded="md" borderWidth={1} my="md">
-      <Div row alignItems="center" justifyContent="space-between">
+      <Div row alignItems="center" justifyContent="space-between" mb="md">
         <Div row alignItems="center">
           <Image
             source={imageURI(postOwner.photoURL)}
@@ -71,7 +71,7 @@ export default function ({}) {
           </Button>
         </Div>
       </Div>
-      <Image source={imageURI(photoURL)} w="100%" h={500} />
+      <Image source={imageURI(photoURL)} w="100%" h={500} rounded="md" />
       <Div row justifyContent="space-between">
         <Button bg="transparent" onPress={handleLike}>
           <Icon name="heart" size="6xl" />

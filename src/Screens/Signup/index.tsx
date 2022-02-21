@@ -48,6 +48,7 @@ export default function Signup({}: Props): React.ReactElement {
       userPkg.lastSeenAt = now
       userPkg.createdWithSocialLogin = false
       userPkg.photoURL = null
+      userPkg.bio = ''
       await firebase.createUser({ email, password }, userPkg)
       // 3. set publicUser profile
       const { uid } = await auth().currentUser

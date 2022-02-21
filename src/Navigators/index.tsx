@@ -21,19 +21,19 @@ export default function Navigator() {
     ExtendedFirestoreInstance,
   ] = [useFirebase(), useFirestore()]
   const { profile } = useAppSelector((state) => state.firebase)
+  const { set } = firestore
 
   const [initializing, setInitializing] = useState<boolean>(false)
   const [user, setUser] = useState<any>()
 
   const onAuthStateChanged = async (user: any) => {
-    // Logger.debug('onAuthStateChanged: user.providerData =', user.providerData)
     setInitializing(true)
     setUser(user)
     try {
       if (user) {
-        // const lastSeenAt = await firestore.FieldValue.serverTimeStamp()
-
         const lastSeenAt = new Date()
+        Logger.debug('USER*** =', user)
+        // TODO: handle this better ( something is happening here where the rerender doesnt happen after social login)
         await firebase.updateProfile({
           lastSeenAt,
           createdWithSocialLogin: user.providerData.some((userInfo: any) =>
@@ -48,20 +48,28 @@ export default function Navigator() {
         })
 
         if (!profile.email && profile.createdWithSocialLogin) {
-          // Logger.debug('UPDATED PROFILE HERE WITH CREDENTIALS')
+          Logger.debug('UPDATED PROFILE HERE WITH CREDENTIALS')
           const now = new Date()
-          await firebase.updateProfile({
+          const userPkg = {
             email: user.email,
             name: user.displayName,
             photoURL: user.photoURL,
             nickname: '',
             createdAt: now,
             updatedAt: now,
+            bio: '',
+          }
+          await firebase.updateProfile(userPkg)
+          Logger.debug('user =', user)
+          const { uid } = user
+          await set(`publicUsers/${uid}`, {
+            ...userPkg,
+            uid,
           })
         }
       }
     } catch (error) {
-      // Logger.debug('Navigator: onAuthStateChanged: error =', error)
+      Logger.debug('Navigator: onAuthStateChanged: error =', error)
     } finally {
       setInitializing(false)
     }
@@ -71,9 +79,11 @@ export default function Navigator() {
     Logger.debug(
       'navigator useEffect invoked: profile =',
       profile,
+      user,
       // firestore.FieldValue.serverTimestamp(),
       // firebase.firestore.FieldValue().serverTimeStamp(),
     )
+    Logger.debug('USER =', user)
     const unsubscribe = auth().onAuthStateChanged(onAuthStateChanged)
     return () => unsubscribe()
   }

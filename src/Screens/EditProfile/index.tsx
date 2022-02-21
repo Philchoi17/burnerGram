@@ -135,7 +135,7 @@ export default function EditProfile({}: Props): JSX.Element {
                 ),
               },
             ]}>
-            <Div alignItems="center">
+            <Div alignItems="center" p="sm">
               {uploading ? (
                 <Progress type="circle" progress={transferred} thickness={5} />
               ) : (

@@ -15,6 +15,7 @@ export default function ({
   h,
   w,
   rounded = 'none',
+  resizeMode = 'cover',
   ...rest
 }: Props): React.ReactElement {
   return (
@@ -28,7 +29,8 @@ export default function ({
         p="xs"
         h={h}
         w={w}
-        resizeMode="contain"
+        // resizeMode="contain"
+        resizeMode={resizeMode}
         rounded={rounded}
         {...rest}
       />
