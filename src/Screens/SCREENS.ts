@@ -8,4 +8,5 @@ export enum AppRoutes {
   UPLOAD_SCREEN = 'upload-screen',
   PROFILE_SCREEN = 'profile-screen',
   EDIT_PROFILE_SCREEN = 'edit-profile-screen',
+  POST_DETAILS = 'post-details-screen',
 }

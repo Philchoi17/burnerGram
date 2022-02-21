@@ -23,7 +23,7 @@ import {
 import { Form, Input, Submit } from '@/Components/Forms'
 import { FeedCard } from '@/Components/Cards'
 import Logger from '@/Utils/Logger'
-import { generateUUID } from '@/Utils/Misc'
+import { generateUUID, getFirestoreRef } from '@/Utils/Misc'
 import { nicknameValidation } from './validation'
 import {
   imagePickerLaunchCamera,
@@ -43,13 +43,10 @@ export default function Feed({}) {
   const { navigate } = useNavigation<AppNavProps>()
 
   const { logout, updateProfile, storage, auth } = firebase
-  const { update } = firestore
+  const { update, get } = firestore
 
   // state variables
   const [nicknameAlert, setNicknameAlert] = useState<boolean>(false)
-  const [imagePickerType, setImagePickerType] = useState<
-    'Camera' | 'Library' | null
-  >(null)
   // const [uploading, setUploading] = useState<boolean>(false)
   const [activity, setActivity] = useState<boolean>(false)
 
@@ -113,6 +110,37 @@ export default function Feed({}) {
 
   useEffect(feedPostListener, [feedPosts])
 
+  // TODO: define feedPost
+  const handleLike = async (userId: string, feedPost: any) => {
+    Logger.debug('handleLike: userId =', userId)
+    Logger.debug('handleLike: feedPost =', feedPost)
+    try {
+      if (feedPost.likedUsers.includes(userId)) return
+      await update(`${CollectionNames.FEED_POSTS}/${feedPost.id}`, {
+        likedUsers: [...(feedPost.likedUsers || []), userId],
+        dislikedUsers: [...(feedPost.dislikedUsers || [])].filter(
+          (id) => id != userId,
+        ),
+      })
+    } catch (error) {
+      Logger.error('handleLike: error =', error)
+    }
+  }
+
+  const handleDislike = async (userId: string, feedPost: any) => {
+    try {
+      if (feedPost.dislikedUsers.includes(userId)) return
+      await update(`${CollectionNames.FEED_POSTS}/${feedPost.id}`, {
+        dislikedUsers: [...(feedPost.dislikedUsers || []), userId],
+        likedUsers: [...(feedPost.likedUsers || [])].filter(
+          (id) => id != userId,
+        ),
+      })
+    } catch (error) {
+      Logger.error('handleDislike: error =', error)
+    }
+  }
+
   return (
     <Host>
       <Alert
@@ -150,6 +178,13 @@ export default function Feed({}) {
                     downloadURL={feedPost.downloadURL}
                     postOwner={feedPost.postOwner}
                     description={feedPost.description}
+                    updatedAt={feedPost.updatedAt}
+                    handleLike={() => handleLike(profile.uid, feedPost)}
+                    liked={feedPost.likedUsers.includes(profile.uid)}
+                    handleDislike={() => handleDislike(profile.uid, feedPost)}
+                    disliked={feedPost.dislikedUsers.includes(profile.uid)}
+                    likedCount={feedPost.likedUsers?.length || 0}
+                    dislikedCount={feedPost.dislikedUsers?.length || 0}
                   />
                 )
               })

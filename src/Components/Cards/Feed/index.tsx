@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native'
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
 
 import { Image, Text, Button, Icon } from '@/Components'
+import IconButton from './IconButton'
 import { imageURI } from '@/Utils/Misc'
 import Logger from '@/Utils/Logger'
 import dayjs from 'dayjs'
@@ -20,29 +21,16 @@ interface Props {
   description: string
   // TODO: make better
   updatedAt: FirebaseFirestoreTypes.Timestamp | any
+  handleLike: () => void
+  liked: boolean
+  likedCount: number
+  handleDislike: () => void
+  disliked: boolean
+  dislikedCount: number
 }
-// TODO: Props
-const postOwner = {
-  photoURL:
-    'https://lh3.googleusercontent.com/a-/AOh14GiX5QPg40HGE5MUds5GdtJgj1lEEKQpWSLKHBkq=s96-c',
-  nickname: 'Nickname',
-}
-const photoURL =
-  'https://images.pexels.com/photos/11210402/pexels-photo-11210402.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-
-const postDescription =
-  'some description longer longer longer longer longersome description longer longer longer longer longer'
 
 const moreOptions = () => {
   Logger.debug('Cards: Feed: moreOptions')
-}
-
-const handleLike = () => {
-  Logger.debug('Cards: Feed: handleLike')
-}
-
-const handleDislike = () => {
-  Logger.debug('Cards: Feed: handleDislike')
 }
 
 const handleComment = () => {
@@ -56,14 +44,39 @@ const handleShare = () => {
   Logger.debug('Cards: Feed: handleShare')
 }
 
+/**
+ * 
+  star-outline
+  star
+
+  bookmark-remove-outline
+  bookmark-remove
+
+  comment-outline
+
+  share-outline
+
+
+  contactless-payment-circle-outline
+
+  contactless-payment-circle
+ */
+
 export default function ({
   postOwner,
   downloadURL,
   description,
   updatedAt,
+  handleLike,
+  liked,
+  likedCount,
+  handleDislike,
+  disliked,
+  dislikedCount,
 }: Props) {
+  // Logger.debug('Cards: Feed: render: updatedAt =', updatedAt)
   return (
-    <Div p="md" rounded="md" borderWidth={1} my="md">
+    <Div p="md" rounded="md" my="md" borderWidth={0.3} borderColor="gray400">
       <Div row alignItems="center" justifyContent="space-between" mb="md">
         <Div row alignItems="center">
           <Image
@@ -84,21 +97,41 @@ export default function ({
       </Div>
       <Image source={imageURI(downloadURL)} w="100%" h={300} rounded="md" />
       <Div row justifyContent="space-between">
-        <Button bg="transparent" onPress={handleLike}>
-          <Icon name="heart" size="6xl" />
-        </Button>
-        <Button bg="transparent" onPress={handleDislike}>
-          <Icon name="heart" size="6xl" />
-        </Button>
-        <Button bg="transparent" onPress={handleComment}>
-          <Icon name="heart" size="6xl" />
-        </Button>
-        <Button bg="transparent" onPress={handleSupport}>
-          <Icon name="heart" size="6xl" />
-        </Button>
-        <Button bg="transparent" onPress={handleShare}>
-          <Icon name="heart" size="6xl" />
-        </Button>
+        <IconButton
+          onPress={handleLike}
+          activeIcon="star"
+          inactiveIcon="star-outline"
+          enabled={liked}
+          numberOf={likedCount}
+        />
+        <IconButton
+          onPress={handleDislike}
+          activeIcon="bookmark-remove"
+          inactiveIcon="bookmark-remove-outline"
+          enabled={disliked}
+          numberOf={dislikedCount}
+        />
+        <IconButton
+          onPress={handleComment}
+          activeIcon="comment"
+          inactiveIcon="comment-outline"
+          enabled={false}
+          numberOf={0}
+        />
+        <IconButton
+          onPress={handleSupport}
+          activeIcon="contactless-payment-circle"
+          inactiveIcon="contactless-payment-circle-outline"
+          enabled={false}
+          numberOf={0}
+        />
+        <IconButton
+          onPress={handleShare}
+          activeIcon="share"
+          inactiveIcon="share-outline"
+          enabled={false}
+          numberOf={0}
+        />
       </Div>
       <Div row alignItems="center">
         <Text
@@ -145,7 +178,7 @@ export default function ({
       </Button>
       <Div m="sm">
         <Text size="lg" color="gray500">
-          {dayjs(updatedAt).format('YYYY.MM.DD')}
+          {dayjs(updatedAt.toDate()).format('YYYY.MM.DD')}
         </Text>
       </Div>
     </Div>
