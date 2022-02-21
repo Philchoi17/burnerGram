@@ -18,7 +18,7 @@ export default function Practice({}) {
             nickname="Nickname"
             navigateToEditProfile={() => {}}
           />
-          <FeedCard />
+          {/* <FeedCard /> */}
         </Div>
       </ScrollView>
     </MainContainer>

@@ -7,9 +7,10 @@ import {
   ExtendedFirebaseInstance,
   ExtendedFirestoreInstance,
 } from 'react-redux-firebase'
+import { useNavigation } from '@react-navigation/native'
 
 import { MainContainer } from '@/Containers'
-import { Button, Icon, Text, ActionSheetOpener } from '@/Components'
+import { Button, Icon, Text, ActionSheetOpener, Image } from '@/Components'
 import { Form, Input, Submit } from '@/Components/Forms'
 import Logger from '@/Utils/Logger'
 import { generateUUID } from '@/Utils/Misc'
@@ -20,6 +21,7 @@ import {
 } from '@/Utils/ImagePicker'
 import { useAppSelector } from '@/Hooks'
 import { validationSchema } from './validation'
+import { imageURI } from '@/Utils/Misc'
 
 interface Props {}
 
@@ -31,6 +33,9 @@ export default function UploadScreen({}: Props): React.ReactElement {
     ExtendedFirestoreInstance,
   ] = [useFirebase(), useFirestore()]
   const { auth, storage } = firebase
+  const { add } = firestore
+  const { profile } = useAppSelector((state) => state.firebase)
+  const { goBack } = useNavigation()
 
   // state variables
   const [uploading, setUploading] = useState<boolean>(false)
@@ -53,7 +58,8 @@ export default function UploadScreen({}: Props): React.ReactElement {
       const task = await storage().ref(ref).putFile(image)
       Logger.debug('task =', task)
       const uploadSnapshot = await storage().ref(ref)
-      // const photoURL = await uploadSnapshot.getDownloadURL()
+      const downloadURL = await uploadSnapshot.getDownloadURL()
+      return downloadURL
       // await updateProfile({ photoURL })
       // await update(`publicUsers/${uid}`, { photoURL })
     } catch (error) {
@@ -68,12 +74,21 @@ export default function UploadScreen({}: Props): React.ReactElement {
     setActivity(true)
     try {
       switch (imagePickerType) {
-        case 'Camera':
-          setTimeout(() => imagePickerLaunchCamera(uploadToServer), 1000)
+        case 'Camera': {
+          setTimeout(async () => {
+            const uploadPath = await imagePickerLaunchCamera()
+            Logger.debug('uploadPath =', uploadPath)
+          }, 1000)
           break
-        case 'Library':
-          setTimeout(() => imagePickerLaunchLibrary(uploadToServer), 1000)
+        }
+        case 'Library': {
+          setTimeout(async () => {
+            const uploadPath = await imagePickerLaunchLibrary()
+            Logger.debug('uploadPath =', uploadPath)
+            setUploadURI(uploadPath)
+          }, 1000)
           break
+        }
         default:
           Logger.debug('is null')
           break
@@ -92,6 +107,38 @@ export default function UploadScreen({}: Props): React.ReactElement {
   // TODO: handle better
   const handleSubmit = async (values: any) => {
     Logger.debug('handleSubmit: values =', values)
+    // TODO: handle firestore.FieldValue.serverTimestamp() instead of Date.now()
+    const now = new Date()
+    try {
+      const downloadURL = await uploadToServer(uploadURI)
+      const { uid } = await auth().currentUser
+      await add('feedPosts', {
+        downloadURL,
+        userId: uid,
+        nickname: profile.nickname,
+        postOwner: {
+          nickname: profile.nickname,
+          photoURL: profile?.photoURL || null,
+        },
+        description: values.description,
+        createdAt: now,
+        updatedAt: now,
+        likeCount: 0,
+        commentCount: 0,
+        dislikeCount: 0,
+        shareCount: 0,
+        supportCount: 0,
+        likedUsers: [],
+        dislikedUsers: [],
+        sharedUsers: [],
+        supportedUsers: [],
+        commentedUsers: [],
+      })
+      goBack()
+      Logger.debug('downloadURL =', downloadURL)
+    } catch (error) {
+      Logger.error('handleSubmit: error =', error)
+    }
   }
 
   return (
@@ -129,18 +176,27 @@ export default function UploadScreen({}: Props): React.ReactElement {
                 ),
               },
             ]}>
-            <Div
-              mt="md"
-              borderColor="gray400"
-              alignSelf="center"
-              borderWidth={1}
-              rounded="circle"
-              h={150}
-              w={150}
-              alignItems="center"
-              justifyContent="center">
-              <Icon name="plus" size={50} />
-            </Div>
+            {uploadURI ? (
+              <Image
+                source={imageURI(uploadURI)}
+                h={300}
+                w={'100%'}
+                rounded="lg"
+              />
+            ) : (
+              <Div
+                mt="md"
+                borderColor="gray400"
+                alignSelf="center"
+                borderWidth={1}
+                rounded="circle"
+                h={150}
+                w={150}
+                alignItems="center"
+                justifyContent="center">
+                <Icon name="plus" size={50} />
+              </Div>
+            )}
           </ActionSheetOpener>
           <Text>Upload</Text>
           <Form
@@ -153,6 +209,7 @@ export default function UploadScreen({}: Props): React.ReactElement {
             <Input val="description" label="Description" />
             {/* <Input val="test" />
             <Input val="test" /> */}
+            <Submit title="Post" wide disabled={!uploadURI} />
           </Form>
         </Div>
       </ScrollView>

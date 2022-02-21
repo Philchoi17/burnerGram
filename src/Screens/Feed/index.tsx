@@ -21,6 +21,7 @@ import {
   FabOptions,
 } from '@/Components'
 import { Form, Input, Submit } from '@/Components/Forms'
+import { FeedCard } from '@/Components/Cards'
 import Logger from '@/Utils/Logger'
 import { generateUUID } from '@/Utils/Misc'
 import { nicknameValidation } from './validation'
@@ -49,7 +50,7 @@ export default function Feed({}) {
   const [imagePickerType, setImagePickerType] = useState<
     'Camera' | 'Library' | null
   >(null)
-  const [uploading, setUploading] = useState<boolean>(false)
+  // const [uploading, setUploading] = useState<boolean>(false)
   const [activity, setActivity] = useState<boolean>(false)
 
   const InputActions = () => (
@@ -93,60 +94,24 @@ export default function Feed({}) {
 
   useEffect(checkNickNameHandler, [profile])
 
-  const uploadToServer = async (image: string) => {
-    setUploading(true)
-    try {
-      // const ref = `${path}/${uid}.jpg`
-      Logger.debug('uploadToServer: image =', image)
-      const path = StoragePaths.FEED_IMAGES
-      const { uid } = await auth().currentUser
-      const uuid = generateUUID()
-      const now = new Date()
-      const ref = `${path}/${uid}_${uuid}_${now.toISOString()}.jpg`
-      const task = await storage().ref(ref).putFile(image)
-      Logger.debug('task =', task)
-      const uploadSnapshot = await storage().ref(ref)
-      // const photoURL = await uploadSnapshot.getDownloadURL()
-      // await updateProfile({ photoURL })
-      // await update(`publicUsers/${uid}`, { photoURL })
-    } catch (error) {
-      Logger.debug('uploadToServer: error =', error)
-    } finally {
-      setUploading(false)
-    }
-  }
-
-  const openImagePicker = () => {
-    Logger.debug('openImagePicker: openImagePicker =', imagePickerType)
-    setActivity(true)
-    try {
-      switch (imagePickerType) {
-        case 'Camera':
-          setTimeout(() => imagePickerLaunchCamera(uploadToServer), 1000)
-          break
-        case 'Library':
-          setTimeout(() => imagePickerLaunchLibrary(uploadToServer), 1000)
-          break
-        default:
-          Logger.debug('is null')
-          break
-      }
-    } catch (error) {
-      Logger.debug('openImagePicker: error =', error)
-    } finally {
-      setImagePickerType(null)
-      setActivity(false)
-    }
-  }
-
-  // handling change of imagePickerType for uploading photo
-  useEffect(openImagePicker, [imagePickerType])
-
   useFirestoreConnect({
     collection: 'feedPosts',
     orderBy: ['updatedAt', 'desc'],
     limit: 10,
   })
+
+  const { feedPosts } = useAppSelector(({ firestore }) => {
+    return firestore.ordered
+  })
+
+  const feedPostListener = () => {
+    Logger.debug('feedPostListener: feedPosts =', feedPosts)
+    return () => {
+      // clean up
+    }
+  }
+
+  useEffect(feedPostListener, [feedPosts])
 
   return (
     <Host>
@@ -164,36 +129,6 @@ export default function Feed({}) {
             prefix: null,
             suffix: (
               <Div row mx="md">
-                <ActionSheetOpener
-                  dropdownTitle="Upload Media"
-                  dropdownOptions={[
-                    {
-                      method: () => setImagePickerType('Camera'),
-                      text: 'Camera',
-                      prefix: (
-                        <Icon
-                          name="add-a-photo"
-                          size="4xl"
-                          mr="lg"
-                          fontFamily="MaterialIcons"
-                        />
-                      ),
-                    },
-                    {
-                      method: () => setImagePickerType('Library'),
-                      text: 'Choose From Library',
-                      prefix: (
-                        <Icon
-                          name="add-photo-alternate"
-                          size="4xl"
-                          mr="lg"
-                          fontFamily="MaterialIcons"
-                        />
-                      ),
-                    },
-                  ]}>
-                  <Icon name="plus" size="6xl" px="md" />
-                </ActionSheetOpener>
                 <TouchableOpacity onPress={() => {}}>
                   <Icon name="bell" size="6xl" px="md" />
                 </TouchableOpacity>
@@ -206,10 +141,18 @@ export default function Feed({}) {
             {activity ? (
               <ActivityIndicator size="large" />
             ) : (
-              <Div>
-                <Text>Home</Text>
-                <Button onPress={logout} />
-              </Div>
+              feedPosts &&
+              // TODO - add loading indicator
+              feedPosts.map((feedPost: any, idx: number) => {
+                return (
+                  <FeedCard
+                    key={String(idx)}
+                    downloadURL={feedPost.downloadURL}
+                    postOwner={feedPost.postOwner}
+                    description={feedPost.description}
+                  />
+                )
+              })
             )}
           </Div>
         </ScrollView>

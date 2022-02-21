@@ -10,6 +10,7 @@ interface Props {
   inputSuffix?: boolean
   suffixName?: string
   loading?: boolean
+  disabled?: boolean
 }
 
 export default function ({
@@ -18,17 +19,22 @@ export default function ({
   inputSuffix,
   suffixName,
   loading,
+  disabled = false,
 }: Props) {
   const { handleSubmit } = useFormikContext()
   if (inputSuffix) {
     return (
-      <TouchableOpacity onPress={handleSubmit}>
+      <TouchableOpacity onPress={handleSubmit} disabled={disabled}>
         <Icon name={suffixName ? suffixName : 'add'} />
       </TouchableOpacity>
     )
   }
   return (
-    <Button block={wide} onPress={handleSubmit} loading={loading}>
+    <Button
+      block={wide}
+      onPress={handleSubmit}
+      loading={loading}
+      disabled={disabled}>
       {title}
     </Button>
   )

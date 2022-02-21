@@ -1,10 +1,12 @@
 import * as React from 'react'
 import { Div, WINDOW_WIDTH as width } from 'react-native-magnus'
 import { TouchableOpacity } from 'react-native'
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
 
 import { Image, Text, Button, Icon } from '@/Components'
 import { imageURI } from '@/Utils/Misc'
 import Logger from '@/Utils/Logger'
+import dayjs from 'dayjs'
 
 interface PostOwnerProps {
   photoURL: string
@@ -13,7 +15,11 @@ interface PostOwnerProps {
 
 interface Props {
   postOwner: PostOwnerProps
-  photoURL: string
+  // photoURL: string
+  downloadURL: string
+  description: string
+  // TODO: make better
+  updatedAt: FirebaseFirestoreTypes.Timestamp | any
 }
 // TODO: Props
 const postOwner = {
@@ -50,7 +56,12 @@ const handleShare = () => {
   Logger.debug('Cards: Feed: handleShare')
 }
 
-export default function ({}) {
+export default function ({
+  postOwner,
+  downloadURL,
+  description,
+  updatedAt,
+}: Props) {
   return (
     <Div p="md" rounded="md" borderWidth={1} my="md">
       <Div row alignItems="center" justifyContent="space-between" mb="md">
@@ -71,7 +82,7 @@ export default function ({}) {
           </Button>
         </Div>
       </Div>
-      <Image source={imageURI(photoURL)} w="100%" h={500} rounded="md" />
+      <Image source={imageURI(downloadURL)} w="100%" h={300} rounded="md" />
       <Div row justifyContent="space-between">
         <Button bg="transparent" onPress={handleLike}>
           <Icon name="heart" size="6xl" />
@@ -100,9 +111,9 @@ export default function ({}) {
             {postOwner.nickname}
           </Text>
           {/* TODO: Handle better */}
-          {postDescription.length > 75
-            ? ' ' + postDescription.substring(0, 72 - 3) + '...'
-            : ' ' + postDescription}
+          {description.length > 75
+            ? ' ' + description.substring(0, 72 - 3) + '...'
+            : ' ' + description}
         </Text>
       </Div>
       <Div mt="sm">
@@ -128,12 +139,15 @@ export default function ({}) {
           w={44}
           rounded="circle"
         />
-        <Text color="gray600">{'add a comment...'}</Text>
+        <Text ml="md" color="gray600">
+          {'add a comment...'}
+        </Text>
       </Button>
+      <Div m="sm">
+        <Text size="lg" color="gray500">
+          {dayjs(updatedAt).format('YYYY.MM.DD')}
+        </Text>
+      </Div>
     </Div>
   )
 }
-
-// {(hospital?.title1 ?? '').length > 10
-// ? (hospital?.title1 ?? '').substring(0, 10 - 3) + '...'
-// : hospital?.title1 ?? ''}

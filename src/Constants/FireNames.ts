@@ -6,4 +6,11 @@ export enum StoragePaths {
 export enum CollectionNames {
   USERS = 'users',
   PUBLIC_USERS = 'publicUsers',
+  FEED_POSTS = 'feedPosts',
+}
+
+export enum DocKeys {
+  USER_ID = 'userId',
+  CREATED_AT = 'createdAt',
+  UPDATED_AT = 'updatedAt',
 }
