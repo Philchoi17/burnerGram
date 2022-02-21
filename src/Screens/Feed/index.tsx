@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { ActivityIndicator, ScrollView, TouchableOpacity } from 'react-native'
-import { Div } from 'react-native-magnus'
+import { Div, Host } from 'react-native-magnus'
 import {
   useFirebase,
   useFirestore,
@@ -8,19 +8,30 @@ import {
   ExtendedFirestoreInstance,
   useFirestoreConnect,
 } from 'react-redux-firebase'
+import { useNavigation } from '@react-navigation/native'
 
 import { useAppSelector } from '@/Hooks'
 import { MainContainer } from '@/Containers'
-import { Text, Button, Alert, Icon, ActionSheetOpener } from '@/Components'
+import {
+  Text,
+  Button,
+  Alert,
+  Icon,
+  ActionSheetOpener,
+  FabOptions,
+} from '@/Components'
 import { Form, Input, Submit } from '@/Components/Forms'
+import { FeedCard } from '@/Components/Cards'
 import Logger from '@/Utils/Logger'
-import { generateUUID } from '@/Utils/Misc'
+import { generateUUID, getFirestoreRef } from '@/Utils/Misc'
 import { nicknameValidation } from './validation'
 import {
   imagePickerLaunchCamera,
   imagePickerLaunchLibrary,
 } from '@/Utils/ImagePicker'
-import { StoragePaths } from '@/Constants/FireNames'
+import { StoragePaths, CollectionNames } from '@/Constants/FireNames'
+import { AppNavProps } from '@/Navigators/NavParams'
+import { AppRoutes } from '../SCREENS'
 
 const { useState, useEffect } = React
 export default function Feed({}) {
@@ -29,16 +40,14 @@ export default function Feed({}) {
     ExtendedFirestoreInstance,
   ] = [useFirebase(), useFirestore()]
   const { profile } = useAppSelector(({ firebase }) => firebase)
+  const { navigate } = useNavigation<AppNavProps>()
 
   const { logout, updateProfile, storage, auth } = firebase
-  const { update } = firestore
+  const { update, get } = firestore
 
   // state variables
   const [nicknameAlert, setNicknameAlert] = useState<boolean>(false)
-  const [imagePickerType, setimagePickerType] = useState<
-    'Camera' | 'Library' | null
-  >(null)
-  const [uploading, setUploading] = useState<boolean>(false)
+  // const [uploading, setUploading] = useState<boolean>(false)
   const [activity, setActivity] = useState<boolean>(false)
 
   const InputActions = () => (
@@ -47,6 +56,7 @@ export default function Feed({}) {
         try {
           Logger.debug('nickname =', nickname)
           updateProfile({ nickname })
+          update(`${CollectionNames.PUBLIC_USERS}/${profile.uid}`, { nickname })
           setNicknameAlert(false)
         } catch (error) {
           Logger.debug('InputActions: onSubmit: error =', error)
@@ -81,57 +91,67 @@ export default function Feed({}) {
 
   useEffect(checkNickNameHandler, [profile])
 
-  const uploadToServer = async (image: string) => {
-    setUploading(true)
-    try {
-      // const ref = `${path}/${uid}.jpg`
-      Logger.debug('uploadToServer: image =', image)
-      const path = StoragePaths.FEED_IMAGES
-      const { uid } = await auth().currentUser
-      const uuid = generateUUID()
-      const now = new Date()
-      const ref = `${path}/${uid}_${uuid}_${now.toISOString()}.jpg`
-      const task = await storage().ref(ref).putFile(image)
-      Logger.debug('task =', task)
-      const uploadSnapshot = await storage().ref(ref)
-      // const photoURL = await uploadSnapshot.getDownloadURL()
-      // await updateProfile({ photoURL })
-      // await update(`publicUsers/${uid}`, { photoURL })
-    } catch (error) {
-      Logger.debug('uploadToServer: error =', error)
-    } finally {
-      setUploading(false)
+  useFirestoreConnect({
+    collection: 'feedPosts',
+    orderBy: ['updatedAt', 'desc'],
+    limit: 10,
+  })
+
+  const { feedPosts } = useAppSelector(({ firestore }) => {
+    return firestore.ordered
+  })
+
+  const feedPostListener = () => {
+    Logger.debug('feedPostListener: feedPosts =', feedPosts)
+    return () => {
+      // clean up
     }
   }
 
-  const openImagePicker = () => {
-    Logger.debug('openImagePicker: openImagePicker =', imagePickerType)
-    setActivity(true)
+  useEffect(feedPostListener, [feedPosts])
+
+  // TODO: define feedPost
+  const handleLike = async (userId: string, feedPost: any) => {
+    Logger.debug('handleLike: userId =', userId)
+    Logger.debug('handleLike: feedPost =', feedPost)
     try {
-      switch (imagePickerType) {
-        case 'Camera':
-          setTimeout(() => imagePickerLaunchCamera(uploadToServer), 1000)
-          break
-        case 'Library':
-          setTimeout(() => imagePickerLaunchLibrary(uploadToServer), 1000)
-          break
-        default:
-          Logger.debug('is null')
-          break
-      }
+      if (feedPost.likedUsers.includes(userId)) return
+      await update(`${CollectionNames.FEED_POSTS}/${feedPost.id}`, {
+        likedUsers: [...(feedPost.likedUsers || []), userId],
+        dislikedUsers: [...(feedPost.dislikedUsers || [])].filter(
+          (id) => id != userId,
+        ),
+      })
     } catch (error) {
-      Logger.debug('openImagePicker: error =', error)
-    } finally {
-      setimagePickerType(null)
-      setActivity(false)
+      Logger.error('handleLike: error =', error)
     }
   }
 
-  // handling change of imagePickerType for uploading photo
-  useEffect(openImagePicker, [imagePickerType])
+  const handleDislike = async (userId: string, feedPost: any) => {
+    try {
+      if (feedPost.dislikedUsers.includes(userId)) return
+      await update(`${CollectionNames.FEED_POSTS}/${feedPost.id}`, {
+        dislikedUsers: [...(feedPost.dislikedUsers || []), userId],
+        likedUsers: [...(feedPost.likedUsers || [])].filter(
+          (id) => id != userId,
+        ),
+      })
+    } catch (error) {
+      Logger.error('handleDislike: error =', error)
+    }
+  }
+
+  const handleComment = async (feedPost: any) => {
+    try {
+      Logger.debug('handleComment')
+      navigate(AppRoutes.COMMENT_POST_SCREEN, { feedPost })
+    } catch (error) {
+      Logger.error('handleComment: error =', error)
+    }
+  }
 
   return (
-    <>
+    <Host>
       <Alert
         alertMsg="please enter a nickname"
         visible={nicknameAlert}
@@ -146,36 +166,6 @@ export default function Feed({}) {
             prefix: null,
             suffix: (
               <Div row mx="md">
-                <ActionSheetOpener
-                  dropdownTitle="Upload Media"
-                  dropdownOptions={[
-                    {
-                      method: () => setimagePickerType('Camera'),
-                      text: 'Camera',
-                      prefix: (
-                        <Icon
-                          name="add-a-photo"
-                          size="4xl"
-                          mr="lg"
-                          fontFamily="MaterialIcons"
-                        />
-                      ),
-                    },
-                    {
-                      method: () => setimagePickerType('Library'),
-                      text: 'Choose From Library',
-                      prefix: (
-                        <Icon
-                          name="add-photo-alternate"
-                          size="4xl"
-                          mr="lg"
-                          fontFamily="MaterialIcons"
-                        />
-                      ),
-                    },
-                  ]}>
-                  <Icon name="plus" size="6xl" px="md" />
-                </ActionSheetOpener>
                 <TouchableOpacity onPress={() => {}}>
                   <Icon name="bell" size="6xl" px="md" />
                 </TouchableOpacity>
@@ -188,14 +178,44 @@ export default function Feed({}) {
             {activity ? (
               <ActivityIndicator size="large" />
             ) : (
-              <Div>
-                <Text>Home</Text>
-                <Button onPress={logout} />
-              </Div>
+              feedPosts &&
+              // TODO - add loading indicator
+              feedPosts.map((feedPost: any, idx: number) => {
+                return (
+                  <FeedCard
+                    key={String(idx)}
+                    downloadURL={feedPost.downloadURL}
+                    postOwner={feedPost.postOwner}
+                    description={feedPost.description}
+                    updatedAt={feedPost.updatedAt}
+                    handleLike={() => handleLike(profile.uid, feedPost)}
+                    liked={feedPost.likedUsers.includes(profile.uid)}
+                    handleDislike={() => handleDislike(profile.uid, feedPost)}
+                    disliked={feedPost.dislikedUsers.includes(profile.uid)}
+                    likedCount={feedPost.likedUsers?.length || 0}
+                    dislikedCount={feedPost.dislikedUsers?.length || 0}
+                    handleComment={() => handleComment(feedPost)}
+                  />
+                )
+              })
             )}
           </Div>
         </ScrollView>
       </MainContainer>
-    </>
+      <FabOptions
+        options={[
+          {
+            title: 'Upload',
+            method: () => navigate(AppRoutes.UPLOAD_SCREEN),
+            icon: 'plus',
+          },
+          {
+            title: 'Cancel',
+            method: () => {},
+            icon: 'close',
+          },
+        ]}
+      />
+    </Host>
   )
 }

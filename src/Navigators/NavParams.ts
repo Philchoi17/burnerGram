@@ -17,6 +17,13 @@ export type AppStackParams = {
   [AppRoutes.FEED_SCREEN]: undefined
   [AppRoutes.PROFILE_SCREEN]: undefined
   [AppRoutes.EDIT_PROFILE_SCREEN]: undefined
+  [AppRoutes.UPLOAD_SCREEN]: undefined
+  [AppRoutes.COMMENT_POST_SCREEN]: undefined
 }
 
 export type AppNavProps = NativeStackNavigationProp<AppStackParams, AppRoutes>
+
+export type RootRouteProps<RouteName extends keyof AppStackParams> = RouteProp<
+  AppStackParams,
+  RouteName
+>

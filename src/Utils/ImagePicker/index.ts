@@ -20,28 +20,30 @@ function uploadURIFormatter(uri: string) {
 
 // TODO: change any for assets to Asset[]
 export const imagePickerLaunchCamera = async (
-  savingScheme: (image: string) => void,
+  savingScheme: null | ((image: string) => void) = null,
 ) => {
   const response: ImagePickerResponse = await launchCamera(options)
   Logger.debug('imagePickerLaunchCamera: response =', response)
   try {
     const { assets }: any = response
-    const uploadUri = uploadURIFormatter(assets[0].uri)
-    savingScheme(uploadUri)
+    const uploadURI = uploadURIFormatter(assets[0].uri)
+    if (savingScheme) return savingScheme(uploadURI)
+    return uploadURI
   } catch (error) {
     Logger.debug('imagePickerLaunchCamera: error =', error)
   }
 }
 
 export const imagePickerLaunchLibrary = async (
-  savingScheme: (image: string) => void,
+  savingScheme: null | ((image: string) => void) = null,
 ) => {
   const response: ImagePickerResponse = await launchImageLibrary(options)
   Logger.debug('imagePickerLaunchLibrary: response =', response)
   try {
     const { assets }: any = response
-    const uploadUri = uploadURIFormatter(assets[0].uri)
-    savingScheme(uploadUri)
+    const uploadURI = uploadURIFormatter(assets[0].uri)
+    if (savingScheme) return savingScheme(uploadURI)
+    return uploadURI
   } catch (error) {
     Logger.debug('imagePickerLaunchLibrary: error =', error)
   }

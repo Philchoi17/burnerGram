@@ -25,7 +25,7 @@ import {
   imagePickerLaunchCamera,
   imagePickerLaunchLibrary,
 } from '@/Utils/ImagePicker'
-import { StoragePaths } from '@/Constants/FireNames'
+import { CollectionNames, StoragePaths } from '@/Constants/FireNames'
 import Logger from '@/Utils/Logger'
 
 interface Props {}
@@ -41,7 +41,7 @@ export default function EditProfile({}: Props): JSX.Element {
   const { update } = firestore
 
   // state variables
-  const [imagePickerType, setimagePickerType] = useState<
+  const [imagePickerType, setImagePickerType] = useState<
     'Camera' | 'Library' | null
   >(null)
   const [uploading, setUploading] = useState<boolean>(false)
@@ -60,7 +60,7 @@ export default function EditProfile({}: Props): JSX.Element {
       const uploadSnapshot = await storage().ref(ref)
       const photoURL = await uploadSnapshot.getDownloadURL()
       await updateProfile({ photoURL })
-      await update(`publicUsers/${uid}`, { photoURL })
+      await update(`${CollectionNames.PUBLIC_USERS}/${uid}`, { photoURL })
     } catch (error) {
       Logger.debug('uploadToServer: error =', error)
     } finally {
@@ -86,7 +86,7 @@ export default function EditProfile({}: Props): JSX.Element {
     } catch (error) {
       Logger.debug('openImagePicker: error =', error)
     } finally {
-      setimagePickerType(null)
+      setImagePickerType(null)
       setActivity(false)
     }
   }
@@ -111,7 +111,7 @@ export default function EditProfile({}: Props): JSX.Element {
             dropdownTitle="Upload Media"
             dropdownOptions={[
               {
-                method: () => setimagePickerType('Camera'),
+                method: () => setImagePickerType('Camera'),
                 text: 'Camera',
                 prefix: (
                   <Icon
@@ -123,7 +123,7 @@ export default function EditProfile({}: Props): JSX.Element {
                 ),
               },
               {
-                method: () => setimagePickerType('Library'),
+                method: () => setImagePickerType('Library'),
                 text: 'Choose From Library',
                 prefix: (
                   <Icon
@@ -135,7 +135,7 @@ export default function EditProfile({}: Props): JSX.Element {
                 ),
               },
             ]}>
-            <Div alignItems="center">
+            <Div alignItems="center" p="sm">
               {uploading ? (
                 <Progress type="circle" progress={transferred} thickness={5} />
               ) : (

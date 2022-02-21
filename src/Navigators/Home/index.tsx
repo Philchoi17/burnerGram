@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { AppRoutes } from '@/Screens/SCREENS'
 import { AppStacks } from '../STACKS'
 import { FeedScreen, ProfileScreen, PracticeScreen } from '@/Screens'
+import FeedStack from '../Feed'
 import ProfileStack from '../Profile'
 
 import { Icon } from '@/Components'
@@ -25,8 +26,8 @@ export default function HomeTabs() {
         tabBarShowLabel: false,
       }}>
       <Screen
-        component={FeedScreen}
-        name={AppRoutes.FEED_SCREEN}
+        component={FeedStack}
+        name={AppStacks.FEED_STACK}
         options={tabOptions(({ focused }) => (
           <Icon name={focused ? 'home' : 'home-outline'} size="6xl" />
         ))}

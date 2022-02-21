@@ -1,10 +1,13 @@
 import * as React from 'react'
 import { Div, WINDOW_WIDTH as width } from 'react-native-magnus'
 import { TouchableOpacity } from 'react-native'
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
 
 import { Image, Text, Button, Icon } from '@/Components'
+import IconButton from './IconButton'
 import { imageURI } from '@/Utils/Misc'
 import Logger from '@/Utils/Logger'
+import dayjs from 'dayjs'
 
 interface PostOwnerProps {
   photoURL: string
@@ -13,35 +16,24 @@ interface PostOwnerProps {
 
 interface Props {
   postOwner: PostOwnerProps
-  photoURL: string
+  // photoURL: string
+  downloadURL: string
+  description: string
+  // TODO: make better
+  updatedAt: FirebaseFirestoreTypes.Timestamp | any
+  handleLike: () => void
+  liked: boolean
+  likedCount: number
+  handleDislike: () => void
+  disliked: boolean
+  dislikedCount: number
+  handleComment: () => void
 }
-// TODO: Props
-const postOwner = {
-  photoURL:
-    'https://lh3.googleusercontent.com/a-/AOh14GiX5QPg40HGE5MUds5GdtJgj1lEEKQpWSLKHBkq=s96-c',
-  nickname: 'Nickname',
-}
-const photoURL =
-  'https://images.pexels.com/photos/11210402/pexels-photo-11210402.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-
-const postDescription =
-  'some description longer longer longer longer longersome description longer longer longer longer longer'
 
 const moreOptions = () => {
   Logger.debug('Cards: Feed: moreOptions')
 }
 
-const handleLike = () => {
-  Logger.debug('Cards: Feed: handleLike')
-}
-
-const handleDislike = () => {
-  Logger.debug('Cards: Feed: handleDislike')
-}
-
-const handleComment = () => {
-  Logger.debug('Cards: Feed: handleComment')
-}
 const handleSupport = () => {
   Logger.debug('Cards: Feed: handleSupport')
 }
@@ -50,10 +42,35 @@ const handleShare = () => {
   Logger.debug('Cards: Feed: handleShare')
 }
 
-export default function ({}) {
+/**
+ * 
+  star-outline
+  star
+  bookmark-remove-outline
+  bookmark-remove
+  comment-outline
+  share-outline
+  contactless-payment-circle-outline
+  contactless-payment-circle
+ */
+
+export default function ({
+  postOwner,
+  downloadURL,
+  description,
+  updatedAt,
+  handleLike,
+  liked,
+  likedCount,
+  handleDislike,
+  disliked,
+  dislikedCount,
+  handleComment,
+}: Props) {
+  // Logger.debug('Cards: Feed: render: updatedAt =', updatedAt)
   return (
-    <Div p="md" rounded="md" borderWidth={1} my="md">
-      <Div row alignItems="center" justifyContent="space-between">
+    <Div p="md" rounded="md" my="md" borderWidth={0.3} borderColor="gray400">
+      <Div row alignItems="center" justifyContent="space-between" mb="md">
         <Div row alignItems="center">
           <Image
             source={imageURI(postOwner.photoURL)}
@@ -71,23 +88,43 @@ export default function ({}) {
           </Button>
         </Div>
       </Div>
-      <Image source={imageURI(photoURL)} w="100%" h={500} />
+      <Image source={imageURI(downloadURL)} w="100%" h={300} rounded="md" />
       <Div row justifyContent="space-between">
-        <Button bg="transparent" onPress={handleLike}>
-          <Icon name="heart" size="6xl" />
-        </Button>
-        <Button bg="transparent" onPress={handleDislike}>
-          <Icon name="heart" size="6xl" />
-        </Button>
-        <Button bg="transparent" onPress={handleComment}>
-          <Icon name="heart" size="6xl" />
-        </Button>
-        <Button bg="transparent" onPress={handleSupport}>
-          <Icon name="heart" size="6xl" />
-        </Button>
-        <Button bg="transparent" onPress={handleShare}>
-          <Icon name="heart" size="6xl" />
-        </Button>
+        <IconButton
+          onPress={handleLike}
+          activeIcon="star"
+          inactiveIcon="star-outline"
+          enabled={liked}
+          numberOf={likedCount}
+        />
+        <IconButton
+          onPress={handleDislike}
+          activeIcon="bookmark-remove"
+          inactiveIcon="bookmark-remove-outline"
+          enabled={disliked}
+          numberOf={dislikedCount}
+        />
+        <IconButton
+          onPress={handleComment}
+          activeIcon="comment"
+          inactiveIcon="comment-outline"
+          enabled={false}
+          numberOf={0}
+        />
+        <IconButton
+          onPress={handleSupport}
+          activeIcon="contactless-payment-circle"
+          inactiveIcon="contactless-payment-circle-outline"
+          enabled={false}
+          numberOf={0}
+        />
+        <IconButton
+          onPress={handleShare}
+          activeIcon="share"
+          inactiveIcon="share-outline"
+          enabled={false}
+          numberOf={0}
+        />
       </Div>
       <Div row alignItems="center">
         <Text
@@ -100,9 +137,9 @@ export default function ({}) {
             {postOwner.nickname}
           </Text>
           {/* TODO: Handle better */}
-          {postDescription.length > 75
-            ? ' ' + postDescription.substring(0, 72 - 3) + '...'
-            : ' ' + postDescription}
+          {description.length > 75
+            ? ' ' + description.substring(0, 72 - 3) + '...'
+            : ' ' + description}
         </Text>
       </Div>
       <Div mt="sm">
@@ -128,12 +165,15 @@ export default function ({}) {
           w={44}
           rounded="circle"
         />
-        <Text color="gray600">{'add a comment...'}</Text>
+        <Text ml="md" color="gray600">
+          {'add a comment...'}
+        </Text>
       </Button>
+      <Div m="sm">
+        <Text size="lg" color="gray500">
+          {dayjs(updatedAt.toDate()).format('YYYY.MM.DD')}
+        </Text>
+      </Div>
     </Div>
   )
 }
-
-// {(hospital?.title1 ?? '').length > 10
-// ? (hospital?.title1 ?? '').substring(0, 10 - 3) + '...'
-// : hospital?.title1 ?? ''}

@@ -26,11 +26,7 @@ export default function ({
   navigateToEditProfile,
 }: Props): React.ReactElement {
   return (
-    <Div
-      justifyContent="center"
-      alignItems="flex-start"
-      rounded="sm"
-      borderWidth={1}>
+    <Div justifyContent="center" alignItems="flex-start" rounded="sm">
       <Div p="md" row>
         <Image h={77} w={77} rounded="circle" source={imageURI(photoURL)} />
         <Div row alignItems="center">
