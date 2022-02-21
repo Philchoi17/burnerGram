@@ -11,6 +11,7 @@ import { Form, Input, Submit } from '@/Components/Forms'
 import { AuthContainer } from '@/Containers'
 import Logger from '@/Utils/Logger'
 import { validationSchema } from './validation'
+import { CollectionNames } from '@/Constants/FireNames'
 
 interface Props {}
 
@@ -52,7 +53,7 @@ export default function Signup({}: Props): React.ReactElement {
       await firebase.createUser({ email, password }, userPkg)
       // 3. set publicUser profile
       const { uid } = await auth().currentUser
-      await set(`publicUsers/${uid}`, {
+      await set(`${CollectionNames.PUBLIC_USERS}/${uid}`, {
         ...userPkg,
         uid,
       })

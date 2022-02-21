@@ -7,60 +7,55 @@ import {
   ExtendedFirebaseInstance,
   ExtendedFirestoreInstance,
 } from 'react-redux-firebase'
-import { useAppSelector } from '@/Hooks'
 
 import { MainContainer } from '@/Containers'
-import {
-  Text,
-  Button,
-  Icon,
-  Image,
-  ActionSheetOpener,
-  Progress,
-} from '@/Components'
+import { Button, Icon, Text, ActionSheetOpener } from '@/Components'
 import { Form, Input, Submit } from '@/Components/Forms'
-import { imageURI } from '@/Utils/Misc'
-import { validationSchema } from './validation'
+import Logger from '@/Utils/Logger'
+import { generateUUID } from '@/Utils/Misc'
+import { StoragePaths } from '@/Constants/FireNames'
 import {
   imagePickerLaunchCamera,
   imagePickerLaunchLibrary,
 } from '@/Utils/ImagePicker'
-import { CollectionNames, StoragePaths } from '@/Constants/FireNames'
-import Logger from '@/Utils/Logger'
+import { useAppSelector } from '@/Hooks'
+import { validationSchema } from './validation'
 
 interface Props {}
 
 const { useEffect, useState } = React
-export default function EditProfile({}: Props): JSX.Element {
+export default function UploadScreen({}: Props): React.ReactElement {
+  // firebase firestore instance
   const [firebase, firestore]: [
     ExtendedFirebaseInstance,
     ExtendedFirestoreInstance,
   ] = [useFirebase(), useFirestore()]
-  const { profile } = useAppSelector((state) => state.firebase)
-  const { logout, updateProfile, storage, auth } = firebase
-  const { update } = firestore
+  const { auth, storage } = firebase
 
   // state variables
+  const [uploading, setUploading] = useState<boolean>(false)
+  const [activity, setActivity] = useState<boolean>(false)
   const [imagePickerType, setImagePickerType] = useState<
     'Camera' | 'Library' | null
   >(null)
-  const [uploading, setUploading] = useState<boolean>(false)
-  const [activity, setActivity] = useState<boolean>(false)
-  const [transferred, setTransferred] = useState<number>(0)
+  // TODO: handle better
+  const [uploadURI, setUploadURI] = useState<any>(null)
 
   const uploadToServer = async (image: string) => {
     setUploading(true)
     try {
       Logger.debug('uploadToServer: image =', image)
-      const path = StoragePaths.PROFILE_IMAGE
+      const path = StoragePaths.FEED_IMAGES
       const { uid } = await auth().currentUser
-      const ref = `${path}/${uid}.jpg`
+      const uuid = generateUUID()
+      const now = new Date()
+      const ref = `${path}/${uid}_${uuid}_${now.toISOString()}.jpg`
       const task = await storage().ref(ref).putFile(image)
       Logger.debug('task =', task)
       const uploadSnapshot = await storage().ref(ref)
-      const photoURL = await uploadSnapshot.getDownloadURL()
-      await updateProfile({ photoURL })
-      await update(`${CollectionNames.PUBLIC_USERS}/${uid}`, { photoURL })
+      // const photoURL = await uploadSnapshot.getDownloadURL()
+      // await updateProfile({ photoURL })
+      // await update(`publicUsers/${uid}`, { photoURL })
     } catch (error) {
       Logger.debug('uploadToServer: error =', error)
     } finally {
@@ -91,19 +86,18 @@ export default function EditProfile({}: Props): JSX.Element {
     }
   }
 
+  // handling change of imagePickerType for uploading photo
   useEffect(openImagePicker, [imagePickerType])
+
+  // TODO: handle better
+  const handleSubmit = async (values: any) => {
+    Logger.debug('handleSubmit: values =', values)
+  }
 
   return (
     <MainContainer
       headerProps={{
-        heading: 'Edit Profile',
-        headerRest: {
-          suffix: (
-            <Div row p="md">
-              <Button onPress={() => {}}>Done</Button>
-            </Div>
-          ),
-        },
+        heading: 'Upload',
       }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Div p="md">
@@ -135,37 +129,30 @@ export default function EditProfile({}: Props): JSX.Element {
                 ),
               },
             ]}>
-            <Div alignItems="center" p="sm">
-              {uploading ? (
-                <Progress type="circle" progress={transferred} thickness={5} />
-              ) : (
-                <>
-                  <Image
-                    source={imageURI(profile.photoURL)}
-                    h={100}
-                    w={100}
-                    rounded="circle"
-                  />
-                  <Text mt="sm" size="lg" weight="bold" color="blue400">
-                    Change Profile Photo
-                  </Text>
-                </>
-              )}
+            <Div
+              mt="md"
+              borderColor="gray400"
+              alignSelf="center"
+              borderWidth={1}
+              rounded="circle"
+              h={150}
+              w={150}
+              alignItems="center"
+              justifyContent="center">
+              <Icon name="plus" size={50} />
             </Div>
           </ActionSheetOpener>
+          <Text>Upload</Text>
           <Form
             initialValues={{
-              name: profile.name,
-              nickname: profile.nickname,
-              bio: '',
+              description: '',
+              uploadURI,
             }}
-            onSubmit={() => {}}
+            onSubmit={handleSubmit}
             validationSchema={validationSchema}>
-            <Input label="Name" val="name" />
-            <Input label="Nickname" val="nickname" />
-            <Input label="Bio" val="bio" />
-            {/* <Input label="Name" val="name" /> */}
-            <Submit title="Done" />
+            <Input val="description" label="Description" />
+            {/* <Input val="test" />
+            <Input val="test" /> */}
           </Form>
         </Div>
       </ScrollView>

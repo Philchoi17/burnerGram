@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { ActivityIndicator, ScrollView, TouchableOpacity } from 'react-native'
-import { Div } from 'react-native-magnus'
+import { Div, Host } from 'react-native-magnus'
 import {
   useFirebase,
   useFirestore,
@@ -8,10 +8,18 @@ import {
   ExtendedFirestoreInstance,
   useFirestoreConnect,
 } from 'react-redux-firebase'
+import { useNavigation } from '@react-navigation/native'
 
 import { useAppSelector } from '@/Hooks'
 import { MainContainer } from '@/Containers'
-import { Text, Button, Alert, Icon, ActionSheetOpener } from '@/Components'
+import {
+  Text,
+  Button,
+  Alert,
+  Icon,
+  ActionSheetOpener,
+  FabOptions,
+} from '@/Components'
 import { Form, Input, Submit } from '@/Components/Forms'
 import Logger from '@/Utils/Logger'
 import { generateUUID } from '@/Utils/Misc'
@@ -20,7 +28,9 @@ import {
   imagePickerLaunchCamera,
   imagePickerLaunchLibrary,
 } from '@/Utils/ImagePicker'
-import { StoragePaths } from '@/Constants/FireNames'
+import { StoragePaths, CollectionNames } from '@/Constants/FireNames'
+import { AppNavProps } from '@/Navigators/NavParams'
+import { AppRoutes } from '../SCREENS'
 
 const { useState, useEffect } = React
 export default function Feed({}) {
@@ -29,13 +39,14 @@ export default function Feed({}) {
     ExtendedFirestoreInstance,
   ] = [useFirebase(), useFirestore()]
   const { profile } = useAppSelector(({ firebase }) => firebase)
+  const { navigate } = useNavigation<AppNavProps>()
 
   const { logout, updateProfile, storage, auth } = firebase
   const { update } = firestore
 
   // state variables
   const [nicknameAlert, setNicknameAlert] = useState<boolean>(false)
-  const [imagePickerType, setimagePickerType] = useState<
+  const [imagePickerType, setImagePickerType] = useState<
     'Camera' | 'Library' | null
   >(null)
   const [uploading, setUploading] = useState<boolean>(false)
@@ -47,6 +58,7 @@ export default function Feed({}) {
         try {
           Logger.debug('nickname =', nickname)
           updateProfile({ nickname })
+          update(`${CollectionNames.PUBLIC_USERS}/${profile.uid}`, { nickname })
           setNicknameAlert(false)
         } catch (error) {
           Logger.debug('InputActions: onSubmit: error =', error)
@@ -122,7 +134,7 @@ export default function Feed({}) {
     } catch (error) {
       Logger.debug('openImagePicker: error =', error)
     } finally {
-      setimagePickerType(null)
+      setImagePickerType(null)
       setActivity(false)
     }
   }
@@ -130,8 +142,14 @@ export default function Feed({}) {
   // handling change of imagePickerType for uploading photo
   useEffect(openImagePicker, [imagePickerType])
 
+  useFirestoreConnect({
+    collection: 'feedPosts',
+    orderBy: ['updatedAt', 'desc'],
+    limit: 10,
+  })
+
   return (
-    <>
+    <Host>
       <Alert
         alertMsg="please enter a nickname"
         visible={nicknameAlert}
@@ -150,7 +168,7 @@ export default function Feed({}) {
                   dropdownTitle="Upload Media"
                   dropdownOptions={[
                     {
-                      method: () => setimagePickerType('Camera'),
+                      method: () => setImagePickerType('Camera'),
                       text: 'Camera',
                       prefix: (
                         <Icon
@@ -162,7 +180,7 @@ export default function Feed({}) {
                       ),
                     },
                     {
-                      method: () => setimagePickerType('Library'),
+                      method: () => setImagePickerType('Library'),
                       text: 'Choose From Library',
                       prefix: (
                         <Icon
@@ -196,6 +214,20 @@ export default function Feed({}) {
           </Div>
         </ScrollView>
       </MainContainer>
-    </>
+      <FabOptions
+        options={[
+          {
+            title: 'Upload',
+            method: () => navigate(AppRoutes.UPLOAD_SCREEN),
+            icon: 'plus',
+          },
+          {
+            title: 'Cancel',
+            method: () => {},
+            icon: 'close',
+          },
+        ]}
+      />
+    </Host>
   )
 }
