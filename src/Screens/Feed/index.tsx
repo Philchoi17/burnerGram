@@ -173,7 +173,7 @@ export default function Feed({}) {
     }
   }
 
-  const supportSubmit = () => {
+  const supportSubmit = ({ credits }: { credits: number }) => {
     try {
       Logger.debug('supportSubmit')
       setSupportAlert(false)
