@@ -19,6 +19,7 @@ export default function Practice({}) {
             navigateToEditProfile={() => {}}
             earnedPress={() => {}}
             creditsPress={() => {}}
+            postCount={0}
           />
           {/* <FeedCard /> */}
           {/* <IconButton iconName="plus" onPress={() => {}} label="test" /> */}

@@ -107,6 +107,8 @@ export default function Profile({}) {
               bio={profile.bio}
               earnedPress={handleEarnedPress}
               creditsPress={handleCreditsPressed}
+              postCount={posts?.length || 0}
+              credits={0}
             />
             <Div
               // borderWidth={1}

@@ -5,9 +5,10 @@ import { Image, Text, Button, Icon } from '@/Components'
 
 interface Props {
   onPress: () => void
-  iconName: string
+  iconName?: string
   bg?: string
   label?: string
+  number?: number
 }
 
 export default function ({
@@ -15,6 +16,7 @@ export default function ({
   iconName,
   bg = 'transparent',
   label,
+  number,
 }: Props) {
   return (
     <Button
@@ -29,7 +31,14 @@ export default function ({
       alignItems="center"
       justifyContent="center">
       <Div p="md">
-        <Icon name={iconName} size="5xl" />
+        {iconName ? (
+          <Icon name={iconName} size="5xl" />
+        ) : (
+          <Text size="3xl" color="gray600" center weight="bold">
+            {String(number)}
+          </Text>
+        )}
+
         {label && (
           <Text size="xl" color="gray600">
             {label}
