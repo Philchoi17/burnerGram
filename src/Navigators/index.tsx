@@ -59,6 +59,7 @@ export default function Navigator() {
             createdAt: now,
             updatedAt: now,
             bio: '',
+            credits: 200,
           }
           await firebase.updateProfile(userPkg)
           Logger.debug('user =', user)

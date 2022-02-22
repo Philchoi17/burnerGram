@@ -108,7 +108,7 @@ export default function Profile({}) {
               earnedPress={handleEarnedPress}
               creditsPress={handleCreditsPressed}
               postCount={posts?.length || 0}
-              credits={0}
+              credits={profile.credits}
             />
             <Div
               // borderWidth={1}

@@ -20,6 +20,7 @@ export default function Practice({}) {
             earnedPress={() => {}}
             creditsPress={() => {}}
             postCount={0}
+            credits={0}
           />
           {/* <FeedCard /> */}
           {/* <IconButton iconName="plus" onPress={() => {}} label="test" /> */}

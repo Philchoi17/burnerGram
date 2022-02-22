@@ -39,7 +39,12 @@ export default function ({
     <Div justifyContent="center" alignItems="flex-start" rounded="sm">
       <Div p="md" row>
         <Image h={77} w={77} rounded="circle" source={imageURI(photoURL)} />
-        <Div row alignItems="center" pl="lg">
+        <Div
+          flex={1}
+          row
+          alignItems="center"
+          pl="lg"
+          justifyContent="space-around">
           <Div m="md" alignItems="center">
             <Text size="3xl" color="gray600">
               {String(postCount)}

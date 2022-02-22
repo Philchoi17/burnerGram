@@ -43,13 +43,13 @@ export default function HomeTabs() {
         ))}
       />
       {/* PRACTICE */}
-      <Screen
+      {/* <Screen
         component={PracticeScreen}
         name={'Practice'}
         options={tabOptions(({ focused }) => (
           <Icon name={focused ? 'play-box' : 'play-box-outline'} size="6xl" />
         ))}
-      />
+      /> */}
       {/* <Group>
       </Group> */}
     </Navigator>
