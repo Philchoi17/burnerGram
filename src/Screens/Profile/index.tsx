@@ -18,6 +18,7 @@ import Logger from '@/Utils/Logger'
 import { AppRoutes } from '@/Screens/SCREENS'
 import { AppNavProps } from '@/Navigators/NavParams'
 import { CollectionNames, DocKeys } from '@/Constants/FireNames'
+import { commentType } from '@/Types'
 
 const { useEffect, useState } = React
 export default function Profile({}) {
@@ -66,6 +67,14 @@ export default function Profile({}) {
     Logger.debug('handlePostPress')
   }
 
+  const handleEarnedPress = () => {
+    Logger.debug('handleEarnedPress')
+  }
+
+  const handleCreditsPressed = () => {
+    Logger.debug('handleCreditsPressed')
+  }
+
   return (
     <>
       <Alert
@@ -95,6 +104,9 @@ export default function Profile({}) {
               photoURL={profile.photoURL}
               nickname={profile.nickname}
               navigateToEditProfile={navigateToEditProfile}
+              bio={profile.bio}
+              earnedPress={handleEarnedPress}
+              creditsPress={handleCreditsPressed}
             />
             <Div
               // borderWidth={1}
@@ -105,15 +117,13 @@ export default function Profile({}) {
               alignItems="flex-start"
               justifyContent="flex-start">
               {posts &&
-                posts.map((post, idx) => {
-                  return (
-                    <PhotoTile
-                      key={String(idx)}
-                      source={post.downloadURL}
-                      onPress={handlePostPress}
-                    />
-                  )
-                })}
+                posts.map((post, idx) => (
+                  <PhotoTile
+                    key={String(idx)}
+                    source={post.downloadURL}
+                    onPress={handlePostPress}
+                  />
+                ))}
             </Div>
           </Div>
         </ScrollView>

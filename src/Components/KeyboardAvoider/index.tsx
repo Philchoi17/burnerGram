@@ -7,7 +7,7 @@ interface Props {
   children: JSX.Element | any
 }
 
-export default function ({ children, offset = 100 }: Props) {
+export default function ({ children, offset = 100 }: Props): JSX.Element {
   return (
     <KeyboardAvoidingView
       // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

@@ -5,8 +5,10 @@ import dayjs from 'dayjs'
 import { Image, Text } from '@/Components'
 import { imageURI } from '@/Utils/Misc'
 
+import { commentType } from '@/Types'
+
 interface Props {
-  comment: any
+  comment: commentType
 }
 
 export default function ({ comment }: Props): JSX.Element {

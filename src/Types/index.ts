@@ -19,3 +19,12 @@ export type PermissionStatus =
   | 'limited'
   | 'granted'
   | 'blocked'
+
+export type commentType = {
+  commentOwnerPhotoURL: string
+  commentOwnerName: string
+  comment: string
+  commentOwner: string
+  updatedAt: FirebaseFirestoreTypes.Timestamp
+  createdAt: FirebaseFirestoreTypes.Timestamp
+}

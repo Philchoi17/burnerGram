@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Div } from 'react-native-magnus'
 
-import { Image, Text, Button } from '@/Components'
+import { Image, Text, Button, IconButton } from '@/Components'
 
 import { imageURI } from '@/Utils/Misc'
 import { profileType } from '@/Types'
@@ -11,7 +11,10 @@ interface Props {
   profile?: profileType
   photoURL: string
   nickname: string
+  bio?: string
   navigateToEditProfile: () => void
+  earnedPress: () => void
+  creditsPress: () => void
 }
 
 // const photoURL =
@@ -23,7 +26,10 @@ export default function ({
   // profile,
   photoURL,
   nickname,
+  bio,
   navigateToEditProfile,
+  earnedPress,
+  creditsPress,
 }: Props): React.ReactElement {
   return (
     <Div justifyContent="center" alignItems="flex-start" rounded="sm">
@@ -44,24 +50,30 @@ export default function ({
           </Div>
         </Div>
       </Div>
-      <Div m="md">
+      <Div mx="md">
         <Text size="xl" mb="md">
           {nickname}
         </Text>
-        <Text size="lg" mb="md">
-          something descriptions
+        <Text size="lg" mb="md" onPress={navigateToEditProfile}>
+          {bio == '' ? 'Edit Bio' : bio}
         </Text>
       </Div>
       <Div row justifyContent="space-around" alignItems="stretch">
-        <Button mx="md" flex={1} onPress={() => {}}>
-          test
-        </Button>
-        <Button mx="md" flex={1} onPress={() => {}}>
-          test
-        </Button>
+        <IconButton iconName="plus" label="earned" onPress={earnedPress} />
+        <IconButton iconName="plus" label="credits" onPress={creditsPress} />
       </Div>
-      <Button m="md" wide onPress={navigateToEditProfile}>
-        Edit
+      <Button
+        rounded="xl"
+        borderColor="gray600"
+        my="md"
+        mx="xs"
+        wide
+        onPress={navigateToEditProfile}
+        bg="transparent"
+        borderWidth={0.3}>
+        <Text size="xl" color="gray500" weight="bold">
+          Edit
+        </Text>
       </Button>
     </Div>
   )
