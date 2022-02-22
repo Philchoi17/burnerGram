@@ -217,6 +217,9 @@ export default function Feed({}) {
         visible={supportAlert}
         withInput
         inputActions={<SupportInput />}
+        actionButtons
+        confirmAction={() => {}}
+        cancelAction={() => setSupportAlert(false)}
       />
       <MainContainer
         headerProps={{
