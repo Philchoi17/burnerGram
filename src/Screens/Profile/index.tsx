@@ -45,7 +45,7 @@ export default function Profile({}) {
         where: [DocKeys.USER_ID, '==', profile.uid],
         orderBy: [DocKeys.UPDATED_AT, 'desc'],
       })
-      Logger.debug('userPosts', userPosts)
+      // Logger.debug('userPosts', userPosts)
       const gotPosts = await userPosts.docs.map((doc: any) => doc.data())
       setPosts(gotPosts)
     } catch (error) {
@@ -97,12 +97,13 @@ export default function Profile({}) {
               navigateToEditProfile={navigateToEditProfile}
             />
             <Div
+              // borderWidth={1}
               flexWrap="wrap"
               row
               flex={1}
               p="xs"
-              alignItems="center"
-              justifyContent="center">
+              alignItems="flex-start"
+              justifyContent="flex-start">
               {posts &&
                 posts.map((post, idx) => {
                   return (

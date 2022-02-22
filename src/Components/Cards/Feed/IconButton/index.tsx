@@ -19,6 +19,7 @@ export default function ({
 }: Props) {
   return (
     <Button
+      // borderWidth={1}
       bg="transparent"
       onPress={onPress}
       flexDir="column"

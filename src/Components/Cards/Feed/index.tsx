@@ -155,7 +155,7 @@ export default function ({
         row
         alignItems="center"
         onPress={() => {
-          Logger.debug('handle add comment')
+          Logger.debug('handle go to profile')
         }}
         bg="transparent">
         <Image
