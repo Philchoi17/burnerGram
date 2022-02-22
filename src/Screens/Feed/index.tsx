@@ -49,6 +49,9 @@ export default function Feed({}) {
   const [nicknameAlert, setNicknameAlert] = useState<boolean>(false)
   // const [uploading, setUploading] = useState<boolean>(false)
   const [activity, setActivity] = useState<boolean>(false)
+  const [noCreditsAlert, setNoCreditsAlert] = useState<boolean>(false)
+
+  const toggleNoCreditsAlert = () => setNoCreditsAlert(!noCreditsAlert)
 
   const InputActions = () => (
     <Form
@@ -150,6 +153,24 @@ export default function Feed({}) {
     }
   }
 
+  const handleSupport = async (profile: any, postId: string) => {
+    try {
+      Logger.debug('handleSupport')
+      Logger.debug('profile', profile)
+      Logger.debug('postId', postId)
+      if (profile.credits < 1) {
+        // if (true) {
+        setNoCreditsAlert(true)
+        setTimeout(() => setNoCreditsAlert(false), 1000)
+        return
+      }
+      await updateProfile({ credits: profile.credits - 1 })
+      await update(`${CollectionNames.FEED_POSTS}/${postId}`, {})
+    } catch (error) {
+      Logger.error('handleSupport: error =', error)
+    }
+  }
+
   return (
     <Host>
       <Alert
@@ -157,6 +178,11 @@ export default function Feed({}) {
         visible={nicknameAlert}
         withInput
         inputActions={<InputActions />}
+      />
+      <Alert
+        alertTitle="balance Low"
+        alertMsg="insufficent Credits"
+        visible={noCreditsAlert}
       />
       <MainContainer
         headerProps={{
@@ -196,6 +222,7 @@ export default function Feed({}) {
                     dislikedCount={feedPost.dislikedUsers?.length || 0}
                     handleComment={() => handleComment(feedPost)}
                     commentCount={feedPost.commentCount}
+                    handleSupport={() => handleSupport(profile, feedPost.id)}
                   />
                 )
               })

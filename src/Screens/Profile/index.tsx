@@ -36,8 +36,10 @@ export default function Profile({}) {
   // state variables
   const [posts, setPosts] = useState<any[]>([])
   const [logoutAlert, setLogoutAlert] = useState<boolean>(false)
+  const [buyCreditsAlert, setBuyCreditsAlert] = useState<boolean>(false)
 
   const toggleLogoutAlert = () => setLogoutAlert(!logoutAlert)
+  const toggleBuyCreditsAlert = () => setBuyCreditsAlert(!buyCreditsAlert)
 
   const getUserPosts = async () => {
     try {
@@ -72,7 +74,7 @@ export default function Profile({}) {
   }
 
   const handleCreditsPressed = () => {
-    Logger.debug('handleCreditsPressed')
+    setBuyCreditsAlert(true)
   }
 
   return (
@@ -84,6 +86,14 @@ export default function Profile({}) {
         actionButtons
         confirmAction={logout}
         cancelAction={toggleLogoutAlert}
+      />
+      <Alert
+        alertTitle="Buy Credits"
+        alertMsg="Are you sure you want to buy credits?"
+        visible={buyCreditsAlert}
+        actionButtons
+        confirmAction={() => {}}
+        cancelAction={toggleBuyCreditsAlert}
       />
       <MainContainer
         headerProps={{

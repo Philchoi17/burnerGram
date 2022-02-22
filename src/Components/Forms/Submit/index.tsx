@@ -11,6 +11,7 @@ interface Props {
   suffixName?: string
   loading?: boolean
   disabled?: boolean
+  iconSize?: number | string
 }
 
 export default function ({
@@ -20,12 +21,13 @@ export default function ({
   suffixName,
   loading,
   disabled = false,
+  iconSize = '3xl',
 }: Props) {
   const { handleSubmit } = useFormikContext()
   if (inputSuffix) {
     return (
       <TouchableOpacity onPress={handleSubmit} disabled={disabled}>
-        <Icon name={suffixName ? suffixName : 'plus'} />
+        <Icon name={suffixName ? suffixName : 'plus'} size={iconSize} />
       </TouchableOpacity>
     )
   }
