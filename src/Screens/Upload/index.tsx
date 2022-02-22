@@ -14,7 +14,7 @@ import { Button, Icon, Text, ActionSheetOpener, Image } from '@/Components'
 import { Form, Input, Submit } from '@/Components/Forms'
 import Logger from '@/Utils/Logger'
 import { generateUUID } from '@/Utils/Misc'
-import { StoragePaths } from '@/Constants/FireNames'
+import { CollectionNames, StoragePaths } from '@/Constants/FireNames'
 import {
   imagePickerLaunchCamera,
   imagePickerLaunchLibrary,
@@ -33,7 +33,7 @@ export default function UploadScreen({}: Props): React.ReactElement {
     ExtendedFirestoreInstance,
   ] = [useFirebase(), useFirestore()]
   const { auth, storage } = firebase
-  const { add } = firestore
+  const { add, set } = firestore
   const { profile } = useAppSelector((state) => state.firebase)
   const { goBack } = useNavigation()
 
@@ -112,7 +112,7 @@ export default function UploadScreen({}: Props): React.ReactElement {
     try {
       const downloadURL = await uploadToServer(uploadURI)
       const { uid } = await auth().currentUser
-      await add('feedPosts', {
+      const post = await add(CollectionNames.FEED_POSTS, {
         downloadURL,
         userId: uid,
         nickname: profile.nickname,
@@ -124,7 +124,7 @@ export default function UploadScreen({}: Props): React.ReactElement {
         createdAt: now,
         updatedAt: now,
         // likeCount: 0,
-        // commentCount: 0,
+        commentCount: 0,
         // dislikeCount: 0,
         // shareCount: 0,
         // supportCount: 0,
@@ -134,6 +134,14 @@ export default function UploadScreen({}: Props): React.ReactElement {
         supportedUsers: [],
         commentedUsers: [],
       })
+      Logger.debug('post =', post.id)
+
+      await set(`${CollectionNames.POST_COMMENTS}/${post.id}`, {
+        comments: [],
+        createdAt: now,
+        updatedAt: now,
+      })
+
       goBack()
       Logger.debug('downloadURL =', downloadURL)
     } catch (error) {

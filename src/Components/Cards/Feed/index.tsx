@@ -28,14 +28,12 @@ interface Props {
   disliked: boolean
   dislikedCount: number
   handleComment: () => void
+  commentCount: number
+  handleSupport: () => void
 }
 
 const moreOptions = () => {
   Logger.debug('Cards: Feed: moreOptions')
-}
-
-const handleSupport = () => {
-  Logger.debug('Cards: Feed: handleSupport')
 }
 
 const handleShare = () => {
@@ -66,6 +64,8 @@ export default function ({
   disliked,
   dislikedCount,
   handleComment,
+  commentCount,
+  handleSupport,
 }: Props) {
   // Logger.debug('Cards: Feed: render: updatedAt =', updatedAt)
   return (
@@ -109,7 +109,7 @@ export default function ({
           activeIcon="comment"
           inactiveIcon="comment-outline"
           enabled={false}
-          numberOf={0}
+          numberOf={commentCount}
         />
         <IconButton
           onPress={handleSupport}
@@ -143,10 +143,7 @@ export default function ({
         </Text>
       </Div>
       <Div mt="sm">
-        <Text
-          size="lg"
-          onPress={() => Logger.debug('handle view all comments')}
-          color="gray600">
+        <Text size="lg" onPress={handleComment} color="gray600">
           {`View all${true ? '' : ' ' + String(1)} Comments`}
         </Text>
       </Div>
@@ -156,7 +153,7 @@ export default function ({
         row
         alignItems="center"
         onPress={() => {
-          Logger.debug('handle add comment')
+          Logger.debug('handle go to profile')
         }}
         bg="transparent">
         <Image
@@ -165,7 +162,7 @@ export default function ({
           w={44}
           rounded="circle"
         />
-        <Text ml="md" color="gray600">
+        <Text ml="md" color="gray600" onPress={handleComment}>
           {'add a comment...'}
         </Text>
       </Button>

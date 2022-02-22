@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Input, InputProps } from 'react-native-magnus'
+import { Input, InputProps, Div } from 'react-native-magnus'
 import { FormikValues, useFormikContext } from 'formik'
 
 import Error from '../Error'
@@ -23,7 +23,7 @@ export default function ({
   const { setFieldTouched, handleChange, errors, touched } =
     useFormikContext<FormikValues>()
   return (
-    <>
+    <Div bg="light">
       {label && (
         <Text size="xl" ml="sm">
           {label}
@@ -40,6 +40,6 @@ export default function ({
         {...rest}
       />
       <Error error={errors[val]} visible={touched[val]} />
-    </>
+    </Div>
   )
 }

@@ -24,12 +24,12 @@ import { Form, Input, Submit } from '@/Components/Forms'
 import { FeedCard } from '@/Components/Cards'
 import Logger from '@/Utils/Logger'
 import { generateUUID, getFirestoreRef } from '@/Utils/Misc'
-import { nicknameValidation } from './validation'
+import { nicknameValidation, supportValidation } from './validation'
 import {
   imagePickerLaunchCamera,
   imagePickerLaunchLibrary,
 } from '@/Utils/ImagePicker'
-import { StoragePaths, CollectionNames } from '@/Constants/FireNames'
+import { StoragePaths, CollectionNames, DocKeys } from '@/Constants/FireNames'
 import { AppNavProps } from '@/Navigators/NavParams'
 import { AppRoutes } from '../SCREENS'
 
@@ -49,6 +49,10 @@ export default function Feed({}) {
   const [nicknameAlert, setNicknameAlert] = useState<boolean>(false)
   // const [uploading, setUploading] = useState<boolean>(false)
   const [activity, setActivity] = useState<boolean>(false)
+  const [noCreditsAlert, setNoCreditsAlert] = useState<boolean>(false)
+  const [supportAlert, setSupportAlert] = useState<boolean>(false)
+
+  const toggleNoCreditsAlert = () => setNoCreditsAlert(!noCreditsAlert)
 
   const InputActions = () => (
     <Form
@@ -93,7 +97,7 @@ export default function Feed({}) {
 
   useFirestoreConnect({
     collection: 'feedPosts',
-    orderBy: ['updatedAt', 'desc'],
+    orderBy: [DocKeys.UPDATED_AT, 'desc'],
     limit: 10,
   })
 
@@ -102,7 +106,7 @@ export default function Feed({}) {
   })
 
   const feedPostListener = () => {
-    Logger.debug('feedPostListener: feedPosts =', feedPosts)
+    Logger.debug('feedPostListener: feedPosts =')
     return () => {
       // clean up
     }
@@ -150,6 +154,50 @@ export default function Feed({}) {
     }
   }
 
+  const handleSupport = async (profile: any, postId: string) => {
+    try {
+      Logger.debug('handleSupport')
+      Logger.debug('profile', profile)
+      Logger.debug('postId', postId)
+      if (profile.credits < 1) {
+        // if (true) {
+        setNoCreditsAlert(true)
+        setTimeout(() => setNoCreditsAlert(false), 1000)
+        return
+      }
+      setSupportAlert(true)
+      // await updateProfile({ credits: profile.credits - 1 })
+      // await update(`${CollectionNames.FEED_POSTS}/${postId}`, {})
+    } catch (error) {
+      Logger.error('handleSupport: error =', error)
+    }
+  }
+
+  const supportSubmit = () => {
+    try {
+      Logger.debug('supportSubmit')
+      setSupportAlert(false)
+    } catch (error) {
+      Logger.error('supportSubmit: error =', error)
+    }
+  }
+
+  const SupportInput = () => (
+    <Form
+      onSubmit={supportSubmit}
+      validationSchema={supportValidation}
+      initialValues={{
+        credits: 0,
+      }}>
+      <Input
+        keyboardType="numeric"
+        label="Support"
+        val="support"
+        suffix={<Submit inputSuffix />}
+      />
+    </Form>
+  )
+
   return (
     <Host>
       <Alert
@@ -157,6 +205,18 @@ export default function Feed({}) {
         visible={nicknameAlert}
         withInput
         inputActions={<InputActions />}
+      />
+      <Alert
+        alertTitle="balance Low"
+        alertMsg="insufficent Credits"
+        visible={noCreditsAlert}
+      />
+      <Alert
+        alertTitle="Support"
+        alertMsg="support amount"
+        visible={supportAlert}
+        withInput
+        inputActions={<SupportInput />}
       />
       <MainContainer
         headerProps={{
@@ -195,6 +255,8 @@ export default function Feed({}) {
                     likedCount={feedPost.likedUsers?.length || 0}
                     dislikedCount={feedPost.dislikedUsers?.length || 0}
                     handleComment={() => handleComment(feedPost)}
+                    commentCount={feedPost.commentCount}
+                    handleSupport={() => handleSupport(profile, feedPost.id)}
                   />
                 )
               })

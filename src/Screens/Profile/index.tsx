@@ -18,6 +18,7 @@ import Logger from '@/Utils/Logger'
 import { AppRoutes } from '@/Screens/SCREENS'
 import { AppNavProps } from '@/Navigators/NavParams'
 import { CollectionNames, DocKeys } from '@/Constants/FireNames'
+import { commentType } from '@/Types'
 
 const { useEffect, useState } = React
 export default function Profile({}) {
@@ -35,8 +36,10 @@ export default function Profile({}) {
   // state variables
   const [posts, setPosts] = useState<any[]>([])
   const [logoutAlert, setLogoutAlert] = useState<boolean>(false)
+  const [buyCreditsAlert, setBuyCreditsAlert] = useState<boolean>(false)
 
   const toggleLogoutAlert = () => setLogoutAlert(!logoutAlert)
+  const toggleBuyCreditsAlert = () => setBuyCreditsAlert(!buyCreditsAlert)
 
   const getUserPosts = async () => {
     try {
@@ -45,7 +48,7 @@ export default function Profile({}) {
         where: [DocKeys.USER_ID, '==', profile.uid],
         orderBy: [DocKeys.UPDATED_AT, 'desc'],
       })
-      Logger.debug('userPosts', userPosts)
+      // Logger.debug('userPosts', userPosts)
       const gotPosts = await userPosts.docs.map((doc: any) => doc.data())
       setPosts(gotPosts)
     } catch (error) {
@@ -66,6 +69,14 @@ export default function Profile({}) {
     Logger.debug('handlePostPress')
   }
 
+  const handleEarnedPress = () => {
+    Logger.debug('handleEarnedPress')
+  }
+
+  const handleCreditsPressed = () => {
+    setBuyCreditsAlert(true)
+  }
+
   return (
     <>
       <Alert
@@ -75,6 +86,14 @@ export default function Profile({}) {
         actionButtons
         confirmAction={logout}
         cancelAction={toggleLogoutAlert}
+      />
+      <Alert
+        alertTitle="Buy Credits"
+        alertMsg="Are you sure you want to buy credits?"
+        visible={buyCreditsAlert}
+        actionButtons
+        confirmAction={() => {}}
+        cancelAction={toggleBuyCreditsAlert}
       />
       <MainContainer
         headerProps={{
@@ -95,24 +114,28 @@ export default function Profile({}) {
               photoURL={profile.photoURL}
               nickname={profile.nickname}
               navigateToEditProfile={navigateToEditProfile}
+              bio={profile.bio}
+              earnedPress={handleEarnedPress}
+              creditsPress={handleCreditsPressed}
+              postCount={posts?.length || 0}
+              credits={profile.credits}
             />
             <Div
+              // borderWidth={1}
               flexWrap="wrap"
               row
               flex={1}
               p="xs"
-              alignItems="center"
-              justifyContent="center">
+              alignItems="flex-start"
+              justifyContent="flex-start">
               {posts &&
-                posts.map((post, idx) => {
-                  return (
-                    <PhotoTile
-                      key={String(idx)}
-                      source={post.downloadURL}
-                      onPress={handlePostPress}
-                    />
-                  )
-                })}
+                posts.map((post, idx) => (
+                  <PhotoTile
+                    key={String(idx)}
+                    source={post.downloadURL}
+                    onPress={handlePostPress}
+                  />
+                ))}
             </Div>
           </Div>
         </ScrollView>
