@@ -24,7 +24,7 @@ import { Form, Input, Submit } from '@/Components/Forms'
 import { FeedCard } from '@/Components/Cards'
 import Logger from '@/Utils/Logger'
 import { generateUUID, getFirestoreRef } from '@/Utils/Misc'
-import { nicknameValidation } from './validation'
+import { nicknameValidation, supportValidation } from './validation'
 import {
   imagePickerLaunchCamera,
   imagePickerLaunchLibrary,
@@ -50,6 +50,7 @@ export default function Feed({}) {
   // const [uploading, setUploading] = useState<boolean>(false)
   const [activity, setActivity] = useState<boolean>(false)
   const [noCreditsAlert, setNoCreditsAlert] = useState<boolean>(false)
+  const [supportAlert, setSupportAlert] = useState<boolean>(false)
 
   const toggleNoCreditsAlert = () => setNoCreditsAlert(!noCreditsAlert)
 
@@ -164,12 +165,38 @@ export default function Feed({}) {
         setTimeout(() => setNoCreditsAlert(false), 1000)
         return
       }
-      await updateProfile({ credits: profile.credits - 1 })
-      await update(`${CollectionNames.FEED_POSTS}/${postId}`, {})
+      setSupportAlert(true)
+      // await updateProfile({ credits: profile.credits - 1 })
+      // await update(`${CollectionNames.FEED_POSTS}/${postId}`, {})
     } catch (error) {
       Logger.error('handleSupport: error =', error)
     }
   }
+
+  const supportSubmit = () => {
+    try {
+      Logger.debug('supportSubmit')
+      setSupportAlert(false)
+    } catch (error) {
+      Logger.error('supportSubmit: error =', error)
+    }
+  }
+
+  const SupportInput = () => (
+    <Form
+      onSubmit={supportSubmit}
+      validationSchema={supportValidation}
+      initialValues={{
+        credits: 0,
+      }}>
+      <Input
+        keyboardType="numeric"
+        label="Support"
+        val="support"
+        suffix={<Submit inputSuffix />}
+      />
+    </Form>
+  )
 
   return (
     <Host>
@@ -183,6 +210,13 @@ export default function Feed({}) {
         alertTitle="balance Low"
         alertMsg="insufficent Credits"
         visible={noCreditsAlert}
+      />
+      <Alert
+        alertTitle="Support"
+        alertMsg="support amount"
+        visible={supportAlert}
+        withInput
+        inputActions={<SupportInput />}
       />
       <MainContainer
         headerProps={{
