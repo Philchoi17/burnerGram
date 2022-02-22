@@ -25,7 +25,7 @@ export default function ({
   if (inputSuffix) {
     return (
       <TouchableOpacity onPress={handleSubmit} disabled={disabled}>
-        <Icon name={suffixName ? suffixName : 'add'} />
+        <Icon name={suffixName ? suffixName : 'plus'} />
       </TouchableOpacity>
     )
   }

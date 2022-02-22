@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native'
+import { Div } from 'react-native-magnus'
 
 interface Props {
   offset?: number
@@ -13,7 +14,7 @@ export default function ({ children, offset = 100 }: Props) {
       style={styles.container}
       behavior="position"
       keyboardVerticalOffset={offset}>
-      {children}
+      <Div bg="light">{children}</Div>
     </KeyboardAvoidingView>
   )
 }

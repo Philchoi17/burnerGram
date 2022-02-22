@@ -2,6 +2,14 @@ import * as React from 'react'
 import { ScrollView } from 'react-native'
 import { Div } from 'react-native-magnus'
 import { useRoute } from '@react-navigation/native'
+import {
+  useFirebase,
+  useFirestore,
+  ExtendedFirebaseInstance,
+  ExtendedFirestoreInstance,
+  useFirestoreConnect,
+} from 'react-redux-firebase'
+import dayjs from 'dayjs'
 
 import { imageURI } from '@/Utils/Misc'
 import { Text, Button, Icon, Image } from '@/Components'
@@ -10,21 +18,93 @@ import { MainContainer } from '@/Containers'
 import Logger from '@/Utils/Logger'
 import { validationSchema } from './validation'
 import KeyboardAvoider from '@/Components/KeyboardAvoider'
+import { CollectionNames } from '@/Constants/FireNames'
+import { useAppSelector } from '@/Hooks'
+import Comment from './Comment'
 
 interface Props {}
 
 const { useEffect, useState } = React
 export default function CommentPost({}: Props) {
+  const [firebase, firestore]: [
+    ExtendedFirebaseInstance,
+    ExtendedFirestoreInstance,
+  ] = [useFirebase(), useFirestore()]
+  const { add, set, get, update } = firestore
+
+  const { profile } = useAppSelector(({ firebase }) => firebase)
+
+  // state variables
+  // TODO: handle better
+  // const [comments, setComments] = useState<any[]>([])
+
   const { params }: any = useRoute()
   const {
-    feedPost: { downloadURL, description, postOwner },
+    feedPost: { downloadURL, description, postOwner, id: postId },
   } = params
+
+  // const getPostComments = async () => {
+  //   try {
+  //     const postComments = await get(
+  //       `${CollectionNames.POST_COMMENTS}/${postId}`,
+  //     )
+  //     const gotComments = await postComments.data()
+  //     Logger.debug('postComments: gotComments =', gotComments)
+  //     setComments(gotComments.comments)
+  //   } catch (error) {
+  //     Logger.error('getPostComments: error =', error)
+  //   }
+  // }
+
+  // TODO: handle better
+  const handleSubmit = async (values: any) => {
+    Logger.debug('values =', values)
+    try {
+      const now = new Date()
+      await update(`${CollectionNames.POST_COMMENTS}/${postId}`, {
+        comments: [
+          ...postComments.comments,
+          {
+            comment: values.comment,
+            commentOwner: profile.uid,
+            commentOwnerName: profile.nickname,
+            commentOwnerPhotoURL: profile.photoURL,
+            createdAt: now,
+            updatedAt: now,
+          },
+        ],
+      })
+      await update(`${CollectionNames.FEED_POSTS}/${postId}`, {
+        commentCount: postComments.comments.length + 1,
+      })
+    } catch (error) {
+      Logger.error('handleSubmit: error =', error)
+    }
+  }
+
+  useFirestoreConnect({
+    collection: CollectionNames.POST_COMMENTS,
+    doc: postId,
+  })
+
+  const postComments = useAppSelector(
+    ({ firestore: { data } }: any) =>
+      data.postComments && data.postComments[postId],
+  )
 
   const commentPostUseEffectHandler = () => {
     Logger.debug('CommentPost: commentPostUseEffectHandler: params =', params)
+    Logger.debug('CommentPost: commentPostUseEffectHandler: profile =', profile)
+    Logger.debug(
+      'CommentPost: commentPostUseEffectHandler: postComments =',
+      // postComments,
+      // postId,
+      postComments,
+      postId,
+    )
   }
 
-  useEffect(commentPostUseEffectHandler, [])
+  useEffect(commentPostUseEffectHandler, [postComments])
 
   return (
     <MainContainer
@@ -59,20 +139,29 @@ export default function CommentPost({}: Props) {
             {description}
           </Text>
           <Div>
-            <KeyboardAvoider>
-              <Form
-                validationSchema={validationSchema}
-                initialValues={{
-                  comment: '',
-                }}
-                onSubmit={() => {}}>
-                <Input val="comment" />
-                <Submit title="Comment" />
-              </Form>
-            </KeyboardAvoider>
+            {postComments &&
+              // TODO: handle comment type
+              postComments.comments.map((comment: any, idx: number) => (
+                <Comment key={String(idx)} comment={comment} />
+              ))}
           </Div>
         </Div>
       </ScrollView>
+      <Div bg="white" p="sm">
+        <KeyboardAvoider offset={750}>
+          <Form
+            validationSchema={validationSchema}
+            initialValues={{
+              comment: '',
+            }}
+            onSubmit={handleSubmit}>
+            <Input
+              val="comment"
+              suffix={<Submit inputSuffix title="Comment" />}
+            />
+          </Form>
+        </KeyboardAvoider>
+      </Div>
     </MainContainer>
   )
 }

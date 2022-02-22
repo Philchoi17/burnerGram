@@ -29,7 +29,7 @@ import {
   imagePickerLaunchCamera,
   imagePickerLaunchLibrary,
 } from '@/Utils/ImagePicker'
-import { StoragePaths, CollectionNames } from '@/Constants/FireNames'
+import { StoragePaths, CollectionNames, DocKeys } from '@/Constants/FireNames'
 import { AppNavProps } from '@/Navigators/NavParams'
 import { AppRoutes } from '../SCREENS'
 
@@ -93,7 +93,7 @@ export default function Feed({}) {
 
   useFirestoreConnect({
     collection: 'feedPosts',
-    orderBy: ['updatedAt', 'desc'],
+    orderBy: [DocKeys.UPDATED_AT, 'desc'],
     limit: 10,
   })
 
@@ -102,7 +102,7 @@ export default function Feed({}) {
   })
 
   const feedPostListener = () => {
-    Logger.debug('feedPostListener: feedPosts =', feedPosts)
+    Logger.debug('feedPostListener: feedPosts =')
     return () => {
       // clean up
     }
@@ -195,6 +195,7 @@ export default function Feed({}) {
                     likedCount={feedPost.likedUsers?.length || 0}
                     dislikedCount={feedPost.dislikedUsers?.length || 0}
                     handleComment={() => handleComment(feedPost)}
+                    commentCount={feedPost.commentCount}
                   />
                 )
               })
