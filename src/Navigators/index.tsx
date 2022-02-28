@@ -47,7 +47,7 @@ export default function Navigator() {
             ].includes(userInfo.providerId),
           ),
         })
-
+        Logger.debug('profile** =', profile)
         if (!profile.email && profile.createdWithSocialLogin) {
           Logger.debug('UPDATED PROFILE HERE WITH CREDENTIALS')
           const now = new Date()

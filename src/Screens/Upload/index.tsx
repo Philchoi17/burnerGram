@@ -78,6 +78,7 @@ export default function UploadScreen({}: Props): React.ReactElement {
           setTimeout(async () => {
             const uploadPath = await imagePickerLaunchCamera()
             Logger.debug('uploadPath =', uploadPath)
+            setUploadURI(uploadPath)
           }, 1000)
           break
         }
@@ -108,8 +109,11 @@ export default function UploadScreen({}: Props): React.ReactElement {
   const handleSubmit = async (values: any) => {
     Logger.debug('handleSubmit: values =', values)
     // TODO: handle firestore.FieldValue.serverTimestamp() instead of Date.now()
+    // TODO: activity indicator for throttling upload
     const now = new Date()
     try {
+      // // small patch for uploading photo
+      // setUploadURI(null)
       const downloadURL = await uploadToServer(uploadURI)
       const { uid } = await auth().currentUser
       const post = await add(CollectionNames.FEED_POSTS, {
@@ -215,9 +219,12 @@ export default function UploadScreen({}: Props): React.ReactElement {
             onSubmit={handleSubmit}
             validationSchema={validationSchema}>
             <Input val="description" label="Description" />
-            {/* <Input val="test" />
-            <Input val="test" /> */}
-            <Submit title="Post" wide disabled={!uploadURI} />
+            <Submit
+              title="Post"
+              wide
+              disabled={!uploadURI}
+              loading={uploading}
+            />
           </Form>
         </Div>
       </ScrollView>

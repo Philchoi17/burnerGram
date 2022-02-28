@@ -13,7 +13,7 @@ interface Props {
 
 export default function ({ source, onPress }: Props) {
   return (
-    <Button flex={1} onPress={onPress} bg="transparent">
+    <Button w={'31%'} onPress={onPress} bg="transparent" m="xs">
       <Image
         source={imageURI(source)}
         w={120}
