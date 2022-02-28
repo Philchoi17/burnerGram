@@ -8,6 +8,7 @@ export enum AppRoutes {
   FEED_SCREEN = 'feed-screen',
   UPLOAD_SCREEN = 'upload-screen',
   COMMENT_POST_SCREEN = 'comment-post-screen',
+  BELL_ALERT_SCREEN = 'bell-alert-screen',
   // profile stack
   PROFILE_SCREEN = 'profile-screen',
   PROFILE_EDIT_SCREEN = 'profile-edit-screen',

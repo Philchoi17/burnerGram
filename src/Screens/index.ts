@@ -6,6 +6,7 @@ export { default as SignupScreen } from './Signup'
 export { default as FeedScreen } from './Feed'
 export { default as UploadScreen } from './Upload'
 export { default as CommentPostScreen } from './CommentPost'
+export { default as BellAlertScreen } from './BellAlert'
 
 // Profile screens
 export { default as ProfileScreen } from './Profile'

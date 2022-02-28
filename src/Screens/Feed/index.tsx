@@ -51,6 +51,7 @@ export default function Feed({}) {
   const [activity, setActivity] = useState<boolean>(false)
   const [noCreditsAlert, setNoCreditsAlert] = useState<boolean>(false)
   const [supportAlert, setSupportAlert] = useState<boolean>(false)
+  const [moreOptionsAlert, setMoreOptionsAlert] = useState<boolean>(false)
 
   const toggleNoCreditsAlert = () => setNoCreditsAlert(!noCreditsAlert)
 
@@ -198,6 +199,19 @@ export default function Feed({}) {
     </Form>
   )
 
+  const handleMoreOptions = async () => {
+    try {
+      Logger.debug('handleMoreOptions')
+      setMoreOptionsAlert(true)
+    } catch (error) {
+      Logger.error('handleMoreOptions: error =', error)
+    }
+  }
+
+  const navigateBellAlertModal = () => {
+    navigate(AppRoutes.BELL_ALERT_SCREEN)
+  }
+
   return (
     <Host>
       <Alert
@@ -221,6 +235,14 @@ export default function Feed({}) {
         confirmAction={() => {}}
         cancelAction={() => setSupportAlert(false)}
       />
+      <Alert
+        alertTitle="More Options"
+        alertMsg="more options"
+        visible={moreOptionsAlert}
+        actionButtons
+        confirmAction={() => {}}
+        cancelAction={() => setMoreOptionsAlert(false)}
+      />
       <MainContainer
         headerProps={{
           heading: 'Home',
@@ -229,7 +251,7 @@ export default function Feed({}) {
             prefix: null,
             suffix: (
               <Div row mx="md">
-                <TouchableOpacity onPress={() => {}}>
+                <TouchableOpacity onPress={navigateBellAlertModal}>
                   <Icon name="bell" size="6xl" px="md" />
                 </TouchableOpacity>
               </Div>
@@ -260,6 +282,7 @@ export default function Feed({}) {
                     handleComment={() => handleComment(feedPost)}
                     commentCount={feedPost.commentCount}
                     handleSupport={() => handleSupport(profile, feedPost.id)}
+                    moreOptions={handleMoreOptions}
                   />
                 )
               })

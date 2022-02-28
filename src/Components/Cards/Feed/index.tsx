@@ -30,11 +30,12 @@ interface Props {
   handleComment: () => void
   commentCount: number
   handleSupport: () => void
+  moreOptions: () => void
 }
 
-const moreOptions = () => {
-  Logger.debug('Cards: Feed: moreOptions')
-}
+// const moreOptions = () => {
+//   Logger.debug('Cards: Feed: moreOptions')
+// }
 
 const handleShare = () => {
   Logger.debug('Cards: Feed: handleShare')
@@ -66,6 +67,7 @@ export default function ({
   handleComment,
   commentCount,
   handleSupport,
+  moreOptions,
 }: Props) {
   // Logger.debug('Cards: Feed: render: updatedAt =', updatedAt)
   return (
