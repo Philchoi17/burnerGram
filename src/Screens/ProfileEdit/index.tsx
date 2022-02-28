@@ -31,7 +31,7 @@ import Logger from '@/Utils/Logger'
 interface Props {}
 
 const { useEffect, useState } = React
-export default function EditProfile({}: Props): JSX.Element {
+export default function ProfileEdit({}: Props): JSX.Element {
   const [firebase, firestore]: [
     ExtendedFirebaseInstance,
     ExtendedFirestoreInstance,

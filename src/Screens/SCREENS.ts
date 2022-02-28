@@ -10,5 +10,7 @@ export enum AppRoutes {
   COMMENT_POST_SCREEN = 'comment-post-screen',
   // profile stack
   PROFILE_SCREEN = 'profile-screen',
-  EDIT_PROFILE_SCREEN = 'edit-profile-screen',
+  PROFILE_EDIT_SCREEN = 'profile-edit-screen',
+  PROFILE_FEED_SCREEN = 'profile-feed-screen',
+  PURCHASE_CREDITS_SCREEN = 'purchase-credits-screen',
 }

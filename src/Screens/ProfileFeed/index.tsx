@@ -14,13 +14,16 @@ import { Text } from '@/Components'
 
 interface Props {}
 
-export default function UserFeed({}: Props): React.ReactElement {
+export default function ProfileFeed({}: Props): React.ReactElement {
   const [firebase, firestore]: [
     ExtendedFirebaseInstance,
     ExtendedFirestoreInstance,
   ] = [useFirebase(), useFirestore()]
   return (
-    <MainContainer>
+    <MainContainer
+      headerProps={{
+        heading: 'Profile Feed',
+      }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Div p="md">
           <Text>User Feed</Text>

@@ -9,7 +9,9 @@ export { default as CommentPostScreen } from './CommentPost'
 
 // Profile screens
 export { default as ProfileScreen } from './Profile'
-export { default as EditProfileScreen } from './EditProfile'
+export { default as ProfileEditScreen } from './ProfileEdit'
+export { default as ProfileFeedScreen } from './ProfileFeed'
+export { default as PurchaseCreditsScreen } from './PurchaseCredits'
 
 // Practice
 export { default as PracticeScreen } from './Practice'

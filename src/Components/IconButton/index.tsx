@@ -20,6 +20,7 @@ export default function ({
 }: Props) {
   return (
     <Button
+      h={75}
       borderColor="gray600"
       mx="xs"
       rounded="xl"

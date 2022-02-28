@@ -1,9 +1,7 @@
 import * as React from 'react'
-import { TouchableOpacity, StyleSheet } from 'react-native'
-import { Div } from 'react-native-magnus'
+import { StyleSheet } from 'react-native'
 
 import { Image, Button } from '@/Components'
-import { ImageSourcePropType } from 'react-native'
 import { imageURI } from '@/Utils/Misc'
 
 interface Props {
@@ -13,12 +11,12 @@ interface Props {
 
 export default function ({ source, onPress }: Props) {
   return (
-    <Button w={'31%'} onPress={onPress} bg="transparent" m="xs">
+    <Button w={'32%'} onPress={onPress} bg="transparent" m={1} p="none">
       <Image
         source={imageURI(source)}
         w={120}
-        h={100}
-        rounded="sm"
+        h={120}
+        rounded="xl"
         resizeMode="cover"
       />
     </Button>

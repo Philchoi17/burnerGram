@@ -31,7 +31,7 @@ export default function Profile({}) {
   const { profile } = useAppSelector(({ firebase }) => firebase)
   const { navigate } = useNavigation<AppNavProps>()
 
-  const navigateToEditProfile = () => navigate(AppRoutes.EDIT_PROFILE_SCREEN)
+  const navigateToEditProfile = () => navigate(AppRoutes.PROFILE_EDIT_SCREEN)
 
   // state variables
   const [posts, setPosts] = useState<any[]>([])
@@ -67,6 +67,7 @@ export default function Profile({}) {
 
   const handlePostPress = () => {
     Logger.debug('handlePostPress')
+    navigate(AppRoutes.PROFILE_FEED_SCREEN)
   }
 
   const handleEarnedPress = () => {
@@ -75,6 +76,16 @@ export default function Profile({}) {
 
   const handleCreditsPressed = () => {
     setBuyCreditsAlert(true)
+  }
+
+  const navigateToPurchaseModal = () => {
+    try {
+      setBuyCreditsAlert(false)
+      navigate(AppRoutes.PURCHASE_CREDITS_SCREEN)
+    } catch (error) {
+      Logger.error('navigateToPurchaseModal: error =', error)
+      setBuyCreditsAlert(false)
+    }
   }
 
   return (
@@ -92,7 +103,7 @@ export default function Profile({}) {
         alertMsg="Are you sure you want to buy credits?"
         visible={buyCreditsAlert}
         actionButtons
-        confirmAction={() => {}}
+        confirmAction={navigateToPurchaseModal}
         cancelAction={toggleBuyCreditsAlert}
       />
       <MainContainer
