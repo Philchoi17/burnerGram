@@ -21,7 +21,9 @@ export type AppStackParams = {
   [AppRoutes.COMMENT_POST_SCREEN]: {
     feedPost: any
   }
-  [AppRoutes.PROFILE_FEED_SCREEN]: undefined
+  [AppRoutes.PROFILE_FEED_SCREEN]: {
+    posts: any[]
+  }
   [AppRoutes.PURCHASE_CREDITS_SCREEN]: undefined
 }
 

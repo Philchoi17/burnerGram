@@ -67,7 +67,7 @@ export default function Profile({}) {
 
   const handlePostPress = () => {
     Logger.debug('handlePostPress')
-    navigate(AppRoutes.PROFILE_FEED_SCREEN)
+    navigate(AppRoutes.PROFILE_FEED_SCREEN, { posts })
   }
 
   const handleEarnedPress = () => {
