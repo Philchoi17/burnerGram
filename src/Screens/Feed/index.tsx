@@ -12,24 +12,14 @@ import { useNavigation } from '@react-navigation/native'
 
 import { useAppSelector } from '@/Hooks'
 import { MainContainer } from '@/Containers'
-import {
-  Text,
-  Button,
-  Alert,
-  Icon,
-  ActionSheetOpener,
-  FabOptions,
-} from '@/Components'
+import { Alert, Icon, FabOptions } from '@/Components'
 import { Form, Input, Submit } from '@/Components/Forms'
 import { FeedCard } from '@/Components/Cards'
 import Logger from '@/Utils/Logger'
-import { generateUUID, getFirestoreRef } from '@/Utils/Misc'
+
 import { nicknameValidation, supportValidation } from './validation'
-import {
-  imagePickerLaunchCamera,
-  imagePickerLaunchLibrary,
-} from '@/Utils/ImagePicker'
-import { StoragePaths, CollectionNames, DocKeys } from '@/Constants/FireNames'
+
+import { CollectionNames, DocKeys } from '@/Constants/FireNames'
 import { AppNavProps } from '@/Navigators/NavParams'
 import { AppRoutes } from '../SCREENS'
 

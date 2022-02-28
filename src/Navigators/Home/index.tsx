@@ -42,6 +42,7 @@ export default function HomeTabs() {
           />
         ))}
       />
+
       {/* PRACTICE */}
       {/* <Screen
         component={PracticeScreen}
