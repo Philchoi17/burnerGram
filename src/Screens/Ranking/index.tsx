@@ -40,6 +40,11 @@ export default function Ranking({}) {
     )
     Logger.debug('gotUsers =', gotUsers)
     setUsersToRank(gotUsers)
+    // setUsersToRank(
+    //   gotUsers.sort(
+    //     (a: any, b: any) => Number(b.earnedSupport) - Number(a.earnedSupport),
+    //   ),
+    // )
   }
 
   const rankingsUseEffectHandler = () => {
@@ -58,6 +63,7 @@ export default function Ranking({}) {
         <Div p="md">
           <Text>Ranking Screen</Text>
           {usersToRank.map((user: profileType, idx: number) => {
+            if (!user.name) return null
             return (
               <RankingCard
                 key={String(idx)}
