@@ -126,6 +126,7 @@ export default function Profile({}) {
               nickname={profile.nickname}
               navigateToEditProfile={navigateToEditProfile}
               bio={profile.bio}
+              earnedSupport={profile.earnedSupport || 0}
               earnedPress={handleEarnedPress}
               creditsPress={handleCreditsPressed}
               postCount={posts?.length || 0}

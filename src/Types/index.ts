@@ -10,6 +10,7 @@ export type profileType = {
   nickname: string
   photoURL?: string | null
   updatedAt: FirebaseFirestoreTypes.Timestamp
+  earnedSupport?: number
 }
 
 // type used in usage examples
@@ -28,3 +29,5 @@ export type commentType = {
   updatedAt: FirebaseFirestoreTypes.Timestamp
   createdAt: FirebaseFirestoreTypes.Timestamp
 }
+
+export type feedType = {}

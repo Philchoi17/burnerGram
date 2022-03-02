@@ -25,7 +25,7 @@ export default function ({
   inputActions,
 }: Props) {
   return (
-    <Overlay visible={visible} p="xl">
+    <Overlay visible={visible} p="xl" onBackdropPress={cancelAction}>
       {alertTitle && (
         <Text size="2xl" fontWeight="700" textAlign="center">
           {alertTitle}

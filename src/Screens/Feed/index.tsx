@@ -21,7 +21,8 @@ import { nicknameValidation, supportValidation } from './validation'
 
 import { COLLECTION_NAMES, DOC_KEYS } from '@/Constants/FIRE_NAMES'
 import { AppNavProps } from '@/Navigators/NavParams'
-import { AppRoutes } from '../SCREENS'
+import { AppRoutes } from '@/Screens/SCREENS'
+import { getFirestoreRef } from '@/Utils/Misc'
 
 const { useState, useEffect } = React
 export default function Feed({}) {
@@ -168,15 +169,20 @@ export default function Feed({}) {
     }
   }
 
+  const [suppostPostId, setSupportPostId] = useState<string | null>(null)
   const handleSupport = async (profile: any, postId: string) => {
     try {
       Logger.debug('handleSupport')
       Logger.debug('profile', profile)
       Logger.debug('postId', postId)
+      setSupportPostId(postId)
       if (profile.credits < 1) {
         // if (true) {
         setNoCreditsAlert(true)
-        setTimeout(() => setNoCreditsAlert(false), 1000)
+        setTimeout(() => {
+          setNoCreditsAlert(false)
+          setSupportPostId(null)
+        }, 1000)
         return
       }
       setSupportAlert(true)
@@ -184,13 +190,66 @@ export default function Feed({}) {
       // await update(`${COLLECTION_NAMES.FEED_POSTS}/${postId}`, {})
     } catch (error) {
       Logger.error('handleSupport: error =', error)
+      setSupportPostId(null)
     }
   }
 
-  const supportSubmit = ({ credits }: { credits: number }) => {
+  const supportSubmit = async ({
+    support,
+    postId,
+  }: {
+    support: number
+    postId: string
+  }) => {
     try {
-      Logger.debug('supportSubmit')
+      if (profile.credits < support) {
+        const updated = await updateProfile({
+          credits: profile.credits - support,
+        })
+        Logger.debug('updated =', updated)
+        Logger.debug('postId =', postId)
+        const feedPostRef = getFirestoreRef(
+          `${COLLECTION_NAMES.FEED_POSTS}/${postId}`,
+        )
+        const getFeedPost = await feedPostRef.get()
+        // handle better [make type of feedPost]
+        const feedPost: any = getFeedPost.data()
+
+        const updatedFeedPost = await update(
+          `${COLLECTION_NAMES.FEED_POSTS}/${postId}`,
+          {
+            supportCount: Number(feedPost.supportCount) + Number(support),
+          },
+        )
+        Logger.debug('updatedFeedPost =', updatedFeedPost)
+
+        const feedPostOwnerRef = getFirestoreRef(
+          `${COLLECTION_NAMES.USERS}/${feedPost.userId}`,
+        )
+
+        const getFeedPostOwner = await feedPostOwnerRef.get()
+
+        const feedPostOwner: any = getFeedPostOwner.data()
+
+        const updatedFeedPostOwner = await update(
+          `${COLLECTION_NAMES.USERS}/${feedPost.userId}`,
+          {
+            earnedSupport: Number(feedPostOwner.earned || 0) + Number(support),
+          },
+        )
+
+        Logger.debug('updatedFeedPostOwner =', updatedFeedPostOwner)
+
+        // const updatedFeedPostUser = await update(
+        //   `${COLLECTION_NAMES.USERS}/${feedPost.userId}`, {
+        //     credits:
+        //   }
+        // )
+
+        // const updatedFeedPostUser = await update()
+      }
       setSupportAlert(false)
+      setSupportPostId(null)
     } catch (error) {
       Logger.error('supportSubmit: error =', error)
     }
@@ -201,7 +260,8 @@ export default function Feed({}) {
       onSubmit={supportSubmit}
       validationSchema={supportValidation}
       initialValues={{
-        credits: 0,
+        support: 0,
+        postId: suppostPostId,
       }}>
       <Input
         keyboardType="numeric"
@@ -244,8 +304,8 @@ export default function Feed({}) {
         visible={supportAlert}
         withInput
         inputActions={<SupportInput />}
-        actionButtons
-        confirmAction={() => {}}
+        // actionButtons
+        // confirmAction={() => {}}
         cancelAction={() => setSupportAlert(false)}
       />
       <Alert
@@ -296,6 +356,7 @@ export default function Feed({}) {
                     commentCount={feedPost.commentCount}
                     handleSupport={() => handleSupport(profile, feedPost.id)}
                     moreOptions={handleMoreOptions}
+                    supportCount={feedPost?.supportCount || 0}
                   />
                 )
               })

@@ -33,6 +33,7 @@ interface Props {
   commentCount: number
   handleSupport: () => void
   moreOptions: () => void
+  supportCount: number
 }
 
 // const moreOptions = () => {
@@ -70,6 +71,7 @@ export default function ({
   commentCount,
   handleSupport,
   moreOptions,
+  supportCount,
 }: Props) {
   // Logger.debug('Cards: Feed: render: postOwner =', postOwner)
   return (
@@ -129,7 +131,7 @@ export default function ({
           activeIcon="contactless-payment-circle"
           inactiveIcon="contactless-payment-circle-outline"
           enabled={false}
-          numberOf={0}
+          numberOf={supportCount}
         />
         <IconButton
           onPress={handleShare}
