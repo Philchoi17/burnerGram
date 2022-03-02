@@ -202,7 +202,7 @@ export default function Feed({}) {
     postId: string
   }) => {
     try {
-      if (profile.credits < support) {
+      if (profile.credits > support) {
         const updated = await updateProfile({
           credits: profile.credits - support,
         })
@@ -247,9 +247,16 @@ export default function Feed({}) {
         // )
 
         // const updatedFeedPostUser = await update()
+        setSupportAlert(false)
+        setSupportPostId(null)
+        return
       }
       setSupportAlert(false)
-      setSupportPostId(null)
+      setNoCreditsAlert(true)
+      setTimeout(() => {
+        setNoCreditsAlert(false)
+        setSupportPostId(null)
+      }, 1000)
     } catch (error) {
       Logger.error('supportSubmit: error =', error)
     }

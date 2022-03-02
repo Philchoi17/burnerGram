@@ -14,8 +14,18 @@ import Logger from '@/Utils/Logger'
 
 const { useState, useEffect } = React
 export default function PurchaseCredits({}) {
+  const [firebase, firestore]: [
+    ExtendedFirebaseInstance,
+    ExtendedFirestoreInstance,
+  ] = [useFirebase(), useFirestore()]
+
+  const { updateProfile } = firebase
+
   const buyCredit = (amt: number) => {
     Logger.debug('amt =', amt)
+    updateProfile({
+      credits: firebase.firestore.FieldValue.increment(amt),
+    })
   }
 
   return (
