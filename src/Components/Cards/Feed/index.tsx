@@ -10,6 +10,7 @@ import { imageURI } from '@/Utils/Misc'
 import Logger from '@/Utils/Logger'
 import dayjs from 'dayjs'
 import Logos from '@/Assets/Logos'
+import { profileType } from '@/Types'
 
 interface PostOwnerProps {
   photoURL: string
@@ -34,6 +35,7 @@ interface Props {
   handleSupport: () => void
   moreOptions: () => void
   supportCount: number
+  profile: profileType
 }
 
 // const moreOptions = () => {
@@ -72,6 +74,7 @@ export default function ({
   handleSupport,
   moreOptions,
   supportCount,
+  profile,
 }: Props) {
   // Logger.debug('Cards: Feed: render: postOwner =', postOwner)
   return (
@@ -133,13 +136,13 @@ export default function ({
           enabled={false}
           numberOf={supportCount}
         />
-        <IconButton
+        {/* <IconButton
           onPress={handleShare}
           activeIcon="share"
           inactiveIcon="share-outline"
           enabled={false}
           numberOf={0}
-        />
+        /> */}
       </Div>
       <Div row alignItems="center">
         <Text
@@ -172,7 +175,7 @@ export default function ({
         }}
         bg="transparent">
         <Image
-          source={imageURI(postOwner.photoURL)}
+          source={profile.photoURL ? imageURI(profile.photoURL) : Logos.logo}
           h={44}
           w={44}
           rounded="circle"

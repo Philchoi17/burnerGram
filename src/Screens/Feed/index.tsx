@@ -234,7 +234,8 @@ export default function Feed({}) {
         const updatedFeedPostOwner = await update(
           `${COLLECTION_NAMES.USERS}/${feedPost.userId}`,
           {
-            earnedSupport: Number(feedPostOwner.earned || 0) + Number(support),
+            earnedSupport:
+              Number(feedPostOwner.earnedSupport || 0) + Number(support),
           },
         )
 
@@ -364,6 +365,7 @@ export default function Feed({}) {
                     handleSupport={() => handleSupport(profile, feedPost.id)}
                     moreOptions={handleMoreOptions}
                     supportCount={feedPost?.supportCount || 0}
+                    profile={profile}
                   />
                 )
               })

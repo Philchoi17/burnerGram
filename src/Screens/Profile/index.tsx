@@ -132,6 +132,7 @@ export default function Profile({}) {
               postCount={posts?.length || 0}
               credits={profile.credits}
             />
+            {/* <Div flex={1} row borderWidth={1} justifyContent="center"> */}
             <Div
               // borderWidth={1}
               flexWrap="wrap"
@@ -149,6 +150,7 @@ export default function Profile({}) {
                   />
                 ))}
             </Div>
+            {/* </Div> */}
           </Div>
         </ScrollView>
       </MainContainer>

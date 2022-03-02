@@ -60,6 +60,9 @@ export default function ProfileFeed({}: Props): React.ReactElement {
                 handleComment={() => handleComment(feedPost)}
                 commentCount={feedPost.commentCount}
                 handleSupport={() => handleSupport(profile, feedPost.id)}
+                moreOptions={() => {}}
+                supportCount={feedPost.supportCount}
+                profile={profile}
               />
             )
           })}
