@@ -346,3 +346,13 @@ yarn add react-native-iap@next
 
 https://github.com/dooboolab/react-native-iap
 ```
+
+# react-native-push-notification
+
+```
+yarn add react-native-push-notification
+
+https://www.npmjs.com/package/react-native-push-notification
+
+https://github.com/zo0r/react-native-push-notification
+```

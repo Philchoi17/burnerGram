@@ -8,6 +8,7 @@ export enum COLLECTION_NAMES {
   PUBLIC_USERS = 'publicUsers',
   FEED_POSTS = 'feedPosts',
   POST_COMMENTS = 'postComments',
+  ALERTS = 'alerts',
 }
 
 export enum DOC_KEYS {
