@@ -547,6 +547,15 @@ PODS:
   - GTMSessionFetcher/Core (1.7.0)
   - leveldb-library (1.22.1)
   - libevent (2.1.12)
+  - libwebp (1.2.1):
+    - libwebp/demux (= 1.2.1)
+    - libwebp/mux (= 1.2.1)
+    - libwebp/webp (= 1.2.1)
+  - libwebp/demux (1.2.1):
+    - libwebp/webp
+  - libwebp/mux (1.2.1):
+    - libwebp/demux
+  - libwebp/webp (1.2.1)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
     - nanopb/encode (= 2.30908.0)
@@ -861,6 +870,10 @@ PODS:
     - React-perflogger (= 0.67.2)
   - RNCAsyncStorage (1.16.1):
     - React-Core
+  - RNFastImage (8.5.11):
+    - React-Core
+    - SDWebImage (~> 5.11.1)
+    - SDWebImageWebPCoder (~> 0.8.4)
   - RNFBApp (14.5.0):
     - Firebase/CoreOnly (= 8.12.1)
     - React-Core
@@ -891,6 +904,8 @@ PODS:
   - RNGoogleSignin (7.1.0):
     - GoogleSignIn (~> 6.1.0)
     - React-Core
+  - RNIap (8.0.0-rc.6):
+    - React-Core
   - RNPermissions (3.2.0):
     - React-Core
   - RNScreens (3.12.0):
@@ -900,6 +915,12 @@ PODS:
     - React
   - RNVectorIcons (9.1.0):
     - React-Core
+  - SDWebImage (5.11.1):
+    - SDWebImage/Core (= 5.11.1)
+  - SDWebImage/Core (5.11.1)
+  - SDWebImageWebPCoder (0.8.4):
+    - libwebp (~> 1.0)
+    - SDWebImage/Core (~> 5.10)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -980,6 +1001,7 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - RNFastImage (from `../node_modules/react-native-fast-image`)
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBDatabase (from `../node_modules/@react-native-firebase/database`)"
@@ -988,6 +1010,7 @@ DEPENDENCIES:
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
+  - RNIap (from `../node_modules/react-native-iap`)
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -1029,9 +1052,12 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - libevent
+    - libwebp
     - nanopb
     - OpenSSL-Universal
     - PromisesObjC
+    - SDWebImage
+    - SDWebImageWebPCoder
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -1137,6 +1163,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
+  RNFastImage:
+    :path: "../node_modules/react-native-fast-image"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
@@ -1153,6 +1181,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/storage"
   RNGoogleSignin:
     :path: "../node_modules/@react-native-google-signin/google-signin"
+  RNIap:
+    :path: "../node_modules/react-native-iap"
   RNPermissions:
     :path: "../node_modules/react-native-permissions"
   RNScreens:
@@ -1203,6 +1233,7 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
+  libwebp: 98a37e597e40bfdb4c911fc98f2c53d0b12d05fc
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
   Permission-AppTrackingTransparency: 95c9308dd40819fa9f6830751d0ef3ea11498723
@@ -1252,6 +1283,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 2450b43df7ffe8e805a0b3dcb2abd4282f1f1836
   ReactCommon: d98c6c96b567f9b3a15f9fd4cc302c1eda8e3cf2
   RNCAsyncStorage: b49b4e38a1548d03b74b30e558a1d18465b94be7
+  RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
   RNFBApp: 06c8447270d295edc431bccd55970d8711a07a42
   RNFBAuth: e248a56b1d28d3b53b54b72a296cf9270df1d96e
   RNFBDatabase: b3d47ea4f15e80004e84ffc5597bf409a14f9834
@@ -1260,10 +1292,13 @@ SPEC CHECKSUMS:
   RNFBMessaging: 8e3575bb0303b43a852bf5decbe99c3272035048
   RNFBStorage: e061bbb005be42225e95cb62af7768bda4d24e3a
   RNGoogleSignin: 233fdfa02522216c19bf02a1e6c60b60a75ffb4c
+  RNIap: df0d62b38505dcdae3ee4b8ca3c267f7af919946
   RNPermissions: f7ebe52db07c00901127966ca080b4ec6a6ceb0a
   RNScreens: 2559f98b0835103cbef3b26ba77fa61d4bb37ae7
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 7923e585eaeb139b9f4531d25a125a1500162a0b
+  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
+  SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
   Yoga: 9b6696970c3289e8dea34b3eda93f23e61fb8121
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 

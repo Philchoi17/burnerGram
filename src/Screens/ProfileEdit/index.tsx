@@ -25,13 +25,13 @@ import {
   imagePickerLaunchCamera,
   imagePickerLaunchLibrary,
 } from '@/Utils/ImagePicker'
-import { CollectionNames, StoragePaths } from '@/Constants/FireNames'
+import { COLLECTION_NAMES, STORAGE_PATHS } from '@/Constants/FIRE_NAMES'
 import Logger from '@/Utils/Logger'
 
 interface Props {}
 
 const { useEffect, useState } = React
-export default function EditProfile({}: Props): JSX.Element {
+export default function ProfileEdit({}: Props): JSX.Element {
   const [firebase, firestore]: [
     ExtendedFirebaseInstance,
     ExtendedFirestoreInstance,
@@ -52,7 +52,7 @@ export default function EditProfile({}: Props): JSX.Element {
     setUploading(true)
     try {
       Logger.debug('uploadToServer: image =', image)
-      const path = StoragePaths.PROFILE_IMAGE
+      const path = STORAGE_PATHS.PROFILE_IMAGE
       const { uid } = await auth().currentUser
       const ref = `${path}/${uid}.jpg`
       const task = await storage().ref(ref).putFile(image)
@@ -60,7 +60,7 @@ export default function EditProfile({}: Props): JSX.Element {
       const uploadSnapshot = await storage().ref(ref)
       const photoURL = await uploadSnapshot.getDownloadURL()
       await updateProfile({ photoURL })
-      await update(`${CollectionNames.PUBLIC_USERS}/${uid}`, { photoURL })
+      await update(`${COLLECTION_NAMES.PUBLIC_USERS}/${uid}`, { photoURL })
     } catch (error) {
       Logger.debug('uploadToServer: error =', error)
     } finally {

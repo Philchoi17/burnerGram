@@ -17,6 +17,7 @@ interface Props {
   navigateToEditProfile: () => void
   earnedPress: () => void
   creditsPress: () => void
+  earnedSupport: number
 }
 
 // const photoURL =
@@ -34,6 +35,7 @@ export default function ({
   creditsPress,
   postCount,
   credits,
+  earnedSupport,
 }: Props): React.ReactElement {
   return (
     <Div justifyContent="center" alignItems="flex-start" rounded="sm">
@@ -78,7 +80,11 @@ export default function ({
         </Text>
       </Div>
       <Div row justifyContent="space-around" alignItems="stretch">
-        <IconButton number={0} label="earned" onPress={earnedPress} />
+        <IconButton
+          number={earnedSupport}
+          label="earned"
+          onPress={earnedPress}
+        />
         <IconButton iconName="plus" label="credits" onPress={creditsPress} />
       </Div>
       <Button

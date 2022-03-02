@@ -8,30 +8,21 @@ import {
   ExtendedFirestoreInstance,
   useFirestoreConnect,
 } from 'react-redux-firebase'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useIsFocused } from '@react-navigation/native'
 
 import { useAppSelector } from '@/Hooks'
 import { MainContainer } from '@/Containers'
-import {
-  Text,
-  Button,
-  Alert,
-  Icon,
-  ActionSheetOpener,
-  FabOptions,
-} from '@/Components'
+import { Alert, Icon, FabOptions } from '@/Components'
 import { Form, Input, Submit } from '@/Components/Forms'
 import { FeedCard } from '@/Components/Cards'
 import Logger from '@/Utils/Logger'
-import { generateUUID, getFirestoreRef } from '@/Utils/Misc'
+
 import { nicknameValidation, supportValidation } from './validation'
-import {
-  imagePickerLaunchCamera,
-  imagePickerLaunchLibrary,
-} from '@/Utils/ImagePicker'
-import { StoragePaths, CollectionNames, DocKeys } from '@/Constants/FireNames'
+
+import { COLLECTION_NAMES, DOC_KEYS } from '@/Constants/FIRE_NAMES'
 import { AppNavProps } from '@/Navigators/NavParams'
-import { AppRoutes } from '../SCREENS'
+import { AppRoutes } from '@/Screens/SCREENS'
+import { getFirestoreRef } from '@/Utils/Misc'
 
 const { useState, useEffect } = React
 export default function Feed({}) {
@@ -41,6 +32,7 @@ export default function Feed({}) {
   ] = [useFirebase(), useFirestore()]
   const { profile } = useAppSelector(({ firebase }) => firebase)
   const { navigate } = useNavigation<AppNavProps>()
+  const isFocused = useIsFocused()
 
   const { logout, updateProfile, storage, auth } = firebase
   const { update, get } = firestore
@@ -51,6 +43,7 @@ export default function Feed({}) {
   const [activity, setActivity] = useState<boolean>(false)
   const [noCreditsAlert, setNoCreditsAlert] = useState<boolean>(false)
   const [supportAlert, setSupportAlert] = useState<boolean>(false)
+  const [moreOptionsAlert, setMoreOptionsAlert] = useState<boolean>(false)
 
   const toggleNoCreditsAlert = () => setNoCreditsAlert(!noCreditsAlert)
 
@@ -60,7 +53,9 @@ export default function Feed({}) {
         try {
           Logger.debug('nickname =', nickname)
           updateProfile({ nickname })
-          update(`${CollectionNames.PUBLIC_USERS}/${profile.uid}`, { nickname })
+          update(`${COLLECTION_NAMES.PUBLIC_USERS}/${profile.uid}`, {
+            nickname,
+          })
           setNicknameAlert(false)
         } catch (error) {
           Logger.debug('InputActions: onSubmit: error =', error)
@@ -96,10 +91,27 @@ export default function Feed({}) {
   useEffect(checkNickNameHandler, [profile])
 
   useFirestoreConnect({
-    collection: 'feedPosts',
-    orderBy: [DocKeys.UPDATED_AT, 'desc'],
+    collection: COLLECTION_NAMES.FEED_POSTS,
+    orderBy: [DOC_KEYS.UPDATED_AT, 'desc'],
     limit: 10,
   })
+
+  const getFeedPosts = async () => {
+    try {
+      await get({
+        collection: COLLECTION_NAMES.FEED_POSTS,
+        orderBy: [DOC_KEYS.UPDATED_AT, 'desc'],
+        limit: 10,
+      })
+    } catch (error) {
+      Logger.error('getFeedPosts: error =', error)
+    }
+  }
+  // patch for when feed screen is focused
+  useEffect(() => {
+    Logger.debug('is Focused')
+    getFeedPosts()
+  }, [isFocused])
 
   const { feedPosts } = useAppSelector(({ firestore }) => {
     return firestore.ordered
@@ -107,6 +119,9 @@ export default function Feed({}) {
 
   const feedPostListener = () => {
     Logger.debug('feedPostListener: feedPosts =')
+    // getFeedPosts()
+    // get()
+
     return () => {
       // clean up
     }
@@ -120,7 +135,7 @@ export default function Feed({}) {
     Logger.debug('handleLike: feedPost =', feedPost)
     try {
       if (feedPost.likedUsers.includes(userId)) return
-      await update(`${CollectionNames.FEED_POSTS}/${feedPost.id}`, {
+      await update(`${COLLECTION_NAMES.FEED_POSTS}/${feedPost.id}`, {
         likedUsers: [...(feedPost.likedUsers || []), userId],
         dislikedUsers: [...(feedPost.dislikedUsers || [])].filter(
           (id) => id != userId,
@@ -134,7 +149,7 @@ export default function Feed({}) {
   const handleDislike = async (userId: string, feedPost: any) => {
     try {
       if (feedPost.dislikedUsers.includes(userId)) return
-      await update(`${CollectionNames.FEED_POSTS}/${feedPost.id}`, {
+      await update(`${COLLECTION_NAMES.FEED_POSTS}/${feedPost.id}`, {
         dislikedUsers: [...(feedPost.dislikedUsers || []), userId],
         likedUsers: [...(feedPost.likedUsers || [])].filter(
           (id) => id != userId,
@@ -154,29 +169,95 @@ export default function Feed({}) {
     }
   }
 
+  const [suppostPostId, setSupportPostId] = useState<string | null>(null)
   const handleSupport = async (profile: any, postId: string) => {
     try {
       Logger.debug('handleSupport')
       Logger.debug('profile', profile)
       Logger.debug('postId', postId)
+      setSupportPostId(postId)
       if (profile.credits < 1) {
         // if (true) {
         setNoCreditsAlert(true)
-        setTimeout(() => setNoCreditsAlert(false), 1000)
+        setTimeout(() => {
+          setNoCreditsAlert(false)
+          setSupportPostId(null)
+        }, 1000)
         return
       }
       setSupportAlert(true)
       // await updateProfile({ credits: profile.credits - 1 })
-      // await update(`${CollectionNames.FEED_POSTS}/${postId}`, {})
+      // await update(`${COLLECTION_NAMES.FEED_POSTS}/${postId}`, {})
     } catch (error) {
       Logger.error('handleSupport: error =', error)
+      setSupportPostId(null)
     }
   }
 
-  const supportSubmit = () => {
+  const supportSubmit = async ({
+    support,
+    postId,
+  }: {
+    support: number
+    postId: string
+  }) => {
     try {
-      Logger.debug('supportSubmit')
+      if (profile.credits > support) {
+        const updated = await updateProfile({
+          credits: profile.credits - support,
+        })
+        Logger.debug('updated =', updated)
+        Logger.debug('postId =', postId)
+        const feedPostRef = getFirestoreRef(
+          `${COLLECTION_NAMES.FEED_POSTS}/${postId}`,
+        )
+        const getFeedPost = await feedPostRef.get()
+        // handle better [make type of feedPost]
+        const feedPost: any = getFeedPost.data()
+
+        const updatedFeedPost = await update(
+          `${COLLECTION_NAMES.FEED_POSTS}/${postId}`,
+          {
+            supportCount: Number(feedPost.supportCount) + Number(support),
+          },
+        )
+        Logger.debug('updatedFeedPost =', updatedFeedPost)
+
+        const feedPostOwnerRef = getFirestoreRef(
+          `${COLLECTION_NAMES.USERS}/${feedPost.userId}`,
+        )
+
+        const getFeedPostOwner = await feedPostOwnerRef.get()
+
+        const feedPostOwner: any = getFeedPostOwner.data()
+
+        const updatedFeedPostOwner = await update(
+          `${COLLECTION_NAMES.USERS}/${feedPost.userId}`,
+          {
+            earnedSupport:
+              Number(feedPostOwner.earnedSupport || 0) + Number(support),
+          },
+        )
+
+        Logger.debug('updatedFeedPostOwner =', updatedFeedPostOwner)
+
+        // const updatedFeedPostUser = await update(
+        //   `${COLLECTION_NAMES.USERS}/${feedPost.userId}`, {
+        //     credits:
+        //   }
+        // )
+
+        // const updatedFeedPostUser = await update()
+        setSupportAlert(false)
+        setSupportPostId(null)
+        return
+      }
       setSupportAlert(false)
+      setNoCreditsAlert(true)
+      setTimeout(() => {
+        setNoCreditsAlert(false)
+        setSupportPostId(null)
+      }, 1000)
     } catch (error) {
       Logger.error('supportSubmit: error =', error)
     }
@@ -187,7 +268,8 @@ export default function Feed({}) {
       onSubmit={supportSubmit}
       validationSchema={supportValidation}
       initialValues={{
-        credits: 0,
+        support: 0,
+        postId: suppostPostId,
       }}>
       <Input
         keyboardType="numeric"
@@ -197,6 +279,19 @@ export default function Feed({}) {
       />
     </Form>
   )
+
+  const handleMoreOptions = async () => {
+    try {
+      Logger.debug('handleMoreOptions')
+      setMoreOptionsAlert(true)
+    } catch (error) {
+      Logger.error('handleMoreOptions: error =', error)
+    }
+  }
+
+  const navigateBellAlertModal = () => {
+    navigate(AppRoutes.BELL_ALERTS_SCREEN)
+  }
 
   return (
     <Host>
@@ -217,6 +312,17 @@ export default function Feed({}) {
         visible={supportAlert}
         withInput
         inputActions={<SupportInput />}
+        // actionButtons
+        // confirmAction={() => {}}
+        cancelAction={() => setSupportAlert(false)}
+      />
+      <Alert
+        alertTitle="More Options"
+        alertMsg="more options"
+        visible={moreOptionsAlert}
+        actionButtons
+        confirmAction={() => {}}
+        cancelAction={() => setMoreOptionsAlert(false)}
       />
       <MainContainer
         headerProps={{
@@ -226,7 +332,7 @@ export default function Feed({}) {
             prefix: null,
             suffix: (
               <Div row mx="md">
-                <TouchableOpacity onPress={() => {}}>
+                <TouchableOpacity onPress={navigateBellAlertModal}>
                   <Icon name="bell" size="6xl" px="md" />
                 </TouchableOpacity>
               </Div>
@@ -257,6 +363,9 @@ export default function Feed({}) {
                     handleComment={() => handleComment(feedPost)}
                     commentCount={feedPost.commentCount}
                     handleSupport={() => handleSupport(profile, feedPost.id)}
+                    moreOptions={handleMoreOptions}
+                    supportCount={feedPost?.supportCount || 0}
+                    profile={profile}
                   />
                 )
               })
@@ -273,7 +382,7 @@ export default function Feed({}) {
           },
           {
             title: 'Cancel',
-            method: () => {},
+            method: () => Logger.debug('handle close'),
             icon: 'close',
           },
         ]}

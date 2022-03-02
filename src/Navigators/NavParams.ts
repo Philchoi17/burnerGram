@@ -16,11 +16,17 @@ export type AuthNavProps = NativeStackNavigationProp<
 export type AppStackParams = {
   [AppRoutes.FEED_SCREEN]: undefined
   [AppRoutes.PROFILE_SCREEN]: undefined
-  [AppRoutes.EDIT_PROFILE_SCREEN]: undefined
+  [AppRoutes.PROFILE_EDIT_SCREEN]: undefined
   [AppRoutes.UPLOAD_SCREEN]: undefined
   [AppRoutes.COMMENT_POST_SCREEN]: {
     feedPost: any
   }
+  [AppRoutes.PROFILE_FEED_SCREEN]: {
+    posts: any[]
+  }
+  [AppRoutes.PURCHASE_CREDITS_SCREEN]: undefined
+  [AppRoutes.BELL_ALERTS_SCREEN]: undefined
+  [AppRoutes.RANKING_SCREEN]: undefined
 }
 
 export type AppNavProps = NativeStackNavigationProp<AppStackParams, AppRoutes>

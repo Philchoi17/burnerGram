@@ -5,9 +5,12 @@ import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
 
 import { Image, Text, Button, Icon } from '@/Components'
 import IconButton from './IconButton'
+import DoubleTap from './DoubleTap'
 import { imageURI } from '@/Utils/Misc'
 import Logger from '@/Utils/Logger'
 import dayjs from 'dayjs'
+import Logos from '@/Assets/Logos'
+import { profileType } from '@/Types'
 
 interface PostOwnerProps {
   photoURL: string
@@ -30,11 +33,14 @@ interface Props {
   handleComment: () => void
   commentCount: number
   handleSupport: () => void
+  moreOptions: () => void
+  supportCount: number
+  profile: profileType
 }
 
-const moreOptions = () => {
-  Logger.debug('Cards: Feed: moreOptions')
-}
+// const moreOptions = () => {
+//   Logger.debug('Cards: Feed: moreOptions')
+// }
 
 const handleShare = () => {
   Logger.debug('Cards: Feed: handleShare')
@@ -66,14 +72,19 @@ export default function ({
   handleComment,
   commentCount,
   handleSupport,
+  moreOptions,
+  supportCount,
+  profile,
 }: Props) {
-  // Logger.debug('Cards: Feed: render: updatedAt =', updatedAt)
+  // Logger.debug('Cards: Feed: render: postOwner =', postOwner)
   return (
-    <Div p="md" rounded="md" my="md" borderWidth={0.3} borderColor="gray400">
+    <Div p="lg" rounded="md" my="md" borderWidth={0.3} borderColor="gray400">
       <Div row alignItems="center" justifyContent="space-between" mb="md">
         <Div row alignItems="center">
           <Image
-            source={imageURI(postOwner.photoURL)}
+            source={
+              postOwner?.photoURL ? imageURI(postOwner?.photoURL) : Logos.logo
+            }
             w={55}
             h={55}
             rounded="circle"
@@ -88,7 +99,14 @@ export default function ({
           </Button>
         </Div>
       </Div>
-      <Image source={imageURI(downloadURL)} w="100%" h={300} rounded="md" />
+      <DoubleTap
+        delay={200}
+        onPress={() => {
+          Logger.debug('onPress')
+        }}
+        doublePress={handleLike}>
+        <Image source={imageURI(downloadURL)} w="100%" h={300} rounded="md" />
+      </DoubleTap>
       <Div row justifyContent="space-between">
         <IconButton
           onPress={handleLike}
@@ -116,15 +134,15 @@ export default function ({
           activeIcon="contactless-payment-circle"
           inactiveIcon="contactless-payment-circle-outline"
           enabled={false}
-          numberOf={0}
+          numberOf={supportCount}
         />
-        <IconButton
+        {/* <IconButton
           onPress={handleShare}
           activeIcon="share"
           inactiveIcon="share-outline"
           enabled={false}
           numberOf={0}
-        />
+        /> */}
       </Div>
       <Div row alignItems="center">
         <Text
@@ -157,7 +175,7 @@ export default function ({
         }}
         bg="transparent">
         <Image
-          source={imageURI(postOwner.photoURL)}
+          source={profile.photoURL ? imageURI(profile.photoURL) : Logos.logo}
           h={44}
           w={44}
           rounded="circle"

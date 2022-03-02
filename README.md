@@ -335,3 +335,14 @@ yarn add react-native-progress
 
 yarn add react-native-svg
 ```
+
+TODO: will use
+
+# react-native-iap@next
+
+```
+
+yarn add react-native-iap@next
+
+https://github.com/dooboolab/react-native-iap
+```

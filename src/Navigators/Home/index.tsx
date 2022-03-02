@@ -6,6 +6,7 @@ import { AppStacks } from '../STACKS'
 import { FeedScreen, ProfileScreen, PracticeScreen } from '@/Screens'
 import FeedStack from '../Feed'
 import ProfileStack from '../Profile'
+import RankingStack from '../Ranking'
 
 import { Icon } from '@/Components'
 
@@ -42,6 +43,14 @@ export default function HomeTabs() {
           />
         ))}
       />
+      <Screen
+        component={RankingStack}
+        name={AppStacks.RANKING_STACK}
+        options={tabOptions(({ focused }) => (
+          <Icon name={focused ? 'trophy' : 'trophy-outline'} size="6xl" />
+        ))}
+      />
+
       {/* PRACTICE */}
       {/* <Screen
         component={PracticeScreen}

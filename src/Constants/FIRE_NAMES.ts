@@ -1,16 +1,16 @@
-export enum StoragePaths {
+export enum STORAGE_PATHS {
   PROFILE_IMAGE = '/profile/images',
   FEED_IMAGES = '/feed/images',
 }
 
-export enum CollectionNames {
+export enum COLLECTION_NAMES {
   USERS = 'users',
   PUBLIC_USERS = 'publicUsers',
   FEED_POSTS = 'feedPosts',
   POST_COMMENTS = 'postComments',
 }
 
-export enum DocKeys {
+export enum DOC_KEYS {
   USER_ID = 'userId',
   CREATED_AT = 'createdAt',
   UPDATED_AT = 'updatedAt',

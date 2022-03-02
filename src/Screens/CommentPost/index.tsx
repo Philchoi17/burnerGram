@@ -18,7 +18,7 @@ import { MainContainer } from '@/Containers'
 import Logger from '@/Utils/Logger'
 import { validationSchema } from './validation'
 import KeyboardAvoider from '@/Components/KeyboardAvoider'
-import { CollectionNames } from '@/Constants/FireNames'
+import { COLLECTION_NAMES } from '@/Constants/FIRE_NAMES'
 import { useAppSelector } from '@/Hooks'
 import Comment from './Comment'
 
@@ -46,7 +46,7 @@ export default function CommentPost({}: Props) {
   // const getPostComments = async () => {
   //   try {
   //     const postComments = await get(
-  //       `${CollectionNames.POST_COMMENTS}/${postId}`,
+  //       `${COLLECTION_NAMES.POST_COMMENTS}/${postId}`,
   //     )
   //     const gotComments = await postComments.data()
   //     Logger.debug('postComments: gotComments =', gotComments)
@@ -61,7 +61,7 @@ export default function CommentPost({}: Props) {
     Logger.debug('values =', values)
     try {
       const now = new Date()
-      await update(`${CollectionNames.POST_COMMENTS}/${postId}`, {
+      await update(`${COLLECTION_NAMES.POST_COMMENTS}/${postId}`, {
         comments: [
           ...postComments.comments,
           {
@@ -74,7 +74,7 @@ export default function CommentPost({}: Props) {
           },
         ],
       })
-      await update(`${CollectionNames.FEED_POSTS}/${postId}`, {
+      await update(`${COLLECTION_NAMES.FEED_POSTS}/${postId}`, {
         commentCount: postComments.comments.length + 1,
       })
     } catch (error) {
@@ -83,7 +83,7 @@ export default function CommentPost({}: Props) {
   }
 
   useFirestoreConnect({
-    collection: CollectionNames.POST_COMMENTS,
+    collection: COLLECTION_NAMES.POST_COMMENTS,
     doc: postId,
   })
 

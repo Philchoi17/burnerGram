@@ -17,7 +17,7 @@ import { PhotoTile } from '@/Components/Tiles'
 import Logger from '@/Utils/Logger'
 import { AppRoutes } from '@/Screens/SCREENS'
 import { AppNavProps } from '@/Navigators/NavParams'
-import { CollectionNames, DocKeys } from '@/Constants/FireNames'
+import { COLLECTION_NAMES, DOC_KEYS } from '@/Constants/FIRE_NAMES'
 import { commentType } from '@/Types'
 
 const { useEffect, useState } = React
@@ -31,7 +31,7 @@ export default function Profile({}) {
   const { profile } = useAppSelector(({ firebase }) => firebase)
   const { navigate } = useNavigation<AppNavProps>()
 
-  const navigateToEditProfile = () => navigate(AppRoutes.EDIT_PROFILE_SCREEN)
+  const navigateToEditProfile = () => navigate(AppRoutes.PROFILE_EDIT_SCREEN)
 
   // state variables
   const [posts, setPosts] = useState<any[]>([])
@@ -44,9 +44,9 @@ export default function Profile({}) {
   const getUserPosts = async () => {
     try {
       const userPosts = await get({
-        collection: CollectionNames.FEED_POSTS,
-        where: [DocKeys.USER_ID, '==', profile.uid],
-        orderBy: [DocKeys.UPDATED_AT, 'desc'],
+        collection: COLLECTION_NAMES.FEED_POSTS,
+        where: [DOC_KEYS.USER_ID, '==', profile.uid],
+        orderBy: [DOC_KEYS.UPDATED_AT, 'desc'],
       })
       // Logger.debug('userPosts', userPosts)
       const gotPosts = await userPosts.docs.map((doc: any) => doc.data())
@@ -67,6 +67,7 @@ export default function Profile({}) {
 
   const handlePostPress = () => {
     Logger.debug('handlePostPress')
+    navigate(AppRoutes.PROFILE_FEED_SCREEN, { posts })
   }
 
   const handleEarnedPress = () => {
@@ -75,6 +76,16 @@ export default function Profile({}) {
 
   const handleCreditsPressed = () => {
     setBuyCreditsAlert(true)
+  }
+
+  const navigateToPurchaseModal = () => {
+    try {
+      setBuyCreditsAlert(false)
+      navigate(AppRoutes.PURCHASE_CREDITS_SCREEN)
+    } catch (error) {
+      Logger.error('navigateToPurchaseModal: error =', error)
+      setBuyCreditsAlert(false)
+    }
   }
 
   return (
@@ -92,7 +103,7 @@ export default function Profile({}) {
         alertMsg="Are you sure you want to buy credits?"
         visible={buyCreditsAlert}
         actionButtons
-        confirmAction={() => {}}
+        confirmAction={navigateToPurchaseModal}
         cancelAction={toggleBuyCreditsAlert}
       />
       <MainContainer
@@ -115,11 +126,13 @@ export default function Profile({}) {
               nickname={profile.nickname}
               navigateToEditProfile={navigateToEditProfile}
               bio={profile.bio}
+              earnedSupport={profile.earnedSupport || 0}
               earnedPress={handleEarnedPress}
               creditsPress={handleCreditsPressed}
               postCount={posts?.length || 0}
               credits={profile.credits}
             />
+            {/* <Div flex={1} row borderWidth={1} justifyContent="center"> */}
             <Div
               // borderWidth={1}
               flexWrap="wrap"
@@ -137,6 +150,7 @@ export default function Profile({}) {
                   />
                 ))}
             </Div>
+            {/* </Div> */}
           </Div>
         </ScrollView>
       </MainContainer>
