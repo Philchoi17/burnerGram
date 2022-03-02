@@ -25,7 +25,7 @@ export default function AuthStack() {
       <Group screenOptions={{ presentation: 'modal' }}>
         <Screen
           component={BellAlertScreen}
-          name={AppRoutes.BELL_ALERT_SCREEN}
+          name={AppRoutes.BELL_ALERTS_SCREEN}
         />
       </Group>
     </Navigator>

@@ -9,6 +9,7 @@ import DoubleTap from './DoubleTap'
 import { imageURI } from '@/Utils/Misc'
 import Logger from '@/Utils/Logger'
 import dayjs from 'dayjs'
+import Logos from '@/Assets/Logos'
 
 interface PostOwnerProps {
   photoURL: string
@@ -70,13 +71,15 @@ export default function ({
   handleSupport,
   moreOptions,
 }: Props) {
-  // Logger.debug('Cards: Feed: render: updatedAt =', updatedAt)
+  // Logger.debug('Cards: Feed: render: postOwner =', postOwner)
   return (
     <Div p="lg" rounded="md" my="md" borderWidth={0.3} borderColor="gray400">
       <Div row alignItems="center" justifyContent="space-between" mb="md">
         <Div row alignItems="center">
           <Image
-            source={imageURI(postOwner.photoURL)}
+            source={
+              postOwner?.photoURL ? imageURI(postOwner?.photoURL) : Logos.logo
+            }
             w={55}
             h={55}
             rounded="circle"

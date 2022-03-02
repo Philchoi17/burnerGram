@@ -13,7 +13,7 @@ import AuthStack from './Auth'
 import HomeTabs from './Home'
 import Logger from '@/Utils/Logger'
 import { Loading } from '@/Components'
-import { CollectionNames } from '@/Constants/FireNames'
+import { COLLECTION_NAMES } from '@/Constants/FIRE_NAMES'
 
 const { useEffect, useState } = React
 export default function Navigator() {
@@ -64,7 +64,7 @@ export default function Navigator() {
           await firebase.updateProfile(userPkg)
           Logger.debug('user =', user)
           const { uid } = user
-          await set(`${CollectionNames.PUBLIC_USERS}/${uid}`, {
+          await set(`${COLLECTION_NAMES.PUBLIC_USERS}/${uid}`, {
             ...userPkg,
             uid,
           })

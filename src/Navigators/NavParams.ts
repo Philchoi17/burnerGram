@@ -25,7 +25,8 @@ export type AppStackParams = {
     posts: any[]
   }
   [AppRoutes.PURCHASE_CREDITS_SCREEN]: undefined
-  [AppRoutes.BELL_ALERT_SCREEN]: undefined
+  [AppRoutes.BELL_ALERTS_SCREEN]: undefined
+  [AppRoutes.RANKING_SCREEN]: undefined
 }
 
 export type AppNavProps = NativeStackNavigationProp<AppStackParams, AppRoutes>

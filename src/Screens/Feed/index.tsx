@@ -8,7 +8,7 @@ import {
   ExtendedFirestoreInstance,
   useFirestoreConnect,
 } from 'react-redux-firebase'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useIsFocused } from '@react-navigation/native'
 
 import { useAppSelector } from '@/Hooks'
 import { MainContainer } from '@/Containers'
@@ -19,7 +19,7 @@ import Logger from '@/Utils/Logger'
 
 import { nicknameValidation, supportValidation } from './validation'
 
-import { CollectionNames, DocKeys } from '@/Constants/FireNames'
+import { COLLECTION_NAMES, DOC_KEYS } from '@/Constants/FIRE_NAMES'
 import { AppNavProps } from '@/Navigators/NavParams'
 import { AppRoutes } from '../SCREENS'
 
@@ -31,6 +31,7 @@ export default function Feed({}) {
   ] = [useFirebase(), useFirestore()]
   const { profile } = useAppSelector(({ firebase }) => firebase)
   const { navigate } = useNavigation<AppNavProps>()
+  const isFocused = useIsFocused()
 
   const { logout, updateProfile, storage, auth } = firebase
   const { update, get } = firestore
@@ -51,7 +52,9 @@ export default function Feed({}) {
         try {
           Logger.debug('nickname =', nickname)
           updateProfile({ nickname })
-          update(`${CollectionNames.PUBLIC_USERS}/${profile.uid}`, { nickname })
+          update(`${COLLECTION_NAMES.PUBLIC_USERS}/${profile.uid}`, {
+            nickname,
+          })
           setNicknameAlert(false)
         } catch (error) {
           Logger.debug('InputActions: onSubmit: error =', error)
@@ -87,10 +90,27 @@ export default function Feed({}) {
   useEffect(checkNickNameHandler, [profile])
 
   useFirestoreConnect({
-    collection: 'feedPosts',
-    orderBy: [DocKeys.UPDATED_AT, 'desc'],
+    collection: COLLECTION_NAMES.FEED_POSTS,
+    orderBy: [DOC_KEYS.UPDATED_AT, 'desc'],
     limit: 10,
   })
+
+  const getFeedPosts = async () => {
+    try {
+      await get({
+        collection: COLLECTION_NAMES.FEED_POSTS,
+        orderBy: [DOC_KEYS.UPDATED_AT, 'desc'],
+        limit: 10,
+      })
+    } catch (error) {
+      Logger.error('getFeedPosts: error =', error)
+    }
+  }
+  // patch for when feed screen is focused
+  useEffect(() => {
+    Logger.debug('is Focused')
+    getFeedPosts()
+  }, [isFocused])
 
   const { feedPosts } = useAppSelector(({ firestore }) => {
     return firestore.ordered
@@ -98,6 +118,9 @@ export default function Feed({}) {
 
   const feedPostListener = () => {
     Logger.debug('feedPostListener: feedPosts =')
+    // getFeedPosts()
+    // get()
+
     return () => {
       // clean up
     }
@@ -111,7 +134,7 @@ export default function Feed({}) {
     Logger.debug('handleLike: feedPost =', feedPost)
     try {
       if (feedPost.likedUsers.includes(userId)) return
-      await update(`${CollectionNames.FEED_POSTS}/${feedPost.id}`, {
+      await update(`${COLLECTION_NAMES.FEED_POSTS}/${feedPost.id}`, {
         likedUsers: [...(feedPost.likedUsers || []), userId],
         dislikedUsers: [...(feedPost.dislikedUsers || [])].filter(
           (id) => id != userId,
@@ -125,7 +148,7 @@ export default function Feed({}) {
   const handleDislike = async (userId: string, feedPost: any) => {
     try {
       if (feedPost.dislikedUsers.includes(userId)) return
-      await update(`${CollectionNames.FEED_POSTS}/${feedPost.id}`, {
+      await update(`${COLLECTION_NAMES.FEED_POSTS}/${feedPost.id}`, {
         dislikedUsers: [...(feedPost.dislikedUsers || []), userId],
         likedUsers: [...(feedPost.likedUsers || [])].filter(
           (id) => id != userId,
@@ -158,7 +181,7 @@ export default function Feed({}) {
       }
       setSupportAlert(true)
       // await updateProfile({ credits: profile.credits - 1 })
-      // await update(`${CollectionNames.FEED_POSTS}/${postId}`, {})
+      // await update(`${COLLECTION_NAMES.FEED_POSTS}/${postId}`, {})
     } catch (error) {
       Logger.error('handleSupport: error =', error)
     }
@@ -199,7 +222,7 @@ export default function Feed({}) {
   }
 
   const navigateBellAlertModal = () => {
-    navigate(AppRoutes.BELL_ALERT_SCREEN)
+    navigate(AppRoutes.BELL_ALERTS_SCREEN)
   }
 
   return (
@@ -289,7 +312,7 @@ export default function Feed({}) {
           },
           {
             title: 'Cancel',
-            method: () => {},
+            method: () => Logger.debug('handle close'),
             icon: 'close',
           },
         ]}

@@ -17,7 +17,7 @@ import { PhotoTile } from '@/Components/Tiles'
 import Logger from '@/Utils/Logger'
 import { AppRoutes } from '@/Screens/SCREENS'
 import { AppNavProps } from '@/Navigators/NavParams'
-import { CollectionNames, DocKeys } from '@/Constants/FireNames'
+import { COLLECTION_NAMES, DOC_KEYS } from '@/Constants/FIRE_NAMES'
 import { commentType } from '@/Types'
 
 const { useEffect, useState } = React
@@ -44,9 +44,9 @@ export default function Profile({}) {
   const getUserPosts = async () => {
     try {
       const userPosts = await get({
-        collection: CollectionNames.FEED_POSTS,
-        where: [DocKeys.USER_ID, '==', profile.uid],
-        orderBy: [DocKeys.UPDATED_AT, 'desc'],
+        collection: COLLECTION_NAMES.FEED_POSTS,
+        where: [DOC_KEYS.USER_ID, '==', profile.uid],
+        orderBy: [DOC_KEYS.UPDATED_AT, 'desc'],
       })
       // Logger.debug('userPosts', userPosts)
       const gotPosts = await userPosts.docs.map((doc: any) => doc.data())

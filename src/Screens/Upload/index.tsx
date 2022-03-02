@@ -14,7 +14,7 @@ import { Button, Icon, Text, ActionSheetOpener, Image } from '@/Components'
 import { Form, Input, Submit } from '@/Components/Forms'
 import Logger from '@/Utils/Logger'
 import { generateUUID } from '@/Utils/Misc'
-import { CollectionNames, StoragePaths } from '@/Constants/FireNames'
+import { COLLECTION_NAMES, STORAGE_PATHS } from '@/Constants/FIRE_NAMES'
 import {
   imagePickerLaunchCamera,
   imagePickerLaunchLibrary,
@@ -50,7 +50,7 @@ export default function UploadScreen({}: Props): React.ReactElement {
     setUploading(true)
     try {
       Logger.debug('uploadToServer: image =', image)
-      const path = StoragePaths.FEED_IMAGES
+      const path = STORAGE_PATHS.FEED_IMAGES
       const { uid } = await auth().currentUser
       const uuid = generateUUID()
       const now = new Date()
@@ -116,7 +116,7 @@ export default function UploadScreen({}: Props): React.ReactElement {
       // setUploadURI(null)
       const downloadURL = await uploadToServer(uploadURI)
       const { uid } = await auth().currentUser
-      const post = await add(CollectionNames.FEED_POSTS, {
+      const post = await add(COLLECTION_NAMES.FEED_POSTS, {
         downloadURL,
         userId: uid,
         nickname: profile.nickname,
@@ -140,7 +140,7 @@ export default function UploadScreen({}: Props): React.ReactElement {
       })
       Logger.debug('post =', post.id)
 
-      await set(`${CollectionNames.POST_COMMENTS}/${post.id}`, {
+      await set(`${COLLECTION_NAMES.POST_COMMENTS}/${post.id}`, {
         comments: [],
         createdAt: now,
         updatedAt: now,
