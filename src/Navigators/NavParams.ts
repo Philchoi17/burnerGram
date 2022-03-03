@@ -2,6 +2,7 @@ import { RouteProp } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 import { AuthRoutes, AppRoutes } from '@/Screens/SCREENS'
+import { AppStacks } from './STACKS'
 
 export type AuthStackParams = {
   [AuthRoutes.LOGIN_SCREEN]: undefined
@@ -14,6 +15,10 @@ export type AuthNavProps = NativeStackNavigationProp<
 >
 
 export type AppStackParams = {
+  [AppStacks.AUTH_STACK]: undefined
+  [AppStacks.FEED_STACK]: undefined
+  [AppStacks.PROFILE_STACK]: undefined
+  [AppStacks.RANKING_STACK]: undefined
   [AppRoutes.FEED_SCREEN]: undefined
   [AppRoutes.PROFILE_SCREEN]: undefined
   [AppRoutes.PROFILE_EDIT_SCREEN]: undefined
@@ -21,6 +26,8 @@ export type AppStackParams = {
   [AppRoutes.COMMENT_POST_SCREEN]: {
     feedPost: any
   }
+  // need to add rout params to this screen and wondering if should be in feed or profile stack
+  [AppRoutes.OTHER_USERS_PROFILE_SCREEN]: undefined
   [AppRoutes.PROFILE_FEED_SCREEN]: {
     posts: any[]
   }

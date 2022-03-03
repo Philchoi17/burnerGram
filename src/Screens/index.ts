@@ -7,6 +7,7 @@ export { default as FeedScreen } from './Feed'
 export { default as UploadScreen } from './Upload'
 export { default as CommentPostScreen } from './CommentPost'
 export { default as BellAlertScreen } from './BellAlerts'
+export { default as OtherUsersProfileScreen } from './OtherUsersProfile'
 
 // Profile screens
 export { default as ProfileScreen } from './Profile'

@@ -23,6 +23,7 @@ import { COLLECTION_NAMES, DOC_KEYS } from '@/Constants/FIRE_NAMES'
 import { AppNavProps } from '@/Navigators/NavParams'
 import { AppRoutes } from '@/Screens/SCREENS'
 import { getFirestoreRef } from '@/Utils/Misc'
+import { AppStacks } from '@/Navigators/STACKS'
 
 const { useState, useEffect } = React
 export default function Feed({}) {
@@ -293,6 +294,12 @@ export default function Feed({}) {
     navigate(AppRoutes.BELL_ALERTS_SCREEN)
   }
 
+  const navigateToProfile = (userId: string) => {
+    if (userId == profile.uid) return navigate(AppStacks.PROFILE_STACK)
+
+    navigate(AppRoutes.OTHER_USERS_PROFILE_SCREEN)
+  }
+
   return (
     <Host>
       <Alert
@@ -366,6 +373,7 @@ export default function Feed({}) {
                     moreOptions={handleMoreOptions}
                     supportCount={feedPost?.supportCount || 0}
                     profile={profile}
+                    navigateToProfile={() => navigateToProfile(feedPost.userId)}
                   />
                 )
               })
