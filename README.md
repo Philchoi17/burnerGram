@@ -356,3 +356,21 @@ https://www.npmjs.com/package/react-native-push-notification
 
 https://github.com/zo0r/react-native-push-notification
 ```
+
+# react-native-haptic-feedback
+
+```
+yarn add react-native-haptic-feedback
+
+https://github.com/junina-de/react-native-haptic-feedback
+
+https://www.npmjs.com/package/react-native-haptic-feedback
+```
+
+MAYBE:
+
+# LOOK FOR PACKAGES THAT ARE SIMILAR
+
+```
+https://github.com/BunHouth/react-native-ig-image-picker
+```
