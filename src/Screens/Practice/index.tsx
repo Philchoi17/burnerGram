@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { ScrollView } from 'react-native'
-import { Div } from 'react-native-magnus'
+import { Div, ScrollDiv } from 'react-native-magnus'
 
 import { MainContainer } from '@/Containers'
 import { Text, Button, Alert, Icon, SearchBar, IconButton } from '@/Components'
@@ -9,7 +8,7 @@ import { ProfileCard, FeedCard } from '@/Components/Cards'
 export default function Practice({}) {
   return (
     <MainContainer>
-      <ScrollView>
+      <ScrollDiv>
         <Div p="md">
           <Text>Practice</Text>
           <SearchBar />
@@ -21,11 +20,12 @@ export default function Practice({}) {
             creditsPress={() => {}}
             postCount={0}
             credits={0}
+            earnedSupport={0}
           />
           {/* <FeedCard /> */}
           {/* <IconButton iconName="plus" onPress={() => {}} label="test" /> */}
         </Div>
-      </ScrollView>
+      </ScrollDiv>
     </MainContainer>
   )
 }

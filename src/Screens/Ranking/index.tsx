@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { ScrollView } from 'react-native'
-import { Div, Drawer, DrawerRef } from 'react-native-magnus'
+import { Div, Drawer, DrawerRef, ScrollDiv } from 'react-native-magnus'
 import {
   useFirebase,
   useFirebaseConnect,
@@ -57,7 +56,10 @@ export default function Ranking({}) {
 
   const getPosts = async () => {
     try {
-      const feedPosts = await get(COLLECTION_NAMES.FEED_POSTS)
+      const feedPosts = await get({
+        collection: COLLECTION_NAMES.FEED_POSTS,
+        limit: 10,
+      })
       Logger.debug('feedPosts =', feedPosts)
       const gotPosts = await feedPosts.docs.map(
         (doc: FirebaseFirestoreTypes.DocumentSnapshot) => doc.data(),
@@ -94,7 +96,7 @@ export default function Ranking({}) {
         headerProps={{
           heading: 'Ranking',
         }}>
-        <ScrollView
+        <ScrollDiv
           showsVerticalScrollIndicator={false}
           stickyHeaderIndices={[0]}>
           <Div row bg="light" p="md">
@@ -141,7 +143,7 @@ export default function Ranking({}) {
               </>
             )}
           </Div>
-        </ScrollView>
+        </ScrollDiv>
       </MainContainer>
     </>
   )

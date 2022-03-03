@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { ScrollView } from 'react-native'
-import { Div } from 'react-native-magnus'
+import { Div, ScrollDiv } from 'react-native-magnus'
 import { useRoute, useNavigation } from '@react-navigation/native'
 import {
   useFirebase,
@@ -50,7 +49,7 @@ export default function ProfileFeed({}: Props): React.ReactElement {
       headerProps={{
         heading: 'Profile Feed',
       }}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollDiv showsVerticalScrollIndicator={false}>
         <Div p="md">
           {feedPosts &&
             feedPosts.map((feedPost: any, idx: number) => {
@@ -78,7 +77,7 @@ export default function ProfileFeed({}: Props): React.ReactElement {
               )
             })}
         </Div>
-      </ScrollView>
+      </ScrollDiv>
     </MainContainer>
   )
 }

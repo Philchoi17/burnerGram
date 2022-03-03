@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { ActivityIndicator, ScrollView, TouchableOpacity } from 'react-native'
-import { Div, Host } from 'react-native-magnus'
+import { ActivityIndicator, TouchableOpacity } from 'react-native'
+import { Div, Host, ScrollDiv } from 'react-native-magnus'
 import {
   useFirebase,
   useFirestore,
@@ -346,7 +346,7 @@ export default function Feed({}) {
             ),
           },
         }}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollDiv showsVerticalScrollIndicator={false}>
           <Div p="md">
             {activity ? (
               <ActivityIndicator size="large" />
@@ -379,7 +379,7 @@ export default function Feed({}) {
               })
             )}
           </Div>
-        </ScrollView>
+        </ScrollDiv>
       </MainContainer>
       <FabOptions
         options={[

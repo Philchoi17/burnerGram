@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { ScrollView } from 'react-native'
-import { Div } from 'react-native-magnus'
+import { Div, ScrollDiv } from 'react-native-magnus'
 import { useNavigation } from '@react-navigation/native'
 import {
   useFirebase,
@@ -119,7 +118,7 @@ export default function Profile({}) {
             ),
           },
         }}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollDiv showsVerticalScrollIndicator={false}>
           <Div p="md">
             <ProfileCard
               photoURL={profile.photoURL}
@@ -150,7 +149,7 @@ export default function Profile({}) {
             </Div>
             {/* </Div> */}
           </Div>
-        </ScrollView>
+        </ScrollDiv>
       </MainContainer>
     </>
   )
