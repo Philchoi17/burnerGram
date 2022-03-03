@@ -131,7 +131,7 @@ export default function UploadScreen({}: Props): React.ReactElement {
         commentCount: 0,
         // dislikeCount: 0,
         // shareCount: 0,
-        // supportCount: 0,
+        supportCount: 0,
         likedUsers: [],
         dislikedUsers: [],
         sharedUsers: [],

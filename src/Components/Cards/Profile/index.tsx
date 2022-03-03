@@ -63,12 +63,6 @@ export default function ({
               Credits
             </Text>
           </Div>
-          {/* <Div m="md" alignItems="center">
-            <Text size="xl">12</Text>
-            <Text size="lg" color="gray600">
-              Coin
-            </Text>
-          </Div> */}
         </Div>
       </Div>
       <Div mx="md">

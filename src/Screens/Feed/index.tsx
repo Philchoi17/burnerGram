@@ -219,7 +219,7 @@ export default function Feed({}) {
         const updatedFeedPost = await update(
           `${COLLECTION_NAMES.FEED_POSTS}/${postId}`,
           {
-            supportCount: Number(feedPost.supportCount) + Number(support),
+            supportCount: Number(feedPost?.supportCount ?? 0) + Number(support),
           },
         )
         Logger.debug('updatedFeedPost =', updatedFeedPost)

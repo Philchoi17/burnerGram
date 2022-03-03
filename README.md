@@ -340,6 +340,8 @@ TODO: will use
 
 # react-native-iap@next
 
+https://rnfirebase.io/messaging/usage
+
 ```
 
 yarn add react-native-iap@next
