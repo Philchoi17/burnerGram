@@ -8,7 +8,7 @@ import {
   ExtendedFirestoreInstance,
 } from 'react-redux-firebase'
 import { useAppSelector } from '@/Hooks'
-import { useRoute } from '@react-navigation/native'
+import { useRoute, useNavigation } from '@react-navigation/native'
 
 import { MainContainer } from '@/Containers'
 import { ProfileCard } from '@/Components/Cards'
@@ -18,6 +18,8 @@ import { COLLECTION_NAMES, DOC_KEYS } from '@/Constants/FIRE_NAMES'
 import Logger from '@/Utils/Logger'
 import { profileType } from '@/Types'
 import { PhotoTile } from '@/Components/Tiles'
+import { AppRoutes } from '../SCREENS'
+import { AppNavProps } from '@/Navigators/NavParams'
 
 const { useState, useEffect } = React
 export default function OtherUsersProfile({}) {
@@ -26,6 +28,7 @@ export default function OtherUsersProfile({}) {
     ExtendedFirestoreInstance,
   ] = [useFirebase(), useFirestore()]
   const { params }: any = useRoute()
+  const { navigate } = useNavigation<AppNavProps>()
   const { userId } = params
 
   // state variables
@@ -87,10 +90,15 @@ export default function OtherUsersProfile({}) {
   // credits,
   // earnedSupport,
 
+  const handlePostPress = () => {
+    Logger.debug('handlePostPress')
+    navigate(AppRoutes.PROFILE_FEED_SCREEN, { posts: usersPosts })
+  }
+
   return (
     <MainContainer
       headerProps={{
-        heading: 'Other Users Profile',
+        heading: otherUsersProfile?.nickname,
       }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Div p="md">
@@ -108,6 +116,7 @@ export default function OtherUsersProfile({}) {
             otherUser
           />
           <Div
+            mt="sm"
             // borderWidth={1}
             flexWrap="wrap"
             row
@@ -120,7 +129,7 @@ export default function OtherUsersProfile({}) {
                 <PhotoTile
                   key={String(idx)}
                   source={post.downloadURL}
-                  onPress={() => {}}
+                  onPress={handlePostPress}
                 />
               ))}
           </Div>

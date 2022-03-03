@@ -29,7 +29,7 @@ export type AppStackParams = {
   // need to add rout params to this screen and wondering if should be in feed or profile stack
   [AppRoutes.OTHER_USERS_PROFILE_SCREEN]: { userId: string }
   [AppRoutes.PROFILE_FEED_SCREEN]: {
-    posts: any[]
+    posts: any[] | undefined | null
   }
   [AppRoutes.PURCHASE_CREDITS_SCREEN]: undefined
   [AppRoutes.BELL_ALERTS_SCREEN]: undefined

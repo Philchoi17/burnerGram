@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Div } from 'react-native-magnus'
 
-import { Text, Image } from '@/Components'
+import { Text, Image, Button } from '@/Components'
 import { imageURI } from '@/Utils/Misc'
 import Logos from '@/Assets/Logos'
 
@@ -10,6 +10,7 @@ interface Props {
   photoURL: string | null
   nickname: string
   earnedSupport: number | null
+  onPress: () => void
 }
 
 export default function ({
@@ -17,40 +18,56 @@ export default function ({
   photoURL,
   nickname,
   earnedSupport,
+  onPress,
 }: Props): JSX.Element {
   return (
-    <Div
+    <Button
+      h={110}
+      bg="transparent"
+      wide
+      onPress={onPress}
       rounded="md"
       m="sm"
       p="md"
+      pl="xl"
       row
       borderWidth={1}
+      borderColor="gray300"
       alignItems="stretch"
-      justifyContent="space-around">
-      <Div>
+      justifyContent="space-between">
+      <Div
+        // borderWidth={1}
+        justifyContent="center">
         <Image
           source={photoURL ? imageURI(photoURL) : Logos.logo}
-          h={44}
-          w={44}
+          h={66}
+          w={66}
           rounded="circle"
+          mb="sm"
         />
-      </Div>
-      <Div pl="lg" alignItems="center" justifyContent="center">
-        {/* <Text weight="bold" size="xl">
-          {name}
-        </Text> */}
-        <Text weight="bold" size="xl">
+        <Text weight="bold" size="xl" center>
           {nickname}
         </Text>
       </Div>
-      <Div row justifyContent="center" alignItems="center">
+
+      <Div justifyContent="center" alignItems="center">
         <Text size="xl" weight="bold">
-          {'Earned Amount:'}
+          {'Earned Support'}
         </Text>
-        <Text size="xl" weight="bold">
-          {earnedSupport || '0'}
-        </Text>
+        <Div
+          mt="sm"
+          h={55}
+          w={55}
+          bg="blue900"
+          rounded="circle"
+          borderWidth={1}
+          justifyContent="center"
+          alignItems="center">
+          <Text size="xl" weight="bold" color="light">
+            {earnedSupport || '0'}
+          </Text>
+        </Div>
       </Div>
-    </Div>
+    </Button>
   )
 }
