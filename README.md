@@ -77,7 +77,7 @@ with your appicons generated with appicon for example.
 Android 🤖#
 To change the appicon of the Android application, you need to replace all the content of
 
-src > android > app > src > res
+src > android > app > src > main > res
 with your appicons generated with appicon for example.
 
 Change the splash screen icon
