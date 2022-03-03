@@ -297,7 +297,7 @@ export default function Feed({}) {
   const navigateToProfile = (userId: string) => {
     if (userId == profile.uid) return navigate(AppStacks.PROFILE_STACK)
 
-    navigate(AppRoutes.OTHER_USERS_PROFILE_SCREEN)
+    navigate(AppRoutes.OTHER_USERS_PROFILE_SCREEN, { userId })
   }
 
   return (
