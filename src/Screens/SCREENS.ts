@@ -14,6 +14,7 @@ export enum AppRoutes {
   PROFILE_EDIT_SCREEN = 'profile-edit-screen',
   PROFILE_FEED_SCREEN = 'profile-feed-screen',
   PURCHASE_CREDITS_SCREEN = 'purchase-credits-screen',
+  OTHER_USERS_PROFILE_SCREEN = 'other-users-profile-screen',
   // ranking stack
   RANKING_SCREEN = 'ranking-screen',
 }

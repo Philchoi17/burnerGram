@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { ScrollView } from 'react-native'
-import { Div } from 'react-native-magnus'
+import { Div, ScrollDiv } from 'react-native-magnus'
 import {
   useFirebase,
   useFirestore,
@@ -105,7 +104,7 @@ export default function ProfileEdit({}: Props): JSX.Element {
           ),
         },
       }}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollDiv showsVerticalScrollIndicator={false}>
         <Div p="md">
           <ActionSheetOpener
             dropdownTitle="Upload Media"
@@ -168,7 +167,7 @@ export default function ProfileEdit({}: Props): JSX.Element {
             <Submit title="Done" />
           </Form>
         </Div>
-      </ScrollView>
+      </ScrollDiv>
     </MainContainer>
   )
 }

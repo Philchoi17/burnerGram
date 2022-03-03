@@ -1,6 +1,6 @@
 import * as React from 'react'
+import { TouchableWithoutFeedback } from 'react-native'
 import { Div, WINDOW_WIDTH as width } from 'react-native-magnus'
-import { TouchableOpacity } from 'react-native'
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
 
 import { Image, Text, Button, Icon } from '@/Components'
@@ -36,6 +36,7 @@ interface Props {
   moreOptions: () => void
   supportCount: number
   profile: profileType
+  navigateToProfile: () => void
 }
 
 // const moreOptions = () => {
@@ -75,24 +76,27 @@ export default function ({
   moreOptions,
   supportCount,
   profile,
+  navigateToProfile,
 }: Props) {
   // Logger.debug('Cards: Feed: render: postOwner =', postOwner)
   return (
     <Div p="lg" rounded="md" my="md" borderWidth={0.3} borderColor="gray400">
       <Div row alignItems="center" justifyContent="space-between" mb="md">
-        <Div row alignItems="center">
-          <Image
-            source={
-              postOwner?.photoURL ? imageURI(postOwner?.photoURL) : Logos.logo
-            }
-            w={55}
-            h={55}
-            rounded="circle"
-          />
-          <Text ml="md" size="xl">
-            {postOwner.nickname}
-          </Text>
-        </Div>
+        <TouchableWithoutFeedback onPress={navigateToProfile}>
+          <Div row alignItems="center">
+            <Image
+              source={
+                postOwner?.photoURL ? imageURI(postOwner?.photoURL) : Logos.logo
+              }
+              w={55}
+              h={55}
+              rounded="circle"
+            />
+            <Text ml="md" size="xl">
+              {postOwner.nickname}
+            </Text>
+          </Div>
+        </TouchableWithoutFeedback>
         <Div>
           <Button bg="transparent" onPress={moreOptions}>
             <Icon name="more" size="6xl" />

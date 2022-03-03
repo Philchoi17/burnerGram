@@ -340,9 +340,43 @@ TODO: will use
 
 # react-native-iap@next
 
+https://rnfirebase.io/messaging/usage
+
 ```
 
 yarn add react-native-iap@next
 
 https://github.com/dooboolab/react-native-iap
+```
+
+# react-native-push-notification
+
+```
+yarn add react-native-push-notification
+
+https://www.npmjs.com/package/react-native-push-notification
+
+https://github.com/zo0r/react-native-push-notification
+```
+
+# react-native-haptic-feedback
+
+```
+yarn add react-native-haptic-feedback
+
+https://github.com/junina-de/react-native-haptic-feedback
+
+https://www.npmjs.com/package/react-native-haptic-feedback
+```
+
+MAYBE:
+
+# LOOK FOR PACKAGES THAT ARE SIMILAR
+
+```
+https://github.com/BunHouth/react-native-ig-image-picker
+
+https://www.npmjs.com/package/react-native-controlled-mentions
+
+@baronha/react-native-photo-editor
 ```

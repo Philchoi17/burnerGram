@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { ScrollView } from 'react-native'
-import { Div } from 'react-native-magnus'
+import { Div, ScrollDiv } from 'react-native-magnus'
 import {
   useFirebase,
   useFirestore,
@@ -131,7 +130,7 @@ export default function UploadScreen({}: Props): React.ReactElement {
         commentCount: 0,
         // dislikeCount: 0,
         // shareCount: 0,
-        // supportCount: 0,
+        supportCount: 0,
         likedUsers: [],
         dislikedUsers: [],
         sharedUsers: [],
@@ -158,7 +157,7 @@ export default function UploadScreen({}: Props): React.ReactElement {
       headerProps={{
         heading: 'Upload',
       }}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollDiv showsVerticalScrollIndicator={false}>
         <Div p="md">
           <ActionSheetOpener
             dropdownTitle="Upload Media"
@@ -227,7 +226,7 @@ export default function UploadScreen({}: Props): React.ReactElement {
             />
           </Form>
         </Div>
-      </ScrollView>
+      </ScrollDiv>
     </MainContainer>
   )
 }

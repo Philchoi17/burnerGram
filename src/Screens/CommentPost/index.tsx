@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { ScrollView } from 'react-native'
-import { Div } from 'react-native-magnus'
+import { Div, ScrollDiv } from 'react-native-magnus'
 import { useRoute } from '@react-navigation/native'
 import {
   useFirebase,
@@ -111,7 +110,7 @@ export default function CommentPost({}: Props) {
       headerProps={{
         heading: 'Comment Post',
       }}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollDiv showsVerticalScrollIndicator={false}>
         <Div p="md">
           <Div row p="md" alignItems="center" justifyContent="space-between">
             <Div row alignItems="center">
@@ -146,7 +145,7 @@ export default function CommentPost({}: Props) {
               ))}
           </Div>
         </Div>
-      </ScrollView>
+      </ScrollDiv>
       <Div bg="white" p="sm">
         <KeyboardAvoider offset={750}>
           <Form

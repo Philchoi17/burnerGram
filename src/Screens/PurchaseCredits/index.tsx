@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { ScrollView, ActivityIndicator } from 'react-native'
-import { Div } from 'react-native-magnus'
+import { ActivityIndicator } from 'react-native'
+import { Div, ScrollDiv } from 'react-native-magnus'
 import {
   useFirebase,
   useFirestore,
@@ -69,7 +69,7 @@ export default function PurchaseCredits({}) {
         headerProps={{
           heading: 'Purchase Credits',
         }}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollDiv showsVerticalScrollIndicator={false}>
           <Div
             p="md"
             justifyContent="center"
@@ -110,7 +110,7 @@ export default function PurchaseCredits({}) {
               2000 Credits
             </Button>
           </Div>
-        </ScrollView>
+        </ScrollDiv>
       </MainContainer>
     </>
   )

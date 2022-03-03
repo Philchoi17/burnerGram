@@ -5,6 +5,7 @@ import { Image, Text, Button, IconButton } from '@/Components'
 
 import { imageURI } from '@/Utils/Misc'
 import { profileType } from '@/Types'
+import Logos from '@/Assets/Logos'
 
 interface Props {
   // TODO: later
@@ -18,6 +19,7 @@ interface Props {
   earnedPress: () => void
   creditsPress: () => void
   earnedSupport: number
+  otherUser?: boolean
 }
 
 // const photoURL =
@@ -36,11 +38,17 @@ export default function ({
   postCount,
   credits,
   earnedSupport,
+  otherUser = false,
 }: Props): React.ReactElement {
   return (
     <Div justifyContent="center" alignItems="flex-start" rounded="sm">
       <Div p="md" row>
-        <Image h={77} w={77} rounded="circle" source={imageURI(photoURL)} />
+        <Image
+          h={77}
+          w={77}
+          rounded="circle"
+          source={photoURL ? imageURI(photoURL) : Logos.logo}
+        />
         <Div
           flex={1}
           row
@@ -63,19 +71,17 @@ export default function ({
               Credits
             </Text>
           </Div>
-          {/* <Div m="md" alignItems="center">
-            <Text size="xl">12</Text>
-            <Text size="lg" color="gray600">
-              Coin
-            </Text>
-          </Div> */}
         </Div>
       </Div>
       <Div mx="md">
         <Text size="xl" mb="md" color="gray600">
           {nickname}
         </Text>
-        <Text size="lg" mb="md" onPress={navigateToEditProfile} color="gray600">
+        <Text
+          size="lg"
+          mb="md"
+          onPress={!otherUser ? navigateToEditProfile : () => {}}
+          color="gray600">
           {bio == '' ? 'Edit Bio' : bio}
         </Text>
       </Div>
@@ -85,21 +91,25 @@ export default function ({
           label="earned"
           onPress={earnedPress}
         />
-        <IconButton iconName="plus" label="credits" onPress={creditsPress} />
+        {!otherUser && (
+          <IconButton iconName="plus" label="credits" onPress={creditsPress} />
+        )}
       </Div>
-      <Button
-        rounded="xl"
-        borderColor="gray600"
-        my="md"
-        mx="xs"
-        wide
-        onPress={navigateToEditProfile}
-        bg="transparent"
-        borderWidth={0.3}>
-        <Text size="xl" color="gray500" weight="bold">
-          Edit
-        </Text>
-      </Button>
+      {!otherUser && (
+        <Button
+          rounded="xl"
+          borderColor="gray600"
+          my="md"
+          mx="xs"
+          wide
+          onPress={navigateToEditProfile}
+          bg="transparent"
+          borderWidth={0.3}>
+          <Text size="xl" color="gray500" weight="bold">
+            Edit
+          </Text>
+        </Button>
+      )}
     </Div>
   )
 }

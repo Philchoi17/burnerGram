@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { ActivityIndicator, ScrollView, TouchableOpacity } from 'react-native'
-import { Div, Host } from 'react-native-magnus'
+import { ActivityIndicator, TouchableOpacity } from 'react-native'
+import { Div, Host, ScrollDiv } from 'react-native-magnus'
 import {
   useFirebase,
   useFirestore,
@@ -23,6 +23,7 @@ import { COLLECTION_NAMES, DOC_KEYS } from '@/Constants/FIRE_NAMES'
 import { AppNavProps } from '@/Navigators/NavParams'
 import { AppRoutes } from '@/Screens/SCREENS'
 import { getFirestoreRef } from '@/Utils/Misc'
+import { AppStacks } from '@/Navigators/STACKS'
 
 const { useState, useEffect } = React
 export default function Feed({}) {
@@ -218,7 +219,7 @@ export default function Feed({}) {
         const updatedFeedPost = await update(
           `${COLLECTION_NAMES.FEED_POSTS}/${postId}`,
           {
-            supportCount: Number(feedPost.supportCount) + Number(support),
+            supportCount: Number(feedPost?.supportCount ?? 0) + Number(support),
           },
         )
         Logger.debug('updatedFeedPost =', updatedFeedPost)
@@ -293,6 +294,12 @@ export default function Feed({}) {
     navigate(AppRoutes.BELL_ALERTS_SCREEN)
   }
 
+  const navigateToProfile = (userId: string) => {
+    if (userId == profile.uid) return navigate(AppStacks.PROFILE_STACK)
+
+    navigate(AppRoutes.OTHER_USERS_PROFILE_SCREEN, { userId })
+  }
+
   return (
     <Host>
       <Alert
@@ -339,7 +346,7 @@ export default function Feed({}) {
             ),
           },
         }}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollDiv showsVerticalScrollIndicator={false}>
           <Div p="md">
             {activity ? (
               <ActivityIndicator size="large" />
@@ -366,12 +373,13 @@ export default function Feed({}) {
                     moreOptions={handleMoreOptions}
                     supportCount={feedPost?.supportCount || 0}
                     profile={profile}
+                    navigateToProfile={() => navigateToProfile(feedPost.userId)}
                   />
                 )
               })
             )}
           </Div>
-        </ScrollView>
+        </ScrollDiv>
       </MainContainer>
       <FabOptions
         options={[

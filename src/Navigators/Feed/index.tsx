@@ -6,6 +6,7 @@ import {
   UploadScreen,
   CommentPostScreen,
   BellAlertScreen,
+  OtherUsersProfileScreen,
 } from '@/Screens'
 import { AppRoutes } from '@/Screens/SCREENS'
 
@@ -15,6 +16,10 @@ export default function AuthStack() {
   return (
     <Navigator screenOptions={{ headerShown: false }}>
       <Screen component={FeedScreen} name={AppRoutes.FEED_SCREEN} />
+      <Screen
+        component={OtherUsersProfileScreen}
+        name={AppRoutes.OTHER_USERS_PROFILE_SCREEN}
+      />
       <Group screenOptions={{ presentation: 'fullScreenModal' }}>
         <Screen component={UploadScreen} name={AppRoutes.UPLOAD_SCREEN} />
         <Screen
