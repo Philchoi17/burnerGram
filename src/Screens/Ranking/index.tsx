@@ -77,7 +77,7 @@ export default function Ranking({}) {
         <ScrollView
           showsVerticalScrollIndicator={false}
           stickyHeaderIndices={[0]}>
-          <Div row bg="light">
+          <Div row bg="light" p="md">
             <Button flex={1} m="sm" onPress={toggleUsersOrPosts}>
               <Text weight="bold" color="white" size="xl">
                 {usersOrPosts}

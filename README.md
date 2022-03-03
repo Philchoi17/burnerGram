@@ -377,4 +377,6 @@ MAYBE:
 https://github.com/BunHouth/react-native-ig-image-picker
 
 https://www.npmjs.com/package/react-native-controlled-mentions
+
+@baronha/react-native-photo-editor
 ```

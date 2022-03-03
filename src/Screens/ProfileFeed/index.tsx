@@ -52,7 +52,6 @@ export default function ProfileFeed({}: Props): React.ReactElement {
       }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Div p="md">
-          <Text>User Feed</Text>
           {feedPosts &&
             feedPosts.map((feedPost: any, idx: number) => {
               return (
