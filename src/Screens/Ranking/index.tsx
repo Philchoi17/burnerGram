@@ -37,6 +37,7 @@ export default function Ranking({}) {
 
   // state variables
   const [usersToRank, setUsersToRank] = useState<any[]>([])
+  const [postsToRank, setPostsToRank] = useState<any[]>([])
   const [usersOrPosts, setUsersOrPosts] = useState<'Users' | 'Posts'>('Posts')
 
   const getUsers = async () => {
@@ -54,8 +55,27 @@ export default function Ranking({}) {
     )
   }
 
+  const getPosts = async () => {
+    try {
+      const feedPosts = await get(COLLECTION_NAMES.FEED_POSTS)
+      Logger.debug('feedPosts =', feedPosts)
+      const gotPosts = await feedPosts.docs.map(
+        (doc: FirebaseFirestoreTypes.DocumentSnapshot) => doc.data(),
+      )
+      Logger.debug('gotPosts =', gotPosts)
+      setPostsToRank(
+        gotPosts.sort(
+          (a: any, b: any) => Number(b.supportCount) - Number(a.supportCount),
+        ),
+      )
+    } catch (error) {
+      Logger.error('getPosts: error = ', error)
+    }
+  }
+
   const rankingsUseEffectHandler = () => {
     getUsers()
+    getPosts()
     Logger.debug('rankingsUseEffectHandler: profile =', profile)
   }
 
@@ -106,7 +126,18 @@ export default function Ranking({}) {
               </>
             ) : (
               <>
-                <Text>handle post rankings</Text>
+                {postsToRank.map((post: any, idx: number) => {
+                  return (
+                    <RankingCard
+                      onPress={openDrawer}
+                      key={String(idx)}
+                      name={post.postOwner.nickname}
+                      photoURL={post.downloadURL || null}
+                      nickname={post.postOwner.nickname}
+                      earnedSupport={post.supportCount || 0}
+                    />
+                  )
+                })}
               </>
             )}
           </Div>

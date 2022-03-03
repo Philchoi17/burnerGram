@@ -11,7 +11,8 @@ interface Props {
 
 export default function ({ source, onPress }: Props) {
   return (
-    <Button w={'32%'} onPress={onPress} bg="transparent" m={1} p="none">
+    // TODO: FIX THIS WIDTH ISSUE
+    <Button w={'32.5%'} onPress={onPress} bg="transparent" m={1} p="none">
       <Image
         source={imageURI(source)}
         w={120}

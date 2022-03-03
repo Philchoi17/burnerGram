@@ -134,10 +134,8 @@ export default function Profile({}) {
             />
             {/* <Div flex={1} row borderWidth={1} justifyContent="center"> */}
             <Div
-              // borderWidth={1}
               flexWrap="wrap"
               row
-              flex={1}
               p="xs"
               alignItems="flex-start"
               justifyContent="flex-start">
