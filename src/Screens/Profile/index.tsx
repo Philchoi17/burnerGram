@@ -41,6 +41,7 @@ export default function Profile({}) {
 
   const toggleLogoutAlert = () => setLogoutAlert(!logoutAlert)
   const toggleBuyCreditsAlert = () => setBuyCreditsAlert(!buyCreditsAlert)
+  const [selected, setSelected] = useState<string>('My Photos')
 
   const getUserPosts = async () => {
     try {
@@ -135,24 +136,30 @@ export default function Profile({}) {
               postCount={posts?.length || 0}
               credits={profile.credits}
             />
-            <RadioSelectors options={['My Photos', 'Wallet']}> </RadioSelectors>
-            {/* <Div flex={1} row borderWidth={1} justifyContent="center"> */}
-            <Div
-              flexWrap="wrap"
-              row
-              p="xs"
-              alignItems="flex-start"
-              justifyContent="flex-start">
-              {posts &&
-                posts.map((post, idx) => (
-                  <PhotoTile
-                    key={String(idx)}
-                    source={post.downloadURL}
-                    onPress={handlePostPress}
-                  />
-                ))}
-            </Div>
-            {/* </Div> */}
+            <RadioSelectors
+              options={['My Photos', 'Wallet']}
+              setSelected={setSelected}>
+              {' '}
+            </RadioSelectors>
+            {selected === 'My Photos' ? (
+              <Div
+                flexWrap="wrap"
+                row
+                p="xs"
+                alignItems="flex-start"
+                justifyContent="flex-start">
+                {posts &&
+                  posts.map((post, idx) => (
+                    <PhotoTile
+                      key={String(idx)}
+                      source={post.downloadURL}
+                      onPress={handlePostPress}
+                    />
+                  ))}
+              </Div>
+            ) : (
+              <Text> Wallet Contents </Text>
+            )}
           </Div>
         </ScrollDiv>
       </MainContainer>
