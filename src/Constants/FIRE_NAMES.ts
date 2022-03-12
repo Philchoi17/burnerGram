@@ -9,6 +9,7 @@ export enum COLLECTION_NAMES {
   FEED_POSTS = 'feedPosts',
   POST_COMMENTS = 'postComments',
   ALERTS = 'alerts',
+  MARKET_PLACE = 'marketPlace',
 }
 
 export enum DOC_KEYS {

@@ -10,7 +10,7 @@ import {
 
 import { useAppSelector } from '@/Hooks'
 import { MainContainer } from '@/Containers'
-import { Button, Icon, Text, Alert } from '@/Components'
+import { Button, Icon, Text, Alert, RadioSelectors } from '@/Components'
 import { ProfileCard } from '@/Components/Cards'
 import { PhotoTile } from '@/Components/Tiles'
 import Logger from '@/Utils/Logger'
@@ -50,7 +50,9 @@ export default function Profile({}) {
         orderBy: [DOC_KEYS.UPDATED_AT, 'desc'],
       })
       // Logger.debug('userPosts', userPosts)
-      const gotPosts = await userPosts.docs.map((doc: any) => doc.data())
+      const gotPosts = await userPosts.docs.map((doc: any) => {
+        return { ...doc.data(), id: doc.id }
+      })
       setPosts(gotPosts)
     } catch (error) {
       Logger.error('getUserPosts: error = ', error)
@@ -133,6 +135,7 @@ export default function Profile({}) {
               postCount={posts?.length || 0}
               credits={profile.credits}
             />
+            <RadioSelectors options={['My Photos', 'Wallet']}> </RadioSelectors>
             {/* <Div flex={1} row borderWidth={1} justifyContent="center"> */}
             <Div
               flexWrap="wrap"
