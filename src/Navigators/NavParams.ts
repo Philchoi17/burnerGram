@@ -19,6 +19,7 @@ export type AppStackParams = {
   [AppStacks.FEED_STACK]: undefined
   [AppStacks.PROFILE_STACK]: undefined
   [AppStacks.RANKING_STACK]: undefined
+  [AppStacks.MARKET_STACK]: undefined
   [AppRoutes.FEED_SCREEN]: undefined
   [AppRoutes.PROFILE_SCREEN]: undefined
   [AppRoutes.PROFILE_EDIT_SCREEN]: undefined
@@ -26,14 +27,16 @@ export type AppStackParams = {
   [AppRoutes.COMMENT_POST_SCREEN]: {
     feedPost: any
   }
-  // need to add rout params to this screen and wondering if should be in feed or profile stack
+  // need to add route params to this screen and wondering if should be in feed or profile stack
   [AppRoutes.OTHER_USERS_PROFILE_SCREEN]: { userId: string }
   [AppRoutes.PROFILE_FEED_SCREEN]: {
     posts: any[] | undefined | null
   }
   [AppRoutes.PURCHASE_CREDITS_SCREEN]: undefined
   [AppRoutes.BELL_ALERTS_SCREEN]: undefined
+  // ranking screens
   [AppRoutes.RANKING_SCREEN]: undefined
+  [AppRoutes.MARKET_PLACE_SCREEN]: undefined
 }
 
 export type AppNavProps = NativeStackNavigationProp<AppStackParams, AppRoutes>

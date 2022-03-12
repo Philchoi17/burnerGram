@@ -18,5 +18,8 @@ export { default as PurchaseCreditsScreen } from './PurchaseCredits'
 // Ranking screens
 export { default as RankingScreen } from './Ranking'
 
+// Market Place screens
+export { default as MarketPlaceScreen } from './MarketPlace'
+
 // Practice
 export { default as PracticeScreen } from './Practice'

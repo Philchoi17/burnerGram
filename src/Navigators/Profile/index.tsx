@@ -7,6 +7,10 @@ import {
   ProfileFeedScreen,
   PurchaseCreditsScreen,
 } from '@/Screens'
+
+import MarketPlaceStack from '../Market'
+
+import { AppStacks } from '../STACKS'
 import { AppRoutes } from '@/Screens/SCREENS'
 
 const { Navigator, Screen, Group } = createNativeStackNavigator()
@@ -24,6 +28,7 @@ export default function ProfileStack() {
           component={ProfileFeedScreen}
           name={AppRoutes.PROFILE_FEED_SCREEN}
         />
+        <Screen component={MarketPlaceStack} name={AppStacks.MARKET_STACK} />
       </Group>
       <Group
         screenOptions={{

@@ -186,7 +186,6 @@ yarn add react-redux-firebase
 ```
 
 https://rnfirebase.io/
-https://rnfirebase.io/
 
 yarn add @react-native-firebase/app
 yarn add @react-native-firebase/auth

@@ -42,19 +42,6 @@ export default function CommentPost({}: Props) {
     feedPost: { downloadURL, description, postOwner, id: postId },
   } = params
 
-  // const getPostComments = async () => {
-  //   try {
-  //     const postComments = await get(
-  //       `${COLLECTION_NAMES.POST_COMMENTS}/${postId}`,
-  //     )
-  //     const gotComments = await postComments.data()
-  //     Logger.debug('postComments: gotComments =', gotComments)
-  //     setComments(gotComments.comments)
-  //   } catch (error) {
-  //     Logger.error('getPostComments: error =', error)
-  //   }
-  // }
-
   // TODO: handle better
   const handleSubmit = async (values: any) => {
     Logger.debug('values =', values)

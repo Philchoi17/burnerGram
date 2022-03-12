@@ -17,4 +17,6 @@ export enum AppRoutes {
   OTHER_USERS_PROFILE_SCREEN = 'other-users-profile-screen',
   // ranking stack
   RANKING_SCREEN = 'ranking-screen',
+  // market place
+  MARKET_PLACE_SCREEN = 'market-place-screen',
 }

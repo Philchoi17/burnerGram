@@ -14,10 +14,11 @@ import { Button, Icon, Text, Alert } from '@/Components'
 import { ProfileCard } from '@/Components/Cards'
 import { PhotoTile } from '@/Components/Tiles'
 import Logger from '@/Utils/Logger'
-import { AppRoutes } from '@/Screens/SCREENS'
 import { AppNavProps } from '@/Navigators/NavParams'
 import { COLLECTION_NAMES, DOC_KEYS } from '@/Constants/FIRE_NAMES'
 import { commentType } from '@/Types'
+import { AppRoutes } from '@/Screens/SCREENS'
+import { AppStacks } from '@/Navigators/STACKS'
 
 const { useEffect, useState } = React
 export default function Profile({}) {
@@ -31,6 +32,7 @@ export default function Profile({}) {
   const { navigate } = useNavigation<AppNavProps>()
 
   const navigateToEditProfile = () => navigate(AppRoutes.PROFILE_EDIT_SCREEN)
+  const navigateToMarket = () => navigate(AppStacks.MARKET_STACK)
 
   // state variables
   const [posts, setPosts] = useState<any[]>([])
@@ -126,7 +128,7 @@ export default function Profile({}) {
               navigateToEditProfile={navigateToEditProfile}
               bio={profile.bio}
               earnedSupport={profile.earnedSupport || 0}
-              earnedPress={handleEarnedPress}
+              earnedPress={navigateToMarket}
               creditsPress={handleCreditsPressed}
               postCount={posts?.length || 0}
               credits={profile.credits}

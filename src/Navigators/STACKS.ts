@@ -3,4 +3,5 @@ export enum AppStacks {
   PROFILE_STACK = 'profile-stack',
   FEED_STACK = 'feed-stack',
   RANKING_STACK = 'ranking-stack',
+  MARKET_STACK = 'market-stack',
 }
