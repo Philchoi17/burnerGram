@@ -21,4 +21,5 @@ export enum AppRoutes {
   MARKET_PLACE_SCREEN = 'market-place-screen',
   // chat stack
   CHATROOMS_SCREEN = 'chatrooms-screen',
+  CHATROOM_SCREEN = 'chatroom-screen',
 }

@@ -41,6 +41,7 @@ export type AppStackParams = {
   [AppRoutes.RANKING_SCREEN]: undefined
   [AppRoutes.MARKET_PLACE_SCREEN]: undefined
   [AppRoutes.CHATROOMS_SCREEN]: undefined
+  [AppRoutes.CHATROOM_SCREEN]: undefined // TODO add route params
 }
 
 export type AppNavProps = NativeStackNavigationProp<AppStackParams, AppRoutes>
