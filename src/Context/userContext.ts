@@ -3,15 +3,31 @@ import * as React from 'react'
 interface UserContextProps {
   lang: string
   switchLang: (lang: string) => void
+  user: any
+  setUser: (_user: any) => void
 }
 
 const { createContext } = React
-export default function UserContext({ lang, switchLang }: UserContextProps) {
-  createContext({
-    lang: '',
-    switchLang: (_lang: string) => {},
-  })
-}
+export default createContext<UserContextProps>({
+  lang: 'en',
+  switchLang: () => {},
+  user: null,
+  setUser: () => {},
+})
+
+// export default function UserContext({
+//   lang,
+//   switchLang,
+//   user,
+//   setUser,
+// }: UserContextProps) {
+//   createContext({
+//     lang: '',
+//     switchLang: (_lang: string) => {},
+//     user: null,
+//     setUser: (_user: any) => {},
+//   })
+// }
 
 // export interface UserTypeContextType {
 //   // userType: string
@@ -20,7 +36,7 @@ export default function UserContext({ lang, switchLang }: UserContextProps) {
 //   switchLang: (lang: string) => void
 // }
 
-// export default function UserTypeContext React.Context<UserTypeContextType> =
+// export default function UserTypeContext: React.Context<UserContextProps> =
 //   React.createContext({
 //     // userType: 'client',
 //     lang: '',

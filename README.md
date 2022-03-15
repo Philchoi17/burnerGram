@@ -335,6 +335,14 @@ yarn add react-native-progress
 yarn add react-native-svg
 ```
 
+# react-native-gifted-chat
+
+```
+https://github.com/FaridSafi/react-native-gifted-chat
+
+yarn add react-native-gifted-chat
+```
+
 TODO: will use
 
 # react-native-iap@next

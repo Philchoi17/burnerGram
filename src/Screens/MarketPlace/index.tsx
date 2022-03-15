@@ -10,7 +10,7 @@ import {
 
 import { useAppSelector } from '@/Hooks'
 import { MainContainer } from '@/Containers'
-import { Text, Button } from '@/Components'
+import { Text, Button, SearchBar } from '@/Components'
 import { MarketTile } from '@/Components/Tiles'
 import Logger from '@/Utils/Logger'
 import { COLLECTION_NAMES, DOC_KEYS } from '@/Constants/FIRE_NAMES'
@@ -46,7 +46,7 @@ export default function MarketPlace({}: Props) {
   }
 
   const marketPlaceUseEffectHandler = () => {
-    Logger.debug('MarketPlace::marketPlaceUseEffectHandler')
+    Logger.debug('MarketPlace: marketPlaceUseEffectHandler')
     getMarketPlaceItems()
   }
 
@@ -59,8 +59,11 @@ export default function MarketPlace({}: Props) {
         // headerProps: {
         // }
       }}>
-      <ScrollDiv showsVerticalScrollIndicator={false}>
-        <Div p="md" flexWrap="wrap" flex={1} borderWidth={1} row>
+      <ScrollDiv showsVerticalScrollIndicator={false} stickyHeaderIndices={[0]}>
+        <Div p="md" bg="light">
+          <SearchBar />
+        </Div>
+        <Div p="md" flexWrap="wrap" flex={1} row>
           {marketItemsForSale &&
             marketItemsForSale.map((item: any, idx: number) => (
               <MarketTile key={String(idx)} feedPost={item} />

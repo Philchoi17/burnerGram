@@ -19,4 +19,6 @@ export enum AppRoutes {
   RANKING_SCREEN = 'ranking-screen',
   // market place
   MARKET_PLACE_SCREEN = 'market-place-screen',
+  // chat stack
+  CHATROOMS_SCREEN = 'chatrooms-screen',
 }

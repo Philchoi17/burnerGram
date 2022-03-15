@@ -15,11 +15,14 @@ export type AuthNavProps = NativeStackNavigationProp<
 >
 
 export type AppStackParams = {
+  // stacks
   [AppStacks.AUTH_STACK]: undefined
   [AppStacks.FEED_STACK]: undefined
   [AppStacks.PROFILE_STACK]: undefined
   [AppStacks.RANKING_STACK]: undefined
   [AppStacks.MARKET_STACK]: undefined
+  [AppStacks.CHAT_STACK]: undefined
+  // screens
   [AppRoutes.FEED_SCREEN]: undefined
   [AppRoutes.PROFILE_SCREEN]: undefined
   [AppRoutes.PROFILE_EDIT_SCREEN]: undefined
@@ -37,6 +40,7 @@ export type AppStackParams = {
   // ranking screens
   [AppRoutes.RANKING_SCREEN]: undefined
   [AppRoutes.MARKET_PLACE_SCREEN]: undefined
+  [AppRoutes.CHATROOMS_SCREEN]: undefined
 }
 
 export type AppNavProps = NativeStackNavigationProp<AppStackParams, AppRoutes>

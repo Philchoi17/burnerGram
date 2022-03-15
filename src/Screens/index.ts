@@ -21,5 +21,8 @@ export { default as RankingScreen } from './Ranking'
 // Market Place screens
 export { default as MarketPlaceScreen } from './MarketPlace'
 
+// Chat screens
+export { default as ChatroomsScreen } from './Chatrooms'
+
 // Practice
 export { default as PracticeScreen } from './Practice'

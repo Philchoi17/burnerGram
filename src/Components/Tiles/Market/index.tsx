@@ -13,14 +13,13 @@ const { useState, useEffect } = React
 export default function ({ feedPost, ...rest }: Props) {
   return (
     <Div
-      {...rest}
+      p="sm"
       w={'45%'}
       borderWidth={1}
       m="sm"
-      flex={1}
       alignItems="center"
-      justifyContent="center">
-      {/* <Text>{JSON.stringify(feedPost)}</Text> */}
+      justifyContent="center"
+      {...rest}>
       <Image source={imageURI(feedPost.downloadURL)} h={150} w={150} />
       <Button
         wide

@@ -14,6 +14,7 @@ import HomeTabs from './Home'
 import Logger from '@/Utils/Logger'
 import { Loading } from '@/Components'
 import { COLLECTION_NAMES } from '@/Constants/FIRE_NAMES'
+import UserContext from '@/Context/UserContext'
 
 const { useEffect, useState } = React
 export default function Navigator() {
@@ -95,7 +96,15 @@ export default function Navigator() {
     <Loading />
   ) : (
     <NavigationContainer>
-      {profile.email ? <HomeTabs /> : <AuthStack />}
+      <UserContext.Provider
+        value={{
+          user,
+          setUser,
+          lang: 'ko',
+          switchLang: () => {},
+        }}>
+        {profile.email ? <HomeTabs /> : <AuthStack />}
+      </UserContext.Provider>
     </NavigationContainer>
   )
 }

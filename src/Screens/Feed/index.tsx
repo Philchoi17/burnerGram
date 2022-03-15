@@ -290,9 +290,9 @@ export default function Feed({}) {
     }
   }
 
-  const navigateBellAlertModal = () => {
-    navigate(AppRoutes.BELL_ALERTS_SCREEN)
-  }
+  const navigateBellAlertModal = () => navigate(AppRoutes.BELL_ALERTS_SCREEN)
+
+  const navigateToChatStack = () => navigate(AppStacks.CHAT_STACK)
 
   const navigateToProfile = (userId: string) => {
     if (userId == profile.uid) return navigate(AppStacks.PROFILE_STACK)
@@ -341,6 +341,9 @@ export default function Feed({}) {
               <Div row mx="md">
                 <TouchableOpacity onPress={navigateBellAlertModal}>
                   <Icon name="bell" size="6xl" px="md" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={navigateToChatStack}>
+                  <Icon name="send-outline" size="6xl" px="md" />
                 </TouchableOpacity>
               </Div>
             ),

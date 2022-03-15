@@ -8,7 +8,9 @@ import {
   BellAlertScreen,
   OtherUsersProfileScreen,
 } from '@/Screens'
+import ChatStack from '../Chat'
 import { AppRoutes } from '@/Screens/SCREENS'
+import { AppStacks } from '../STACKS'
 
 const { Navigator, Screen, Group } = createNativeStackNavigator()
 
@@ -26,6 +28,7 @@ export default function AuthStack() {
           component={CommentPostScreen}
           name={AppRoutes.COMMENT_POST_SCREEN}
         />
+        <Screen component={ChatStack} name={AppStacks.CHAT_STACK} />
       </Group>
       <Group screenOptions={{ presentation: 'modal' }}>
         <Screen
