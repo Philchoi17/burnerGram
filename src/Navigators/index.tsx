@@ -49,6 +49,7 @@ export default function Navigator() {
           ),
         })
         Logger.debug('profile** =', profile)
+        // TODO: handle better
         if (!profile.email && profile.createdWithSocialLogin) {
           Logger.debug('UPDATED PROFILE HERE WITH CREDENTIALS')
           const now = new Date()

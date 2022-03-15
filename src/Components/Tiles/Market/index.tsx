@@ -15,7 +15,9 @@ export default function ({ feedPost, ...rest }: Props) {
     <Div
       p="sm"
       w={'45%'}
-      borderWidth={1}
+      borderWidth={0.3}
+      borderColor="gray"
+      rounded="xl"
       m="sm"
       alignItems="center"
       justifyContent="center"

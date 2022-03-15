@@ -24,7 +24,6 @@ export default function Chatrooms({}) {
           <SearchBar />
         </Div>
         <Div p="md">
-          <Text>Chatrooms</Text>
           <ChatTile
             nickname="nickname"
             recentMessage="recentMessage"
