@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.burnermobile">
+  package="org.reactjs.native.example.mobile">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 🚨 Keep only the permissions used in your app 🚨 -->

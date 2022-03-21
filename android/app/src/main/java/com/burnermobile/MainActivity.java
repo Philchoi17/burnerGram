@@ -1,4 +1,4 @@
-package com.burnermobile;
+package org.reactjs.native.example.mobile;
 import android.os.Bundle; // adding for react-navigation
 
 import com.facebook.react.ReactActivity;

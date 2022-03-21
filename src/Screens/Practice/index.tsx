@@ -12,6 +12,7 @@ import {
   Accordian,
 } from '@/Components'
 import { ProfileCard, FeedCard } from '@/Components/Cards'
+import Config from '@/Config'
 
 export default function Practice({}) {
   return (
@@ -36,6 +37,13 @@ export default function Practice({}) {
           /> */}
           {/* <FeedCard /> */}
           {/* <IconButton iconName="plus" onPress={() => {}} label="test" /> */}
+
+          <Button
+            onPress={() => {
+              Config.log.debug('hello')
+            }}>
+            test
+          </Button>
         </Div>
       </ScrollDiv>
     </MainContainer>

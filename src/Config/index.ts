@@ -35,6 +35,8 @@ class Config {
     const token = await this.PhoneStorage.get(StorageItemNames.FCM_TOKEN)
     return token
   }
+
+  log = Logger
 }
 
 export default new Config()
