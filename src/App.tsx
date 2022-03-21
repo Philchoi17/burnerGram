@@ -2,7 +2,9 @@ import * as React from 'react'
 import { Platform, StatusBar, AppState, AppStateStatus } from 'react-native'
 import { ThemeProvider } from 'react-native-magnus'
 import { useAppState } from '@react-native-community/hooks'
+
 import { checkAndRequest } from '@/Utils/Permissions'
+import Notifications from '@/Utils/Notifications'
 // dayjs timezones
 import 'dayjs/locale/ko'
 import 'dayjs/locale/en'
@@ -35,6 +37,24 @@ export default function App({}) {
 
     return listener.remove
   }, [state])
+
+  const requestNotificationPermission = async () => {
+    try {
+      const notificationPermission = await Notifications.requestUserPermission()
+      Logger.debug('notificationPermission =', notificationPermission)
+      if (notificationPermission == 1) Notifications.getFCMToken()
+    } catch (error) {
+      Logger.error('requestNotificationPermission: error =', error)
+    }
+  }
+
+  const notificationUserEffectHandler = () => {
+    requestNotificationPermission()
+    Notifications.notificationListener()
+  }
+
+  useEffect(notificationUserEffectHandler, [state])
+
   return (
     <RRFProvider>
       <ThemeProvider theme={Theme.default}>

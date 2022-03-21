@@ -7,6 +7,8 @@ import {
   requestMultiple,
   checkMultiple,
 } from 'react-native-permissions'
+// import messages from '@react-native-firebase/messaging'
+
 import Logger from '@/Utils/Logger'
 
 type permissionTypes = 'mic' | 'camera' | 'transparency' | 'writeExtStorage'

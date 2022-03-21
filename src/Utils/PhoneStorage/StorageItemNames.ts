@@ -1,1 +1,3 @@
-export default Object.freeze({})
+export default Object.freeze({
+  FCM_TOKEN: '@notificationToken',
+})

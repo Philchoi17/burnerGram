@@ -10,8 +10,8 @@ import { Platform } from 'react-native'
 
 const options: CameraOptions = {
   mediaType: 'photo',
-  maxWidth: 200,
-  maxHeight: 200,
+  maxWidth: 1000,
+  maxHeight: 1000,
 }
 
 function uploadURIFormatter(uri: string) {
