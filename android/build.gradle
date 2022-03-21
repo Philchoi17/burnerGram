@@ -14,7 +14,9 @@ buildscript {
         androidXAnnotation = "1.1.0"
         androidXBrowser = "1.0.0"
         // for react-native-iap module --
-        kotlinVersion = '1.5.0'
+        kotlinVersion = '1.5.10'
+        // VV for google-signin VV
+        googlePlayServicesAuthVersion = "19.2.0"
     }
     repositories {
         // firebase config

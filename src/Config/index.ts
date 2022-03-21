@@ -3,13 +3,13 @@ import PhoneStorage from '@/Utils/PhoneStorage'
 import StorageItemNames from '@/Utils/PhoneStorage/StorageItemNames'
 
 class Config {
-  Logger = {}
+  log = Logger
 
-  PhoneStorage = PhoneStorage
+  storage = PhoneStorage
 
   constructor() {
-    this.Logger = Logger
-    this.PhoneStorage = PhoneStorage
+    this.log = Logger
+    this.storage = PhoneStorage
   }
 
   // init function when app is started
@@ -28,15 +28,13 @@ class Config {
   async launch() {}
 
   async setFCMToken(token: string): Promise<void> {
-    await this.PhoneStorage.set(StorageItemNames.FCM_TOKEN, token)
+    await this.storage.set(StorageItemNames.FCM_TOKEN, token)
   }
 
   async getFCMToken(): Promise<string | null | undefined> {
-    const token = await this.PhoneStorage.get(StorageItemNames.FCM_TOKEN)
+    const token = await this.storage.get(StorageItemNames.FCM_TOKEN)
     return token
   }
-
-  log = Logger
 }
 
 export default new Config()

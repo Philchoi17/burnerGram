@@ -26,6 +26,7 @@
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.5.0",
     "@reduxjs/toolkit": "^1.7.2",
+    "@types/react": "^17",
     "color": "^4.2.1",
     "dayjs": "^1.10.7",
     "deepmerge": "^4.2.2",

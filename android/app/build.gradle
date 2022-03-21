@@ -135,13 +135,19 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "org.reactjs.native.example.mobile"
+        applicationId "com.mobile.burner"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
         // react-native-iap: we only use the Google Play flavor
         missingDimensionStrategy 'store', 'play'
+        // enabled multiDex for --> 
+        /** 
+            Note: <APPNAME>/node_modules/@react-native-async-storage/async-storage/android/src/main/java/com/reactnativecommunity/asyncstorage/AsyncStorageModule.java uses or overrides a deprecated API.
+        */
+        
+        multiDexEnabled true
     }
     splits {
         abi {
@@ -204,6 +210,9 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
+    // for multidex --> ^^from above in defaultConfig^^  
+    implementation 'androidx.multidex:multidex:2.0.1'
+
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'
     }
@@ -234,3 +243,4 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+apply plugin: 'com.google.gms.google-services'

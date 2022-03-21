@@ -562,43 +562,43 @@ PODS:
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - OpenSSL-Universal (1.1.180)
-  - Permission-AppTrackingTransparency (3.2.0):
+  - Permission-AppTrackingTransparency (3.3.1):
     - RNPermissions
-  - Permission-BluetoothPeripheral (3.2.0):
+  - Permission-BluetoothPeripheral (3.3.1):
     - RNPermissions
-  - Permission-Calendars (3.2.0):
+  - Permission-Calendars (3.3.1):
     - RNPermissions
-  - Permission-Camera (3.2.0):
+  - Permission-Camera (3.3.1):
     - RNPermissions
-  - Permission-Contacts (3.2.0):
+  - Permission-Contacts (3.3.1):
     - RNPermissions
-  - Permission-FaceID (3.2.0):
+  - Permission-FaceID (3.3.1):
     - RNPermissions
-  - Permission-LocationAccuracy (3.2.0):
+  - Permission-LocationAccuracy (3.3.1):
     - RNPermissions
-  - Permission-LocationAlways (3.2.0):
+  - Permission-LocationAlways (3.3.1):
     - RNPermissions
-  - Permission-LocationWhenInUse (3.2.0):
+  - Permission-LocationWhenInUse (3.3.1):
     - RNPermissions
-  - Permission-MediaLibrary (3.2.0):
+  - Permission-MediaLibrary (3.3.1):
     - RNPermissions
-  - Permission-Microphone (3.2.0):
+  - Permission-Microphone (3.3.1):
     - RNPermissions
-  - Permission-Motion (3.2.0):
+  - Permission-Motion (3.3.1):
     - RNPermissions
-  - Permission-Notifications (3.2.0):
+  - Permission-Notifications (3.3.1):
     - RNPermissions
-  - Permission-PhotoLibrary (3.2.0):
+  - Permission-PhotoLibrary (3.3.1):
     - RNPermissions
-  - Permission-PhotoLibraryAddOnly (3.2.0):
+  - Permission-PhotoLibraryAddOnly (3.3.1):
     - RNPermissions
-  - Permission-Reminders (3.2.0):
+  - Permission-Reminders (3.3.1):
     - RNPermissions
-  - Permission-Siri (3.2.0):
+  - Permission-Siri (3.3.1):
     - RNPermissions
-  - Permission-SpeechRecognition (3.2.0):
+  - Permission-SpeechRecognition (3.3.1):
     - RNPermissions
-  - Permission-StoreKit (3.2.0):
+  - Permission-StoreKit (3.3.1):
     - RNPermissions
   - PromisesObjC (2.0.0)
   - RCT-Folly (2021.06.28.00-v2):
@@ -801,7 +801,7 @@ PODS:
     - glog
   - react-native-image-picker (4.7.3):
     - React-Core
-  - react-native-safe-area-context (3.4.0):
+  - react-native-safe-area-context (3.4.1):
     - React-Core
   - React-perflogger (0.67.2)
   - React-RCTActionSheet (0.67.2):
@@ -868,51 +868,51 @@ PODS:
     - React-jsi (= 0.67.2)
     - React-logger (= 0.67.2)
     - React-perflogger (= 0.67.2)
-  - RNCAsyncStorage (1.16.1):
+  - RNCAsyncStorage (1.17.0):
     - React-Core
   - RNFastImage (8.5.11):
     - React-Core
     - SDWebImage (~> 5.11.1)
     - SDWebImageWebPCoder (~> 0.8.4)
-  - RNFBApp (14.5.0):
+  - RNFBApp (14.5.1):
     - Firebase/CoreOnly (= 8.12.1)
     - React-Core
-  - RNFBAuth (14.5.0):
+  - RNFBAuth (14.5.1):
     - Firebase/Auth (= 8.12.1)
     - React-Core
     - RNFBApp
-  - RNFBDatabase (14.5.0):
+  - RNFBDatabase (14.5.1):
     - Firebase/Database (= 8.12.1)
     - React-Core
     - RNFBApp
-  - RNFBFirestore (14.5.0):
+  - RNFBFirestore (14.5.1):
     - Firebase/Firestore (= 8.12.1)
     - React-Core
     - RNFBApp
-  - RNFBFunctions (14.5.0):
+  - RNFBFunctions (14.5.1):
     - Firebase/Functions (= 8.12.1)
     - React-Core
     - RNFBApp
-  - RNFBMessaging (14.5.0):
+  - RNFBMessaging (14.5.1):
     - Firebase/Messaging (= 8.12.1)
     - React-Core
     - RNFBApp
-  - RNFBStorage (14.5.0):
+  - RNFBStorage (14.5.1):
     - Firebase/Storage (= 8.12.1)
     - React-Core
     - RNFBApp
-  - RNGoogleSignin (7.1.0):
+  - RNGoogleSignin (7.2.1):
     - GoogleSignIn (~> 6.1.0)
     - React-Core
-  - RNIap (8.0.0-rc.6):
+  - RNIap (8.0.6):
     - React-Core
-  - RNPermissions (3.2.0):
+  - RNPermissions (3.3.1):
     - React-Core
-  - RNScreens (3.12.0):
+  - RNScreens (3.13.1):
     - React-Core
     - React-RCTImage
-  - RNSVG (12.1.1):
-    - React
+  - RNSVG (12.3.0):
+    - React-Core
   - RNVectorIcons (9.1.0):
     - React-Core
   - SDWebImage (5.11.1):
@@ -1236,25 +1236,25 @@ SPEC CHECKSUMS:
   libwebp: 98a37e597e40bfdb4c911fc98f2c53d0b12d05fc
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
-  Permission-AppTrackingTransparency: 95c9308dd40819fa9f6830751d0ef3ea11498723
-  Permission-BluetoothPeripheral: dd2663f81d622c9d153a2aacd7e3de0d59f7b4b6
-  Permission-Calendars: b2c5f5e0b53403d195f9ac78114731682a9a0e91
-  Permission-Camera: 53efcbb755b0e8bdf253dbb27cc7559ccfce8480
-  Permission-Contacts: 3919ddcaa62d6dc4320d41a27883b6f734a76fa4
-  Permission-FaceID: e3d306dc6284b8985beb608b033817900388cbb8
-  Permission-LocationAccuracy: c13bf629b614be250031458cf81d6a2e9dcdf64f
-  Permission-LocationAlways: 012fd2c1f610068c5f9a7b48bc908ea41edd0c43
-  Permission-LocationWhenInUse: 13de9a01e006cb53a6ac3c9f8d1ab6cc98318d9c
-  Permission-MediaLibrary: d35adbe2a069f2e16121fd79cf15959e86a3f74a
-  Permission-Microphone: db557c64f7e9ad41bff6b3f6d93df3b67311855b
-  Permission-Motion: 4a699388cd4fd57db51eb4e0a34d6e66a0268f61
-  Permission-Notifications: bb420c3d28328df24de1b476b41ed8249ccf2537
-  Permission-PhotoLibrary: 7bec836dcdd04a0bfb200c314f1aae06d4476357
-  Permission-PhotoLibraryAddOnly: 06fb0cdb1d35683b235ad8c464ef0ecc88859ea3
-  Permission-Reminders: 3c2d5d1e9c4b9fe90f937a23cbec9d8cf5ba52fd
-  Permission-Siri: 1495cb9b2059d11ac5a08c92ba38db7593fdddc1
-  Permission-SpeechRecognition: bfb038564b6f3a6e5dcf8d848171c32ae09d949c
-  Permission-StoreKit: ee68e7b70e9c44c2b16c6add64ddc58bd54c81c6
+  Permission-AppTrackingTransparency: 507f031f783885aad86f5754bd23edba587b2125
+  Permission-BluetoothPeripheral: a408e2ba4b43e60c5a4b8b4d442bb8abc93394b2
+  Permission-Calendars: 1a97703f804b86ece328f53fac3683f23ec0df1b
+  Permission-Camera: bae27a8503530770c35aadfecbb97ec71823382a
+  Permission-Contacts: 795936e988352bbf628334378eec5c3728db7140
+  Permission-FaceID: 278547824ae3a5cae07050505e8a505932c3c5c4
+  Permission-LocationAccuracy: 43d7a6b3d736a90168e9fc7117a721ca44722f83
+  Permission-LocationAlways: fbf36cbdcabc3101f1168ad1ec45cfc5a6448cc4
+  Permission-LocationWhenInUse: 006c85c8de0c05b5d8be8e8029e4f6b813270293
+  Permission-MediaLibrary: cbc1ee191cf0fe73282d2b3f197714941783d99d
+  Permission-Microphone: 13922195a81b9d46d2df8050c225006eae126d49
+  Permission-Motion: db2cffebd72064294639959653f81175b1c1d354
+  Permission-Notifications: 4b21cfdd5e8aab2cbb1f117aaa17b44e1f5736c4
+  Permission-PhotoLibrary: ddb5a158725b29cb12e9e477e8a5f5151c66cc3c
+  Permission-PhotoLibraryAddOnly: 104e42dbe894b0fccb370be26dd1b4a3c23578eb
+  Permission-Reminders: e6c3190fd33fe2a088350533dfba8bc78c0632b3
+  Permission-Siri: 1ae2ad3349327f25eac3f7d7a69389ca46d4c163
+  Permission-SpeechRecognition: fdab73ea6aec7103fef3ef8719194e9ef65dbb9e
+  Permission-StoreKit: 49cd0d1d0cec7211b1a7fefb3a810f3caa89b992
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   RCT-Folly: 803a9cfd78114b2ec0f140cfa6fa2a6bafb2d685
   RCTRequired: cd47794163052d2b8318c891a7a14fcfaccc75ab
@@ -1269,7 +1269,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 595f76eba2176ebd8817a1fffd47b84fbdab9383
   React-logger: 23de8ea0f44fa00ee77e96060273225607fd4d78
   react-native-image-picker: 4e6008ad8c2321622affa2c85432a5ebd02d480c
-  react-native-safe-area-context: f4f7cc09d81ae2d39dfd13e764d718969af07080
+  react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
   React-perflogger: 3c9bb7372493e49036f07a82c44c8cf65cbe88db
   React-RCTActionSheet: 052606483045a408693aa7e864410b4a052f541a
   React-RCTAnimation: 08d4cac13222bb1348c687a0158dfd3b577cdb63
@@ -1282,20 +1282,20 @@ SPEC CHECKSUMS:
   React-RCTVibration: 99c7f67fba7a5ade46e98e870c6ff2444484f995
   React-runtimeexecutor: 2450b43df7ffe8e805a0b3dcb2abd4282f1f1836
   ReactCommon: d98c6c96b567f9b3a15f9fd4cc302c1eda8e3cf2
-  RNCAsyncStorage: b49b4e38a1548d03b74b30e558a1d18465b94be7
+  RNCAsyncStorage: 4efdcd2f7378421b29467c9de58f43552b60cf5b
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
-  RNFBApp: 06c8447270d295edc431bccd55970d8711a07a42
-  RNFBAuth: e248a56b1d28d3b53b54b72a296cf9270df1d96e
-  RNFBDatabase: b3d47ea4f15e80004e84ffc5597bf409a14f9834
-  RNFBFirestore: 7e4fe3b009a193d2f2fb0a19d1d6ab06355d4a09
-  RNFBFunctions: e1cdc731ad9248672ab45e70f751cdae2e963389
-  RNFBMessaging: 8e3575bb0303b43a852bf5decbe99c3272035048
-  RNFBStorage: e061bbb005be42225e95cb62af7768bda4d24e3a
-  RNGoogleSignin: 233fdfa02522216c19bf02a1e6c60b60a75ffb4c
-  RNIap: df0d62b38505dcdae3ee4b8ca3c267f7af919946
-  RNPermissions: f7ebe52db07c00901127966ca080b4ec6a6ceb0a
-  RNScreens: 2559f98b0835103cbef3b26ba77fa61d4bb37ae7
-  RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
+  RNFBApp: 5bae3002117e55f3c9aa0fb38175dd16c8046c90
+  RNFBAuth: ed314ff1732011c23041570ac4a98bc6070f9f4d
+  RNFBDatabase: 3c0f5efe76714ca3a8838250fdefe26a85f3380e
+  RNFBFirestore: 6103ff28c04b6a71faaca286a7f778914c3c7bb4
+  RNFBFunctions: ce53e6f983b38fb87af9934632218a687319212a
+  RNFBMessaging: ae6c40883868cd01fa802395174ec7d61cfa0920
+  RNFBStorage: 495f37ba9f233e3be134c8bc0f31ff011a9eecec
+  RNGoogleSignin: 824ef4924ecb709477fc9f39d6557baeded867c4
+  RNIap: c9eddf59cee1b83e9eb26e654224046032ecd430
+  RNPermissions: 34d678157c800b25b22a488e4d8babb57456e796
+  RNScreens: 40a2cb40a02a609938137a1e0acfbf8fc9eebf19
+  RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
   RNVectorIcons: 7923e585eaeb139b9f4531d25a125a1500162a0b
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
