@@ -109,6 +109,7 @@ export default function UploadScreen({}: Props): React.ReactElement {
     Logger.debug('handleSubmit: values =', values)
     // TODO: handle firestore.FieldValue.serverTimestamp() instead of Date.now()
     // TODO: activity indicator for throttling upload
+    // const now = firestore.FieldValue.serverTimestamp()
     const now = new Date()
     try {
       // // small patch for uploading photo

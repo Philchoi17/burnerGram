@@ -82,17 +82,21 @@ export default function Navigator() {
   const navigatorUseEffectHandler = () => {
     Logger.debug(
       'navigator useEffect invoked: profile =',
-      profile,
-      user,
-      // firestore.FieldValue.serverTimestamp(),
-      // firebase.firestore.FieldValue().serverTimeStamp(),
+      // profile,
+      // user,
+      // firebase,
+      // firestore,
+      firebase.firestore.FieldValue.serverTimestamp(),
+      firestore.FieldValue.arrayUnion(),
     )
     Logger.debug('USER =', user)
     const unsubscribe = auth().onAuthStateChanged(onAuthStateChanged)
     return () => unsubscribe()
   }
 
+  // auth state listener
   useEffect(navigatorUseEffectHandler, [])
+
   return initializing ? (
     <Loading />
   ) : (

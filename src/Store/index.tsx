@@ -5,10 +5,10 @@ import { configureStore } from '@reduxjs/toolkit'
 // import Reducer from '@reduxjs/toolkit'
 
 // firebase
+import * as RNFirebase from '@react-native-firebase/app'
 import '@react-native-firebase/storage'
 import '@react-native-firebase/auth'
 import '@react-native-firebase/firestore'
-import RNFirebase from '@react-native-firebase/app'
 import '@react-native-firebase/database'
 import '@react-native-firebase/functions'
 import '@react-native-firebase/messaging'
@@ -74,7 +74,7 @@ const store = configureStore({
 })
 
 const rrfProps = {
-  firebase: RNFirebase.app(),
+  firebase: RNFirebase.default,
   config: rrfConfig,
   dispatch: store.dispatch,
   createFirestoreInstance,

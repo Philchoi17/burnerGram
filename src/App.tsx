@@ -19,7 +19,7 @@ const { useEffect } = React
 export default function App({}) {
   const state = useAppState()
 
-  useEffect(() => {
+  const permissionUseEffectListener = () => {
     Logger.debug('src: App.tsx: state has changed', state)
     const appPermissionListener = async (status: AppStateStatus) => {
       try {
@@ -36,7 +36,10 @@ export default function App({}) {
     const listener = AppState.addEventListener('change', appPermissionListener)
 
     return listener.remove
-  }, [state])
+  }
+
+  // handler for checking app transparency permission
+  useEffect(permissionUseEffectListener, [state])
 
   const requestNotificationPermission = async () => {
     try {
@@ -53,6 +56,7 @@ export default function App({}) {
     Notifications.notificationListener()
   }
 
+  // handler for notification permission and FCM token
   useEffect(notificationUserEffectHandler, [state])
 
   return (
