@@ -45,6 +45,7 @@ export default function Navigator() {
               'facebook.com',
               'twitter.com',
               'github.com',
+              'KAKAO',
             ].includes(userInfo.providerId),
           ),
         })

@@ -1,3 +1,9 @@
 {
-  "LANG": "en"
+  "LANG": "en",
+  "BASE_URL": {
+    "PROD": "https://asia-northeast3-liveculturelab.cloudfunctions.net",
+    "DEV": "http://localhost:5001",
+    "STG": ""
+  },
+  "APP_MODE": "PROD"
 }
