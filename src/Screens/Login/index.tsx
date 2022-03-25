@@ -9,7 +9,10 @@ import { AuthRoutes } from '../SCREENS'
 import { AuthContainer } from '@/Containers'
 import { Text, Button, Icon, Alert } from '@/Components'
 import { Input, Form, Submit } from '@/Components/Forms'
-import { GoogleLoginButton } from '@/Components/SocialLoginButtons'
+import {
+  GoogleLoginButton,
+  KakaoLoginButton,
+} from '@/Components/SocialLoginButtons'
 import { validationSchema } from './validation'
 import Logger from '@/Utils/Logger'
 
@@ -94,6 +97,7 @@ export default function Login({}): React.ReactElement {
             </Div>
           </Form>
           <GoogleLoginButton />
+          <KakaoLoginButton />
         </Div>
       </AuthContainer>
     </>

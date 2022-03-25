@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">burnerMobile</string>
+    <!-- adding for kakao configuration -->
+    <string name="kakao_app_key">c2152e1e01cc8d87036b644c18b3e784</string>
 </resources>

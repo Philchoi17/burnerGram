@@ -39,13 +39,13 @@
     <uses-permission android:name="com.android.voicemail.permission.ADD_VOICEMAIL" />
 
     <!-- … -->
-
+    <!-- change android:allowBackup to true from false for kakao configuration -->
     <application
+      android:allowBackup="true"
       android:name=".MainApplication"
       android:label="@string/app_name"
       android:icon="@mipmap/ic_launcher"
       android:roundIcon="@mipmap/ic_launcher"
-      android:allowBackup="false"
       android:theme="@style/AppTheme">
       <activity
         android:name=".MainActivity"
@@ -56,6 +56,16 @@
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+      </activity>
+      <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+
+            <data android:host="oauth"
+                android:scheme="kakaoc2152e1e01cc8d87036b644c18b3e784" />
         </intent-filter>
       </activity>
     </application>

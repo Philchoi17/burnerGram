@@ -343,7 +343,17 @@ https://github.com/FaridSafi/react-native-gifted-chat
 yarn add react-native-gifted-chat
 ```
 
-TODO: will use
+# @react-native-seoul/kakao-login
+
+```
+
+https://github.com/react-native-seoul/react-native-kakao-login
+
+yarn add @react-native-seoul/kakao-login
+
+```
+
+TODO: will use ----------------------------------------------------------
 
 # react-native-iap@next
 

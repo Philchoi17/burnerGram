@@ -13,7 +13,7 @@ buildscript {
         // AndroidX configuration VV
         androidXAnnotation = "1.1.0"
         androidXBrowser = "1.0.0"
-        // for react-native-iap module --
+        // for react-native-iap module -- && kakao configuration
         kotlinVersion = '1.5.10'
         // VV for google-signin VV
         googlePlayServicesAuthVersion = "19.2.0"
@@ -28,7 +28,7 @@ buildscript {
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath 'com.google.gms:google-services:4.3.10'
-        // for react-native-iap module
+        // for react-native-iap module && kakao configuration
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
 }
@@ -52,5 +52,7 @@ allprojects {
         }
         google()
         maven { url 'https://www.jitpack.io' }
+        // for kakao login configuration
+        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
     }
 }

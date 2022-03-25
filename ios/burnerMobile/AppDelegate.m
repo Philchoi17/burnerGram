@@ -1,5 +1,7 @@
-// firebae configure
+// firebase configuration
 #import <Firebase.h>
+// kakao login configuration
+#import <RNKakaoLogins.h>
 #import "AppDelegate.h"
 
 #import <React/RCTBridge.h>
@@ -61,6 +63,17 @@ static void InitializeFlipper(UIApplication *application) {
 #else
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
+}
+
+// for kakao login configuration
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+                                       sourceApplication:(NSString *)sourceApplication
+                                              annotation:(id)annotation {
+    if([RNKakaoLogins isKakaoTalkLoginUrl:url]) {
+      return [RNKakaoLogins handleOpenUrl: url];
+    }
+
+    return NO;
 }
 
 @end

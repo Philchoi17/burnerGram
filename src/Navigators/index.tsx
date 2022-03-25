@@ -33,7 +33,7 @@ export default function Navigator() {
     setUser(user)
     try {
       if (user) {
-        const lastSeenAt = new Date()
+        const lastSeenAt = firestore.FieldValue.serverTimestamp()
         Logger.debug('USER*** =', user)
         // TODO: handle this better ( something is happening here where the rerender doesnt happen after social login)
         await firebase.updateProfile({
@@ -86,7 +86,7 @@ export default function Navigator() {
       // user,
       // firebase,
       // firestore,
-      firebase.firestore.FieldValue.serverTimestamp(),
+      firestore.FieldValue.serverTimestamp(),
       firestore.FieldValue.arrayUnion(),
     )
     Logger.debug('USER =', user)
