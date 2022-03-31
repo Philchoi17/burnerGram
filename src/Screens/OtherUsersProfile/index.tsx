@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Div, ScrollDiv } from 'react-native-magnus'
+import { Div } from 'react-native-magnus'
 import {
   useFirebase,
   useFirestore,
@@ -96,44 +96,43 @@ export default function OtherUsersProfile({}) {
 
   return (
     <MainContainer
+      scrollable
       headerProps={{
         heading: otherUsersProfile?.nickname,
       }}>
-      <ScrollDiv showsVerticalScrollIndicator={false}>
-        <Div p="md">
-          <ProfileCard
-            profile={otherUsersProfile}
-            photoURL={otherUsersProfile?.photoURL}
-            nickname={otherUsersProfile?.nickname}
-            bio={otherUsersProfile?.bio}
-            navigateToEditProfile={() => {}}
-            earnedPress={() => {}}
-            creditsPress={() => {}}
-            postCount={usersPosts?.length ?? 0}
-            credits={otherUsersProfile?.credits}
-            earnedSupport={otherUsersProfile?.earnedSupport}
-            otherUser
-          />
-          <Div
-            mt="sm"
-            // borderWidth={1}
-            flexWrap="wrap"
-            row
-            flex={1}
-            p="xs"
-            alignItems="flex-start"
-            justifyContent="flex-start">
-            {usersPosts &&
-              usersPosts.map((post, idx) => (
-                <PhotoTile
-                  key={String(idx)}
-                  source={post.downloadURL}
-                  onPress={handlePostPress}
-                />
-              ))}
-          </Div>
+      <Div p="md">
+        <ProfileCard
+          profile={otherUsersProfile}
+          photoURL={otherUsersProfile?.photoURL}
+          nickname={otherUsersProfile?.nickname}
+          bio={otherUsersProfile?.bio}
+          navigateToEditProfile={() => {}}
+          earnedPress={() => {}}
+          creditsPress={() => {}}
+          postCount={usersPosts?.length ?? 0}
+          credits={otherUsersProfile?.credits}
+          earnedSupport={otherUsersProfile?.earnedSupport}
+          otherUser
+        />
+        <Div
+          mt="sm"
+          // borderWidth={1}
+          flexWrap="wrap"
+          row
+          flex={1}
+          p="xs"
+          alignItems="flex-start"
+          justifyContent="flex-start">
+          {usersPosts &&
+            usersPosts.map((post, idx) => (
+              <PhotoTile
+                key={String(idx)}
+                source={post.downloadURL}
+                onPress={handlePostPress}
+              />
+            ))}
         </Div>
-      </ScrollDiv>
+      </Div>
     </MainContainer>
   )
 }

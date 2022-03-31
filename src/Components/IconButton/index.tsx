@@ -16,7 +16,7 @@ export default function ({
   iconName,
   bg = 'transparent',
   label,
-  number,
+  number = 0,
 }: Props) {
   return (
     <Button

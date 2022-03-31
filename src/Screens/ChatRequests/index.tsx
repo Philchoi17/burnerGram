@@ -2,17 +2,18 @@ import * as React from 'react'
 import { Div } from 'react-native-magnus'
 
 import { MainContainer } from '@/Containers'
-import { Text, Button } from '@/Components'
+import { Text, Button, Icon, Alert } from '@/Components'
 
-export default function BellAlert({}) {
+const { useState, useEffect } = React
+export default function ChatRequests() {
   return (
     <MainContainer
       scrollable
       headerProps={{
-        heading: 'Bell Alert',
+        heading: 'Chat Requests',
       }}>
-      <Div p="md">
-        <Text>BELL ALERT</Text>
+      <Div>
+        <Text>ChatRequests</Text>
       </Div>
     </MainContainer>
   )

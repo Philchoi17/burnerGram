@@ -28,7 +28,12 @@ export default function Navigator() {
   const [initializing, setInitializing] = useState<boolean>(false)
   const [user, setUser] = useState<any>()
 
-  const onAuthStateChanged = async (user: any) => {
+  type CallbackOrObserver<T extends (...args: any[]) => any> = T | { next: T }
+
+  const onAuthStateChanged = async (
+    user: FirebaseAuthTypes.AuthListenerCallback | any,
+  ) => {
+    console.log('user =', user)
     setInitializing(true)
     setUser(user)
     try {
@@ -46,6 +51,7 @@ export default function Navigator() {
               'twitter.com',
               'github.com',
               'KAKAO',
+              'kakao.com',
             ].includes(userInfo.providerId),
           ),
         })

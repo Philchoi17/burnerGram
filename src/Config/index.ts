@@ -4,7 +4,7 @@ import StorageItemNames from '@/Utils/PhoneStorage/StorageItemNames'
 import appConfig from './appConfig.json'
 
 interface IConfig {
-  appConfig: any
+  appConfig: typeof appConfig.APP_MODE
   phoneStorage: typeof PhoneStorage
   logger: typeof Logger
   storageItemNames: typeof StorageItemNames
@@ -18,7 +18,8 @@ class Config {
   // app config
   LANG = appConfig.LANG
   BASE_URL = appConfig.BASE_URL
-  APP_MODE: 'DEV' | 'PROD' | 'STG' = 'PROD'
+  // @ts-ignore
+  APP_MODE: 'DEV' | 'PROD' | 'STG' = appConfig.APP_MODE
   // APP_VERSION = appConfig.APP_VERSION
 
   constructor() {
@@ -26,7 +27,8 @@ class Config {
     this.storage = PhoneStorage
     this.LANG = appConfig.LANG
     this.BASE_URL = appConfig.BASE_URL
-    this.APP_MODE = 'PROD'
+    // @ts-ignore
+    this.APP_MODE = appConfig.APP_MODE
     // this.APP_VERSION = appConfig.APP_VERSION
   }
 

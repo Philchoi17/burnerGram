@@ -94,45 +94,39 @@ export default function CommentPost({}: Props) {
 
   return (
     <MainContainer
+      scrollable
       headerProps={{
         heading: 'Comment Post',
       }}>
-      <ScrollDiv showsVerticalScrollIndicator={false}>
-        <Div p="md">
-          <Div row p="md" alignItems="center" justifyContent="space-between">
-            <Div row alignItems="center">
-              <Image
-                source={imageURI(postOwner.photoURL)}
-                h={44}
-                w={44}
-                rounded="circle"
-              />
-              <Text size="xl" ml="sm" color="gray600">
-                {postOwner.nickname}
-              </Text>
-            </Div>
-            <Button onPress={() => {}} bg="transparent">
-              <Icon name="more" size="4xl" />
-            </Button>
+      <Div p="md">
+        <Div row p="md" alignItems="center" justifyContent="space-between">
+          <Div row alignItems="center">
+            <Image
+              source={imageURI(postOwner.photoURL)}
+              h={44}
+              w={44}
+              rounded="circle"
+            />
+            <Text size="xl" ml="sm" color="gray600">
+              {postOwner.nickname}
+            </Text>
           </Div>
-          <Image
-            source={imageURI(downloadURL)}
-            h={200}
-            w={'100%'}
-            rounded="xl"
-          />
-          <Text size="xl" color="gray600" mt="sm" ml="xs">
-            {description}
-          </Text>
-          <Div>
-            {postComments &&
-              // TODO: handle comment type
-              postComments.comments.map((comment: any, idx: number) => (
-                <Comment key={String(idx)} comment={comment} />
-              ))}
-          </Div>
+          <Button onPress={() => {}} bg="transparent">
+            <Icon name="more" size="4xl" />
+          </Button>
         </Div>
-      </ScrollDiv>
+        <Image source={imageURI(downloadURL)} h={200} w={'100%'} rounded="xl" />
+        <Text size="xl" color="gray600" mt="sm" ml="xs">
+          {description}
+        </Text>
+        <Div>
+          {postComments &&
+            // TODO: handle comment type
+            postComments.comments.map((comment: any, idx: number) => (
+              <Comment key={String(idx)} comment={comment} />
+            ))}
+        </Div>
+      </Div>
       <Div bg="white" p="sm">
         <KeyboardAvoider offset={750}>
           <Form

@@ -4,7 +4,7 @@ import endpoints from './endpoints'
 /**
  *
  * @param uid
- * @param provider
+ * @param userDetails
  */
 export async function createCustomToken(uid: string, userDetails: any) {
   // endpoints.CUSTOM_TOKEN

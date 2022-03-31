@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { ActivityIndicator } from 'react-native'
-import { Div, ScrollDiv } from 'react-native-magnus'
+import { Div } from 'react-native-magnus'
 import {
   useFirebase,
   useFirestore,
@@ -66,51 +66,50 @@ export default function PurchaseCredits({}) {
         }}
       />
       <MainContainer
+        scrollable
         headerProps={{
           heading: 'Purchase Credits',
         }}>
-        <ScrollDiv showsVerticalScrollIndicator={false}>
-          <Div
-            p="md"
-            justifyContent="center"
-            alignItems="center"
-            flex={1}
-            borderWidth={1}>
-            <Text>Amount of Credits</Text>
-            <Button
-              wide
-              m="sm"
-              my="xl"
-              p="xl"
-              onPress={() => buyCreditNotify(100)}>
-              100 Credits
-            </Button>
-            <Button
-              wide
-              m="sm"
-              my="xl"
-              p="xl"
-              onPress={() => buyCreditNotify(500)}>
-              500 Credits
-            </Button>
-            <Button
-              wide
-              m="sm"
-              my="xl"
-              p="xl"
-              onPress={() => buyCreditNotify(1000)}>
-              1000 Credits
-            </Button>
-            <Button
-              wide
-              m="sm"
-              my="xl"
-              p="xl"
-              onPress={() => buyCreditNotify(2000)}>
-              2000 Credits
-            </Button>
-          </Div>
-        </ScrollDiv>
+        <Div
+          p="md"
+          justifyContent="center"
+          alignItems="center"
+          flex={1}
+          borderWidth={1}>
+          <Text>Amount of Credits</Text>
+          <Button
+            wide
+            m="sm"
+            my="xl"
+            p="xl"
+            onPress={() => buyCreditNotify(100)}>
+            100 Credits
+          </Button>
+          <Button
+            wide
+            m="sm"
+            my="xl"
+            p="xl"
+            onPress={() => buyCreditNotify(500)}>
+            500 Credits
+          </Button>
+          <Button
+            wide
+            m="sm"
+            my="xl"
+            p="xl"
+            onPress={() => buyCreditNotify(1000)}>
+            1000 Credits
+          </Button>
+          <Button
+            wide
+            m="sm"
+            my="xl"
+            p="xl"
+            onPress={() => buyCreditNotify(2000)}>
+            2000 Credits
+          </Button>
+        </Div>
       </MainContainer>
     </>
   )

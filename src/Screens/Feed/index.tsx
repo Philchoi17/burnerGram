@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { ActivityIndicator, TouchableOpacity } from 'react-native'
-import { Div, Host, ScrollDiv } from 'react-native-magnus'
+import { Div, Host } from 'react-native-magnus'
 import {
   useFirebase,
   useFirestore,
@@ -332,6 +332,7 @@ export default function Feed({}) {
         cancelAction={() => setMoreOptionsAlert(false)}
       />
       <MainContainer
+        scrollable
         headerProps={{
           heading: 'Home',
           headerRest: {
@@ -349,40 +350,38 @@ export default function Feed({}) {
             ),
           },
         }}>
-        <ScrollDiv showsVerticalScrollIndicator={false}>
-          <Div p="md">
-            {activity ? (
-              <ActivityIndicator size="large" />
-            ) : (
-              feedPosts &&
-              // TODO - add loading indicator
-              feedPosts.map((feedPost: any, idx: number) => {
-                return (
-                  <FeedCard
-                    key={String(idx)}
-                    downloadURL={feedPost.downloadURL}
-                    postOwner={feedPost.postOwner}
-                    description={feedPost.description}
-                    updatedAt={feedPost.updatedAt}
-                    handleLike={() => handleLike(profile.uid, feedPost)}
-                    liked={feedPost.likedUsers.includes(profile.uid)}
-                    handleDislike={() => handleDislike(profile.uid, feedPost)}
-                    disliked={feedPost.dislikedUsers.includes(profile.uid)}
-                    likedCount={feedPost.likedUsers?.length || 0}
-                    dislikedCount={feedPost.dislikedUsers?.length || 0}
-                    handleComment={() => handleComment(feedPost)}
-                    commentCount={feedPost.commentCount}
-                    handleSupport={() => handleSupport(profile, feedPost.id)}
-                    moreOptions={handleMoreOptions}
-                    supportCount={feedPost?.supportCount || 0}
-                    profile={profile}
-                    navigateToProfile={() => navigateToProfile(feedPost.userId)}
-                  />
-                )
-              })
-            )}
-          </Div>
-        </ScrollDiv>
+        <Div p="md">
+          {activity ? (
+            <ActivityIndicator size="large" />
+          ) : (
+            feedPosts &&
+            // TODO - add loading indicator
+            feedPosts.map((feedPost: any, idx: number) => {
+              return (
+                <FeedCard
+                  key={String(idx)}
+                  downloadURL={feedPost.downloadURL}
+                  postOwner={feedPost.postOwner}
+                  description={feedPost.description}
+                  updatedAt={feedPost.updatedAt}
+                  handleLike={() => handleLike(profile.uid, feedPost)}
+                  liked={feedPost.likedUsers.includes(profile.uid)}
+                  handleDislike={() => handleDislike(profile.uid, feedPost)}
+                  disliked={feedPost.dislikedUsers.includes(profile.uid)}
+                  likedCount={feedPost.likedUsers?.length || 0}
+                  dislikedCount={feedPost.dislikedUsers?.length || 0}
+                  handleComment={() => handleComment(feedPost)}
+                  commentCount={feedPost.commentCount}
+                  handleSupport={() => handleSupport(profile, feedPost.id)}
+                  moreOptions={handleMoreOptions}
+                  supportCount={feedPost?.supportCount || 0}
+                  profile={profile}
+                  navigateToProfile={() => navigateToProfile(feedPost.userId)}
+                />
+              )
+            })
+          )}
+        </Div>
       </MainContainer>
       <FabOptions
         options={[

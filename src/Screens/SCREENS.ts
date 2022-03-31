@@ -22,4 +22,5 @@ export enum AppRoutes {
   // chat stack
   CHATROOMS_SCREEN = 'chatrooms-screen',
   CHATROOM_SCREEN = 'chatroom-screen',
+  CHAT_REQUESTS_SCREEN = 'chat-requests-screen',
 }

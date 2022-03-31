@@ -15,6 +15,7 @@ import {
 } from '@/Components/SocialLoginButtons'
 import { validationSchema } from './validation'
 import Logger from '@/Utils/Logger'
+import Config from '@/Config'
 
 const { useEffect, useState } = React
 export default function Login({}): React.ReactElement {
@@ -98,6 +99,13 @@ export default function Login({}): React.ReactElement {
           </Form>
           <GoogleLoginButton />
           <KakaoLoginButton />
+          <Button
+            onPress={() => {
+              Logger.debug('hello there')
+              Logger.debug('Config.getBaseURL()', Config.getBaseEp())
+            }}>
+            hello
+          </Button>
         </Div>
       </AuthContainer>
     </>

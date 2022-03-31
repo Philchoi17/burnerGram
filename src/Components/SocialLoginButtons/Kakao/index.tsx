@@ -9,6 +9,7 @@ import {
   KakaoProfileNoneAgreement,
   logout,
 } from '@react-native-seoul/kakao-login'
+// firebase auth
 import auth from '@react-native-firebase/auth'
 
 import Logger from '@/Utils/Logger'
@@ -33,9 +34,12 @@ export default function KakaoLoginButton({}: Props) {
       })
       Logger.debug('customToken =', customToken)
 
-      const createUser = await auth().signInWithCustomToken(customToken)
-      Logger.debug('createUser =', createUser)
-      Logger.debug('createUser.user =', createUser.user.providerData)
+      // const signInUser = await auth().signInWithCustomToken(customToken)
+      // const idUser = auth().currentUser?.getIdToken(true)
+
+      // Logger.debug('signInuser =', signInUser)
+      // Logger.debug('signInuser.user =', signInUser.user)
+      // Logger.debug('createUser.user =', signInUser.user.providerData)
     } catch (error) {
       Logger.error('KakaoLoginButton: error =>', error)
     }

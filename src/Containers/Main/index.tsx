@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Div } from 'react-native-magnus'
+import { Div, ScrollDiv } from 'react-native-magnus'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { Header } from '@/Components'
@@ -13,11 +13,13 @@ interface HeaderProps {
 interface Props {
   children: any
   headerProps?: HeaderProps
+  scrollable?: boolean
 }
 
 export default function MainContainer({
   children,
   headerProps,
+  scrollable = false,
 }: Props): React.ReactElement {
   const { top, bottom } = useSafeAreaInsets()
   return (
@@ -30,7 +32,11 @@ export default function MainContainer({
           {headerProps.heading}
         </Header>
       )}
-      {children}
+      {scrollable ? (
+        <ScrollDiv showsVerticalScrollIndicator={false}>{children}</ScrollDiv>
+      ) : (
+        <Div>{children}</Div>
+      )}
     </Div>
   )
 }

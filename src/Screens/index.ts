@@ -24,6 +24,7 @@ export { default as MarketPlaceScreen } from './MarketPlace'
 // Chat screens
 export { default as ChatroomsScreen } from './Chatrooms'
 export { default as ChatroomScreen } from './Chatroom'
+export { default as ChatRequestsScreen } from './ChatRequests'
 
 // Practice
 export { default as PracticeScreen } from './Practice'

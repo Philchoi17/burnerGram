@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Div, ScrollDiv } from 'react-native-magnus'
+import { Div } from 'react-native-magnus'
 import { useRoute, useNavigation } from '@react-navigation/native'
 import {
   useFirebase,
@@ -128,38 +128,37 @@ export default function ProfileFeed({}: Props): React.ReactElement {
         }
       />
       <MainContainer
+        scrollable
         headerProps={{
           heading: 'Profile Feed',
         }}>
-        <ScrollDiv showsVerticalScrollIndicator={false}>
-          <Div p="md">
-            {feedPosts &&
-              feedPosts.map((feedPost: any, idx: number) => {
-                return (
-                  <FeedCard
-                    key={String(idx)}
-                    downloadURL={feedPost.downloadURL}
-                    postOwner={feedPost.postOwner}
-                    description={feedPost.description}
-                    updatedAt={feedPost.updatedAt}
-                    handleLike={() => handleLike(profile.uid, feedPost)}
-                    liked={feedPost.likedUsers.includes(profile.uid)}
-                    handleDislike={() => handleDislike(profile.uid, feedPost)}
-                    disliked={feedPost.dislikedUsers.includes(profile.uid)}
-                    likedCount={feedPost.likedUsers?.length || 0}
-                    dislikedCount={feedPost.dislikedUsers?.length || 0}
-                    handleComment={() => handleComment(feedPost)}
-                    commentCount={feedPost.commentCount}
-                    handleSupport={() => handleSupport(profile, feedPost.id)}
-                    moreOptions={() => handleMoreOptions(feedPost)}
-                    supportCount={feedPost.supportCount}
-                    profile={profile}
-                    navigateToProfile={() => navigateToProfile(feedPost.userId)}
-                  />
-                )
-              })}
-          </Div>
-        </ScrollDiv>
+        <Div p="md">
+          {feedPosts &&
+            feedPosts.map((feedPost: any, idx: number) => {
+              return (
+                <FeedCard
+                  key={String(idx)}
+                  downloadURL={feedPost.downloadURL}
+                  postOwner={feedPost.postOwner}
+                  description={feedPost.description}
+                  updatedAt={feedPost.updatedAt}
+                  handleLike={() => handleLike(profile.uid, feedPost)}
+                  liked={feedPost.likedUsers.includes(profile.uid)}
+                  handleDislike={() => handleDislike(profile.uid, feedPost)}
+                  disliked={feedPost.dislikedUsers.includes(profile.uid)}
+                  likedCount={feedPost.likedUsers?.length || 0}
+                  dislikedCount={feedPost.dislikedUsers?.length || 0}
+                  handleComment={() => handleComment(feedPost)}
+                  commentCount={feedPost.commentCount}
+                  handleSupport={() => handleSupport(profile, feedPost.id)}
+                  moreOptions={() => handleMoreOptions(feedPost)}
+                  supportCount={feedPost.supportCount}
+                  profile={profile}
+                  navigateToProfile={() => navigateToProfile(feedPost.userId)}
+                />
+              )
+            })}
+        </Div>
       </MainContainer>
     </>
   )

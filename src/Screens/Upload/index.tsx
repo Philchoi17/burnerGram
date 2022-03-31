@@ -155,79 +155,73 @@ export default function UploadScreen({}: Props): React.ReactElement {
 
   return (
     <MainContainer
+      scrollable
       headerProps={{
         heading: 'Upload',
       }}>
-      <ScrollDiv showsVerticalScrollIndicator={false}>
-        <Div p="md">
-          <ActionSheetOpener
-            dropdownTitle="Upload Media"
-            dropdownOptions={[
-              {
-                method: () => setImagePickerType('Camera'),
-                text: 'Camera',
-                prefix: (
-                  <Icon
-                    name="add-a-photo"
-                    size="4xl"
-                    mr="lg"
-                    fontFamily="MaterialIcons"
-                  />
-                ),
-              },
-              {
-                method: () => setImagePickerType('Library'),
-                text: 'Choose From Library',
-                prefix: (
-                  <Icon
-                    name="add-photo-alternate"
-                    size="4xl"
-                    mr="lg"
-                    fontFamily="MaterialIcons"
-                  />
-                ),
-              },
-            ]}>
-            {uploadURI ? (
-              <Image
-                source={imageURI(uploadURI)}
-                h={300}
-                w={'100%'}
-                rounded="lg"
-              />
-            ) : (
-              <Div
-                mt="md"
-                borderColor="gray400"
-                alignSelf="center"
-                borderWidth={1}
-                rounded="circle"
-                h={150}
-                w={150}
-                alignItems="center"
-                justifyContent="center">
-                <Icon name="plus" size={50} />
-              </Div>
-            )}
-          </ActionSheetOpener>
-          <Text>Upload</Text>
-          <Form
-            initialValues={{
-              description: '',
-              uploadURI,
-            }}
-            onSubmit={handleSubmit}
-            validationSchema={validationSchema}>
-            <Input val="description" label="Description" />
-            <Submit
-              title="Post"
-              wide
-              disabled={!uploadURI}
-              loading={uploading}
+      <Div p="md">
+        <ActionSheetOpener
+          dropdownTitle="Upload Media"
+          dropdownOptions={[
+            {
+              method: () => setImagePickerType('Camera'),
+              text: 'Camera',
+              prefix: (
+                <Icon
+                  name="add-a-photo"
+                  size="4xl"
+                  mr="lg"
+                  fontFamily="MaterialIcons"
+                />
+              ),
+            },
+            {
+              method: () => setImagePickerType('Library'),
+              text: 'Choose From Library',
+              prefix: (
+                <Icon
+                  name="add-photo-alternate"
+                  size="4xl"
+                  mr="lg"
+                  fontFamily="MaterialIcons"
+                />
+              ),
+            },
+          ]}>
+          {uploadURI ? (
+            <Image
+              source={imageURI(uploadURI)}
+              h={300}
+              w={'100%'}
+              rounded="lg"
             />
-          </Form>
-        </Div>
-      </ScrollDiv>
+          ) : (
+            <Div
+              mt="md"
+              borderColor="gray400"
+              alignSelf="center"
+              borderWidth={1}
+              rounded="circle"
+              h={150}
+              w={150}
+              alignItems="center"
+              justifyContent="center">
+              <Icon name="plus" size={50} />
+            </Div>
+          )}
+        </ActionSheetOpener>
+        <Text>Upload</Text>
+        <Form
+          initialValues={{
+            description: '',
+            uploadURI,
+          }}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}>
+          <Input val="description" label="Description" />
+          <Submit title="Post" wide disabled={!uploadURI} loading={uploading} />
+        </Form>
+      </Div>
     </MainContainer>
   )
 }

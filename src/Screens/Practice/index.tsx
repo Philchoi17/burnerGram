@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Div, ScrollDiv } from 'react-native-magnus'
+import { Div } from 'react-native-magnus'
 
 import { MainContainer } from '@/Containers'
 import {
@@ -16,16 +16,15 @@ import Config from '@/Config'
 
 export default function Practice({}) {
   return (
-    <MainContainer>
-      <ScrollDiv>
-        <Div p="md">
-          <Text>Practice</Text>
-          <SearchBar />
-          <Accordian
-            heading="TESTER"
-            bodyText="l;ajfdlja;ldfjal;jdfl;ajdlfajdljfa;jdf;ldajl"
-          />
-          {/* <ProfileCard
+    <MainContainer scrollable>
+      <Div p="md">
+        <Text>Practice</Text>
+        <SearchBar />
+        <Accordian
+          heading="TESTER"
+          bodyText="l;ajfdlja;ldfjal;jdfl;ajdlfajdljfa;jdf;ldajl"
+        />
+        {/* <ProfileCard
             photoURL="https://lh3.googleusercontent.com/a-/AOh14GiX5QPg40HGE5MUds5GdtJgj1lEEKQpWSLKHBkq=s96-c"
             nickname="Nickname"
             navigateToEditProfile={() => {}}
@@ -35,17 +34,16 @@ export default function Practice({}) {
             credits={0}
             earnedSupport={0}
           /> */}
-          {/* <FeedCard /> */}
-          {/* <IconButton iconName="plus" onPress={() => {}} label="test" /> */}
+        {/* <FeedCard /> */}
+        {/* <IconButton iconName="plus" onPress={() => {}} label="test" /> */}
 
-          <Button
-            onPress={() => {
-              Config.log.debug('hello')
-            }}>
-            test
-          </Button>
-        </Div>
-      </ScrollDiv>
+        <Button
+          onPress={() => {
+            Config.log.debug('hello')
+          }}>
+          test
+        </Button>
+      </Div>
     </MainContainer>
   )
 }

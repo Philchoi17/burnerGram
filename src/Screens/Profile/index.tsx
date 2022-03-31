@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Div, ScrollDiv } from 'react-native-magnus'
+import { Div } from 'react-native-magnus'
 import { useNavigation } from '@react-navigation/native'
 import {
   useFirebase,
@@ -111,6 +111,7 @@ export default function Profile({}) {
         cancelAction={toggleBuyCreditsAlert}
       />
       <MainContainer
+        scrollable
         headerProps={{
           heading: 'Profile',
           headerRest: {
@@ -123,45 +124,43 @@ export default function Profile({}) {
             ),
           },
         }}>
-        <ScrollDiv showsVerticalScrollIndicator={false}>
-          <Div p="md">
-            <ProfileCard
-              photoURL={profile.photoURL}
-              nickname={profile.nickname}
-              navigateToEditProfile={navigateToEditProfile}
-              bio={profile.bio}
-              earnedSupport={profile.earnedSupport || 0}
-              earnedPress={navigateToMarket}
-              creditsPress={handleCreditsPressed}
-              postCount={posts?.length || 0}
-              credits={profile.credits}
-            />
-            <RadioSelectors
-              options={['My Photos', 'Wallet']}
-              setSelected={setSelected}>
-              {' '}
-            </RadioSelectors>
-            {selected === 'My Photos' ? (
-              <Div
-                flexWrap="wrap"
-                row
-                p="xs"
-                alignItems="flex-start"
-                justifyContent="flex-start">
-                {posts &&
-                  posts.map((post, idx) => (
-                    <PhotoTile
-                      key={String(idx)}
-                      source={post.downloadURL}
-                      onPress={handlePostPress}
-                    />
-                  ))}
-              </Div>
-            ) : (
-              <Text> Wallet Contents </Text>
-            )}
-          </Div>
-        </ScrollDiv>
+        <Div p="md">
+          <ProfileCard
+            photoURL={profile.photoURL}
+            nickname={profile.nickname}
+            navigateToEditProfile={navigateToEditProfile}
+            bio={profile.bio}
+            earnedSupport={profile.earnedSupport || 0}
+            earnedPress={navigateToMarket}
+            creditsPress={handleCreditsPressed}
+            postCount={posts?.length || 0}
+            credits={profile.credits}
+          />
+          <RadioSelectors
+            options={['My Photos', 'Wallet']}
+            setSelected={setSelected}>
+            {' '}
+          </RadioSelectors>
+          {selected === 'My Photos' ? (
+            <Div
+              flexWrap="wrap"
+              row
+              p="xs"
+              alignItems="flex-start"
+              justifyContent="flex-start">
+              {posts &&
+                posts.map((post, idx) => (
+                  <PhotoTile
+                    key={String(idx)}
+                    source={post.downloadURL}
+                    onPress={handlePostPress}
+                  />
+                ))}
+            </Div>
+          ) : (
+            <Text> Wallet Contents </Text>
+          )}
+        </Div>
       </MainContainer>
     </>
   )

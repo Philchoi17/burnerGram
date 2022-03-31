@@ -13,9 +13,9 @@ const EP = axios.create({
 
 export default Object.freeze({
   // auth
-  CUSTOM_TOKEN: (uid: string, provider: string) =>
+  CUSTOM_TOKEN: (uid: string, userDetails: any) =>
     EP.post('/createCustomToken', {
       uid,
-      provider,
+      userDetails,
     }),
 })

@@ -42,6 +42,7 @@ export type AppStackParams = {
   [AppRoutes.MARKET_PLACE_SCREEN]: undefined
   [AppRoutes.CHATROOMS_SCREEN]: undefined
   [AppRoutes.CHATROOM_SCREEN]: undefined // TODO add route params
+  [AppRoutes.CHAT_REQUESTS_SCREEN]: undefined
 }
 
 export type AppNavProps = NativeStackNavigationProp<AppStackParams, AppRoutes>

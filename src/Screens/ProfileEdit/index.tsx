@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Div, ScrollDiv } from 'react-native-magnus'
+import { Div } from 'react-native-magnus'
 import {
   useFirebase,
   useFirestore,
@@ -94,6 +94,7 @@ export default function ProfileEdit({}: Props): JSX.Element {
 
   return (
     <MainContainer
+      scrollable
       headerProps={{
         heading: 'Edit Profile',
         headerRest: {
@@ -104,70 +105,68 @@ export default function ProfileEdit({}: Props): JSX.Element {
           ),
         },
       }}>
-      <ScrollDiv showsVerticalScrollIndicator={false}>
-        <Div p="md">
-          <ActionSheetOpener
-            dropdownTitle="Upload Media"
-            dropdownOptions={[
-              {
-                method: () => setImagePickerType('Camera'),
-                text: 'Camera',
-                prefix: (
-                  <Icon
-                    name="add-a-photo"
-                    size="4xl"
-                    mr="lg"
-                    fontFamily="MaterialIcons"
-                  />
-                ),
-              },
-              {
-                method: () => setImagePickerType('Library'),
-                text: 'Choose From Library',
-                prefix: (
-                  <Icon
-                    name="add-photo-alternate"
-                    size="4xl"
-                    mr="lg"
-                    fontFamily="MaterialIcons"
-                  />
-                ),
-              },
-            ]}>
-            <Div alignItems="center" p="sm">
-              {uploading ? (
-                <Progress type="circle" progress={transferred} thickness={5} />
-              ) : (
-                <>
-                  <Image
-                    source={imageURI(profile.photoURL)}
-                    h={100}
-                    w={100}
-                    rounded="circle"
-                  />
-                  <Text mt="sm" size="lg" weight="bold" color="blue400">
-                    Change Profile Photo
-                  </Text>
-                </>
-              )}
-            </Div>
-          </ActionSheetOpener>
-          <Form
-            initialValues={{
-              name: profile.name,
-              nickname: profile.nickname,
-              bio: '',
-            }}
-            onSubmit={() => {}}
-            validationSchema={validationSchema}>
-            <Input label="Name" val="name" />
-            <Input label="Nickname" val="nickname" />
-            <Input label="Bio" val="bio" />
-            {/* <Input label="Name" val="name" /> */}
-            <Submit title="Done" />
-          </Form>
-        </Div>
-      </ScrollDiv>
+      <Div p="md">
+        <ActionSheetOpener
+          dropdownTitle="Upload Media"
+          dropdownOptions={[
+            {
+              method: () => setImagePickerType('Camera'),
+              text: 'Camera',
+              prefix: (
+                <Icon
+                  name="add-a-photo"
+                  size="4xl"
+                  mr="lg"
+                  fontFamily="MaterialIcons"
+                />
+              ),
+            },
+            {
+              method: () => setImagePickerType('Library'),
+              text: 'Choose From Library',
+              prefix: (
+                <Icon
+                  name="add-photo-alternate"
+                  size="4xl"
+                  mr="lg"
+                  fontFamily="MaterialIcons"
+                />
+              ),
+            },
+          ]}>
+          <Div alignItems="center" p="sm">
+            {uploading ? (
+              <Progress type="circle" progress={transferred} thickness={5} />
+            ) : (
+              <>
+                <Image
+                  source={imageURI(profile.photoURL)}
+                  h={100}
+                  w={100}
+                  rounded="circle"
+                />
+                <Text mt="sm" size="lg" weight="bold" color="blue400">
+                  Change Profile Photo
+                </Text>
+              </>
+            )}
+          </Div>
+        </ActionSheetOpener>
+        <Form
+          initialValues={{
+            name: profile.name,
+            nickname: profile.nickname,
+            bio: '',
+          }}
+          onSubmit={() => {}}
+          validationSchema={validationSchema}>
+          <Input label="Name" val="name" />
+          <Input label="Nickname" val="nickname" />
+          <Input label="Bio" val="bio" />
+          {/* <Input label="Name" val="name" /> */}
+          <Submit title="Done" />
+        </Form>
+      </Div>
     </MainContainer>
   )
 }
