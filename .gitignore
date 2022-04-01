@@ -61,8 +61,9 @@ buck-out/
 # Bundle artifact
 *.jsbundle
 
-# CocoaPods
+# Ruby / CocoaPods
 /ios/Pods/
+<<<<<<< ours
 /ios/builds/
 
 # PYC firebase key protection
@@ -73,3 +74,6 @@ fastlane/credentials/
 
 fastlane/report.xml
 package-lock.json
+=======
+/vendor/bundle/
+>>>>>>> theirs
