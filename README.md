@@ -1,9 +1,87 @@
 # Mobile App Development
 
 ```
-project = "Mobile App Development"
+this is a application that will be used for social networking. it is very similar to instagram.
+
+the application will be built using react-native and firebase.
+- react-native for the front-end
+    - react-navigation for the navigation
+    - redux for the state management
+    - react-redux for the redux bindings
+    - redux-thunk for the async actions
+    - react-native-gesture-handler for the gestures
+    - react-native-reanimated for the animations
+    - react-native-screens for the screens
+
+- firebase for the back-end
+      - firestore for the database
+      - storage for the images
+      - authentication for the users
+      - functions for the serverless functions
+      - messaging for the notifications
+
+
+
+features include:
+- authentication []
+- profile []
+- posts []
+- comments []
+- likes []
+- follows []
+- messages []
+- notifications []
+- settings []
+- search []
+- explore []
 
 ```
+
+# app folder structure
+
+```
+src
+  - assets
+    - images
+    - icons
+  - components
+    - auth
+    - home
+    - messages
+    - notifications
+    - posts
+    - profile
+    - settings
+    - shared
+  - constants
+  - navigation
+  - redux
+    - actions
+    - reducers
+    - store
+  - screens
+    - auth
+    - home
+    - messages
+    - notifications
+    - posts
+    - profile
+    - settings
+    - shared
+  - services
+    - auth
+    - firestore
+    - storage
+  - utils
+```
+
+# react-native init
+
+```
+npx react-native init <project-name>
+```
+
+# PACKAGES USED
 
 # babel-plugin-module-resolver
 
